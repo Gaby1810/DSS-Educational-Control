@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Panel Docente</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#f1f5f9;
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:230px;
+    background:#111827;
+    color:white;
+    height:100vh;
+    padding:20px;
+}
+
+.sidebar h2{
+    margin-bottom:40px;
+}
+
+.sidebar a{
+    display:block;
+    padding:12px;
+    margin-bottom:10px;
+    text-decoration:none;
+    color:#cbd5e1;
+    border-radius:8px;
+}
+
+.sidebar a:hover{
+    background:#1f2937;
+    color:white;
+}
+
+/* CONTENIDO */
+
+.main{
+    flex:1;
+    padding:30px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    margin:25px 0;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.card h3{
+    margin:0;
+}
+
+.table-container{
+    background:white;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    padding:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th, td{
+    padding:12px;
+    text-align:left;
+}
+
+th{
+    background:#f3f4f6;
+}
+
+tr{
+    border-bottom:1px solid #eee;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-nota{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-asistencia{
+    background:#10b981;
+    color:white;
+}
+
+.logout{
+    background:#ef4444;
+    color:white;
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>EduControl</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Materias</a>
+    <a href="#">Reportes</a>
+</div>
+
+<div class="main">
+
+<div class="header">
+    <h2>Panel del Docente</h2>
+    <button class="logout" onclick="logout()">Cerrar sesión</button>
+</div>
+
+<div class="cards">
+    <div class="card">
+        <h3 id="totalMaterias">0</h3>
+        <p>Materias Asignadas</p>
+    </div>
+
+    <div class="card">
+        <h3 id="totalEstudiantes">0</h3>
+        <p>Total Estudiantes</p>
+    </div>
+
+    <div class="card">
+        <h3>Activo</h3>
+        <p>Semestre Actual</p>
+    </div>
+</div>
+
+<div class="table-container">
+    <h3>Materias Activas</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Materia</th>
+                <th>Grado</th>
+                <th>Sección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaMaterias"></tbody>
+    </table>
+
+</div>
+
+</div>
+
+<script>
+
+// Cargar materias
+fetch("/api/docente/mis-materias")
+.then(res=>res.json())
+.then(data=>{
+
+    document.getElementById("totalMaterias").innerText = data.length;
+
+    const tabla = document.getElementById("tablaMaterias");
+
+    let totalEst = 0;
+
+    data.forEach(m=>{
+
+        fetch("/api/docente/estudiantes/"+m.id)
+        .then(res=>res.json())
+        .then(est=>{
+            totalEst += est.length;
+            document.getElementById("totalEstudiantes").innerText = totalEst;
+        });
+
+        tabla.innerHTML += `
+        <tr>
+            <td>${m.nombre}</td>
+            <td>${m.grado}</td>
+            <td>${m.seccion}</td>
+            <td>
+                <button class="btn-nota" onclick="irNotas(${m.id})">Registrar Notas</button>
+                <button class="btn-asistencia" onclick="irAsistencia(${m.id})">Asistencia</button>
+            </td>
+        </tr>
+        `;
+    });
+});
+
+function irNotas(id){
+    window.location.href="materia.html?id="+id;
+}
+
+function irAsistencia(id){
+    window.location.href="materia.html?id="+id+"#asistencia";
+}
+
+function logout(){
+    fetch("/api/auth/logout")
+    .then(()=>window.location.href="../login.html");
+}
+
+</script>
+
+</body>
+</html>

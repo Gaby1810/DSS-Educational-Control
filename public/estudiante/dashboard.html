@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Educational Control</title>
+
+<style>
+    body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f3f4f6;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2f4fa3;
+    padding: 15px 40px;
+    color: white;
+}
+
+.navbar nav a {
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar .active {
+    background: white;
+    color: #2f4fa3;
+    padding: 5px 15px;
+    border-radius: 6px;
+}
+
+/* HERO */
+.hero {
+    height: 200px;
+    background: url('/fondo.png') center/cover;
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+    font-size: 22px;
+}
+
+/* CARDS */
+.cards {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.card {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 120px;
+    object-fit: cover;
+}
+
+.card div {
+    padding: 15px;
+}
+
+.card h2 {
+    color: #2f4fa3;
+    margin: 10px 0;
+}
+
+.card span {
+    color: #2f4fa3;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">🎓 Educational Control</div>
+
+    <nav>
+        <a class="active">Inicio</a>
+        <a>Clases</a>
+        <a>Estudiantes</a>
+    </nav>
+
+    <div class="icons">
+        🔔 👤
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Bienvenido a Educational control</h1>
+</section>
+
+<!-- CARDS -->
+<section class="cards">
+
+    <div class="card">
+        <img src="/fondo.png">
+        <div>
+            <h3>Total clases</h3>
+            <p>Explora tus materias y accede a todo tu contenido académico en un solo lugar</p>
+            <h2 id="clases">0</h2>
+            <span>Ver más...</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/fondo.png">
+        <div>
+            <h3>Tareas activas</h3>
+            <p>Mantente al día con tus deberes y organiza tus entregas</p>
+            <h2 id="tareas">0</h2>
+            <span>Ver más...</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/fondo.png">
+        <div>
+            <h3>Total estudiantes</h3>
+            <p>Comparte tu experiencia con tus compañeros</p>
+            <h2 id="estudiantes">0</h2>
+            <span>Ver más...</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/fondo.png">
+        <div>
+            <h3>Promedio general</h3>
+            <p>Visualiza tu progreso académico</p>
+            <h2 id="promedio">0</h2>
+            <span>Ver más...</span>
+        </div>
+    </div>
+
+</section>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

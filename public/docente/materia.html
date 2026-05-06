@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gestión de Materia</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    padding:40px;
+}
+
+/* Título */
+h2{
+    margin-bottom:25px;
+    color:#111827;
+}
+
+/* Cards */
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom:35px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+}
+
+/* Inputs */
+input[type="text"],
+input[type="date"],
+select{
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    outline:none;
+    margin-right:10px;
+    margin-top:10px;
+}
+
+input:focus,
+select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 2px rgba(37,99,235,0.2);
+}
+
+/* Tabla */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th, td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+
+th{
+    background:#f9fafb;
+    text-align:left;
+}
+
+tr:hover{
+    background:#f3f4f6;
+}
+
+/* Nota input */
+input[type="number"]{
+    width:80px;
+    padding:6px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+/* Botones */
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+    margin-top:15px;
+}
+
+/* Botón principal */
+button{
+    background:#2563eb;
+    color:white;
+}
+
+button:hover{
+    background:#1e40af;
+    transform:scale(1.05);
+}
+
+/* Check asistencia */
+.asistencia-check{
+    transform:scale(1.3);
+    cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<h2>Gestión de Materia</h2>
+<div class="card">
+    <h3>📚 Crear Nueva Tarea</h3>
+
+    <input type="text" id="tituloTarea" placeholder="Nombre de la tarea">
+
+    <button onclick="crearTarea()">Crear</button>
+</div>
+<div class="card">
+    <h3>📝 Registrar Notas</h3>
+
+    <select id="selectTarea"></select>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Estudiante</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody id="tablaNotas"></tbody>
+    </table>
+
+    <br>
+    <button onclick="guardarNotas()">Guardar Notas</button>
+</div>
+
+<div class="card">
+    <h3>📅 Pasar Asistencia</h3>
+
+    <input type="date" id="fechaAsistencia">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Estudiante</th>
+                <th>Presente</th>
+            </tr>
+        </thead>
+        <tbody id="tablaAsistencia"></tbody>
+    </table>
+
+    <br>
+    <button onclick="guardarAsistencia()">Guardar Asistencia</button>
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const materiaId = params.get("id");
+
+let estudiantes = [];
+
+// Cargar estudiantes
+fetch("/api/docente/estudiantes/"+materiaId, { credentials: "include" })
+.then(res=>res.json())
+.then(data=>{
+    estudiantes = data;
+    cargarTablas();
+});
+
+// Cargar tareas
+function cargarTareas(){
+    fetch("/api/docente/tareas/"+materiaId, { credentials: "include" })
+    .then(res=>res.json())
+    .then(data=>{
+        const select = document.getElementById("selectTarea");
+        select.innerHTML = "";
+
+        data.forEach(t=>{
+            select.innerHTML += `
+                <option value="${t.id}">${t.titulo}</option>
+            `;
+        });
+    });
+}
+
+cargarTareas();
+
+function cargarTablas(){
+
+    const tablaNotas = document.getElementById("tablaNotas");
+    const tablaAsistencia = document.getElementById("tablaAsistencia");
+
+    tablaNotas.innerHTML = "";
+    tablaAsistencia.innerHTML = "";
+
+    estudiantes.forEach(e=>{
+
+        tablaNotas.innerHTML += `
+        <tr>
+            <td>${e.nombre}</td>
+            <td>
+                <input type="number" min="0" max="100" id="nota-${e.id}">
+            </td>
+        </tr>
+        `;
+
+        tablaAsistencia.innerHTML += `
+        <tr>
+            <td>${e.nombre}</td>
+            <td>
+                <input type="checkbox" id="asis-${e.id}" checked>
+            </td>
+        </tr>
+        `;
+    });
+}
+
+function crearTarea(){
+
+    const titulo = document.getElementById("tituloTarea").value;
+
+    if(titulo === ""){
+        alert("Escribe un nombre para la tarea");
+        return;
+    }
+
+    fetch("/api/docente/crear-tarea", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            materiaId: materiaId,
+            titulo: titulo
+        })
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        alert(data.message);
+        document.getElementById("tituloTarea").value = "";
+        cargarTareas();
+    });
+}
+
+function guardarNotas(){
+
+    const tareaId = document.getElementById("selectTarea").value;
+
+    let notas = [];
+
+    estudiantes.forEach(e=>{
+        const nota = document.getElementById("nota-"+e.id).value;
+        if(nota !== ""){
+            notas.push({
+                tarea_id:tareaId,
+                estudiante_id:e.id,
+                nota:nota
+            });
+        }
+    });
+
+    fetch("/api/docente/guardar-notas",{
+        method:"POST",
+        credentials:"include",
+        headers:{ "Content-Type":"application/json"},
+        body:JSON.stringify({notas})
+    })
+    .then(res=>res.json())
+    .then(data=>alert(data.message));
+}
+
+function guardarAsistencia(){
+
+    const fecha = document.getElementById("fechaAsistencia").value;
+
+    if(!fecha){
+        alert("Selecciona una fecha");
+        return;
+    }
+
+    let asistencia = [];
+
+    estudiantes.forEach(e=>{
+        asistencia.push({
+            docente_materia_id:materiaId,
+            estudiante_id:e.id,
+            fecha:fecha,
+            presente:document.getElementById("asis-"+e.id).checked ? 1 : 0
+        });
+    });
+
+    fetch("/api/docente/asistencia",{
+        method:"POST",
+        credentials:"include",
+        headers:{ "Content-Type":"application/json"},
+        body:JSON.stringify({asistencia})
+    })
+    .then(res=>res.json())
+    .then(data=>alert(data.message));
+}
+
+</script>
+
+</body>
+</html>
