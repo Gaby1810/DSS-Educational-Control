@@ -1,55 +1,143 @@
-
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const db = require("../db");
 
-// REGISTRO
+// =========================
+// REGISTER
+// =========================
+
 router.post("/register", async (req, res) => {
 
-    const { nombre, correo, password, rol } = req.body;
+    const {
+        nombre,
+        correo,
+        password,
+        rol,
+        grado,
+        seccion,
+        turno,
+        materia_principal,
+        telefono
+    } = req.body;
 
     if (!nombre || !correo || !password || !rol) {
-        return res.json({ message: "Faltan datos" });
+
+        return res.json({
+            message: "Faltan datos"
+        });
+
     }
 
-    db.query("SELECT * FROM usuarios WHERE correo = ?", [correo], async (err, result) => {
+    db.query(
+        "SELECT * FROM usuarios WHERE correo = ?",
+        [correo],
+        async (err, result) => {
 
-        if (result.length > 0) {
-            return res.json({ message: "Correo ya existe" });
-        }
+            if (result.length > 0) {
 
-        const hash = await bcrypt.hash(password, 10);
+                return res.json({
+                    message: "Correo ya existe"
+                });
 
-        db.query(
-            "INSERT INTO usuarios (nombre, correo, password, rol) VALUES (?, ?, ?, ?)",
-            [nombre, correo, hash, rol],
-            (err) => {
-                if (err) return res.json({ message: "Error servidor" });
-
-                res.json({ message: "Usuario registrado correctamente" });
             }
-        );
-    });
+
+            const hash = await bcrypt.hash(password, 10);
+
+            const sql = `
+            INSERT INTO usuarios
+            (
+                nombre,
+                correo,
+                password,
+                rol,
+                grado,
+                seccion,
+                turno,
+                materia_principal,
+                telefono
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+
+            db.query(
+                sql,
+                [
+                    nombre,
+                    correo,
+                    hash,
+                    rol,
+                    grado || null,
+                    seccion || null,
+                    turno || null,
+                    materia_principal || null,
+                    telefono || null
+                ],
+                (err) => {
+
+                    if (err) {
+
+                        console.log(err);
+
+                        return res.json({
+                            message: "Error servidor"
+                        });
+
+                    }
+
+                    res.json({
+                        message: "Usuario registrado correctamente"
+                    });
+
+                }
+            );
+
+        }
+    );
+
 });
 
+// =========================
 // LOGIN
+// =========================
+
 router.post("/login", (req, res) => {
 
     const { correo, password } = req.body;
 
-    db.query("SELECT * FROM usuarios WHERE correo = ?", [correo], async (err, result) => {
+    db.query(
+        "SELECT * FROM usuarios WHERE correo = ?",
+        [correo],
+        async (err, result) => {
 
-        if (result.length === 0) {
-            return res.json({ message: "Usuario no existe" });
-        }
+            if (err) {
+                return res.json({
+                    message: "Error servidor"
+                });
+            }
 
-        const user = result[0];
-        const ok = await bcrypt.compare(password, user.password);
+            if (result.length === 0) {
 
-        if (!ok) {
-            return res.json({ message: "Contraseña incorrecta" });
-        }
+                return res.json({
+                    message: "Usuario no existe"
+                });
+
+            }
+
+            const user = result[0];
+
+            const ok = await bcrypt.compare(
+                password,
+                user.password
+            );
+
+            if (!ok) {
+
+                return res.json({
+                    message: "Contraseña incorrecta"
+                });
+
+            }
 
         req.session.usuario = {
             id: user.id,
@@ -57,11 +145,30 @@ router.post("/login", (req, res) => {
             rol: user.rol
         };
 
+        console.log(user);
+        console.log(req.session.usuario);
+
         res.json({
             message: "Login correcto",
             rol: user.rol
         });
-    });
-});
 
+                }
+            );
+
+        });
+
+// LOGOUT
+
+router.get("/logout", (req, res) => {
+
+    req.session.destroy(() => {
+
+        res.json({
+            message: "Sesión cerrada"
+        });
+
+    });
+
+});
 module.exports = router;

@@ -164,89 +164,199 @@ button.primary-btn:hover{
 
 </div>
 </div>
-
 <script>
 
 let rolSeleccionado = "estudiante";
 
 function setRol(rol) {
+
     rolSeleccionado = rol;
 
     document.getElementById("btnEst").classList.remove("active");
     document.getElementById("btnDoc").classList.remove("active");
     document.getElementById("btnAdmin").classList.remove("active");
 
-    if (rol === "estudiante") document.getElementById("btnEst").classList.add("active");
-    if (rol === "docente") document.getElementById("btnDoc").classList.add("active");
-    if (rol === "admin") document.getElementById("btnAdmin").classList.add("active");
+    if (rol === "estudiante")
+        document.getElementById("btnEst").classList.add("active");
+
+    if (rol === "docente")
+        document.getElementById("btnDoc").classList.add("active");
+
+    if (rol === "admin")
+        document.getElementById("btnAdmin").classList.add("active");
 
     mostrarCampos();
 }
 
 function mostrarCampos() {
+
     const extra = document.getElementById("extra");
 
     if (rolSeleccionado === "estudiante") {
+
         extra.innerHTML = `
         <div class="section-box">
+
             <select id="grado">
                 <option value="">Seleccione grado</option>
                 <option value="1">1°</option>
                 <option value="2">2°</option>
                 <option value="3">3°</option>
             </select>
-            <input type="text" id="seccion" placeholder="Sección">
+
+            <input
+                type="text"
+                id="seccion"
+                placeholder="Sección"
+            >
+
             <select id="turno">
                 <option value="">Turno</option>
                 <option value="Matutino">Matutino</option>
                 <option value="Vespertino">Vespertino</option>
             </select>
-        </div>`;
+
+        </div>
+        `;
     }
 
-    if (rolSeleccionado === "docente") {
+    else if (rolSeleccionado === "docente") {
+
         extra.innerHTML = `
         <div class="section-box">
-            <input type="text" id="materia_principal" placeholder="Materia principal">
-            <input type="text" id="telefono" placeholder="Teléfono">
-        </div>`;
+
+            <input
+                type="text"
+                id="materia_principal"
+                placeholder="Materia principal"
+            >
+
+            <input
+                type="text"
+                id="telefono"
+                placeholder="Teléfono"
+            >
+
+        </div>
+        `;
     }
 
-    if (rolSeleccionado === "admin") {
+    else {
+
         extra.innerHTML = `
         <div class="section-box">
-            <input type="password" id="codigo_admin" placeholder="Código admin">
-        </div>`;
+
+            <input
+                type="password"
+                id="codigo_admin"
+                placeholder="Código admin"
+            >
+
+        </div>
+        `;
     }
+
 }
 
 mostrarCampos();
 
 function registrar() {
 
-    const nombre = document.getElementById("nombre").value;
-    const correo = document.getElementById("correo").value;
-    const password = document.getElementById("password").value;
+    const nombre =
+    document.getElementById("nombre").value;
 
-    fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // 🔥 IMPORTANTE
-        body: JSON.stringify({ nombre, correo, password, rol: rolSeleccionado })
-    })
+    const correo =
+    document.getElementById("correo").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    let datosExtra = {};
+
+    // ESTUDIANTE
+    if (rolSeleccionado === "estudiante") {
+
+        datosExtra = {
+
+            grado:
+            document.getElementById("grado").value,
+
+            seccion:
+            document.getElementById("seccion").value,
+
+            turno:
+            document.getElementById("turno").value
+
+        };
+
+    }
+
+    // DOCENTE
+    if (rolSeleccionado === "docente") {
+
+        datosExtra = {
+
+            materia_principal:
+            document.getElementById("materia_principal").value,
+
+            telefono:
+            document.getElementById("telefono").value
+
+        };
+
+    }
+
+    fetch(
+        "http://localhost:3000/api/auth/register",
+        {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            credentials: "include",
+
+            body: JSON.stringify({
+
+                nombre,
+                correo,
+                password,
+
+                rol: rolSeleccionado,
+
+                ...datosExtra
+
+            })
+
+        }
+    )
+
     .then(res => res.json())
+
     .then(data => {
 
-        if (data.message.includes("correctamente")) {
-            // 🚀 REDIRECCIÓN AUTOMÁTICA
-            window.location.href = "/login.html";
-        } else {
-            alert(data.message);
+        if (
+            data.message.includes("correctamente")
+        ) {
+
+            alert("Usuario creado");
+
+            window.location.href = "login.html";
+
         }
+
+        else {
+
+            alert(data.message);
+
+        }
+
     });
+
 }
 
 </script>
-
 </body>
 </html>

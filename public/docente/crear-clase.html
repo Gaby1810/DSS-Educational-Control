@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Crear Clase</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f5f7;
+    min-height:100vh;
+}
+
+/* ===== TOPBAR ===== */
+
+.topbar{
+    background:#0f2c82;
+    height:90px;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+}
+
+.topbar-left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.circle-btn{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:white;
+    color:#0f2c82;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+}
+
+.topbar h2{
+    font-size:20px;
+}
+
+.top-icons{
+    font-size:24px;
+}
+
+/* ===== CONTENIDO ===== */
+
+.container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 20px 120px;
+}
+
+/* ===== CARD ===== */
+
+.form-card{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:22px;
+    padding:35px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.form-card h1{
+    color:#111827;
+    margin-bottom:10px;
+}
+
+.form-card p{
+    color:#6b7280;
+    margin-bottom:30px;
+}
+
+/* ===== INPUTS ===== */
+
+.input-group{
+    margin-bottom:22px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    color:#374151;
+    font-weight:600;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border-radius:14px;
+    border:2px solid #dbeafe;
+    outline:none;
+    font-size:15px;
+    transition:0.3s;
+}
+
+.input-group input:focus{
+    border-color:#2563eb;
+}
+
+/* ===== BOTONES ===== */
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+}
+
+.btn{
+    border:none;
+    padding:14px 24px;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:15px;
+    transition:0.3s;
+}
+
+.btn-cancel{
+    background:#ef4444;
+    color:white;
+}
+
+.btn-cancel:hover{
+    background:#dc2626;
+}
+
+.btn-create{
+    background:#0f2c82;
+    color:white;
+}
+
+.btn-create:hover{
+    background:#1d4ed8;
+}
+
+/* ===== NAVBAR ===== */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:75px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -2px 10px rgba(0,0,0,0.08);
+}
+
+.bottom-nav a{
+    text-decoration:none;
+    color:#6b7280;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    font-size:13px;
+}
+
+.bottom-nav a i{
+    font-size:22px;
+}
+
+.bottom-nav a.active{
+    color:#2563eb;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+    <div class="topbar-left">
+
+        <div class="circle-btn">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+
+        <div>
+
+            <h2>
+                Crear Clase
+            </h2>
+
+            <small style="opacity:0.8;">
+                Educational Control
+            </small>
+
+        </div>
+
+    </div>
+
+    <div class="top-icons">
+        <i class="fa-regular fa-bell"></i>
+    </div>
+
+</div>
+
+<!-- CONTENIDO -->
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h1>
+            Nueva Clase
+        </h1>
+
+        <p>
+            Completa los datos para crear una nueva clase.
+        </p>
+
+        <!-- FORM -->
+
+        <div class="input-group">
+
+            <label>
+                Nombre de la materia
+            </label>
+
+            <input
+            type="text"
+            id="nombreMateria"
+            placeholder="Ejemplo: Matemática">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+                Grado
+            </label>
+
+            <input
+            type="number"
+            id="grado"
+            placeholder="Ejemplo: 9">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+                Sección
+            </label>
+
+            <input
+            type="text"
+            id="seccion"
+            placeholder="Ejemplo: A">
+
+        </div>
+
+        <!-- BOTONES -->
+
+        <div class="buttons">
+
+            <button
+            class="btn btn-cancel"
+            onclick="window.location.href='clases.html'">
+
+                Cancelar
+
+            </button>
+
+            <button
+            class="btn btn-create"
+            onclick="crearClase()">
+
+                Crear Clase
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NAVBAR -->
+
+<div class="bottom-nav">
+
+    <a href="dashboard.html">
+        <i class="fa-solid fa-house"></i>
+        Inicio
+    </a>
+
+    <a href="clases.html" class="active">
+        <i class="fa-solid fa-book"></i>
+        Clases
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-users"></i>
+        Estudiantes
+    </a>
+
+    <a href="#" onclick="logout()">
+        <i class="fa-regular fa-user"></i>
+        Perfil
+    </a>
+
+</div>
+
+<script>
+
+// =====================================
+// CREAR CLASE
+// =====================================
+
+function crearClase(){
+
+    fetch(
+    "http://localhost:3000/api/docente/crear-clase",
+
+    {
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        credentials:"include",
+
+        body: JSON.stringify({
+
+            nombreMateria:
+            document.getElementById("nombreMateria").value,
+
+            grado:
+            document.getElementById("grado").value,
+
+            seccion:
+            document.getElementById("seccion").value
+
+        })
+
+    })
+
+    .then(async res => {
+
+        const data = await res.json();
+
+        if(!res.ok){
+
+            throw new Error(data.message);
+
+        }
+
+        return data;
+
+    })
+
+    .then(data => {
+
+        alert(data.message);
+
+        window.location.href =
+        "clases.html";
+
+    })
+
+    .catch(err => {
+
+        console.log(err);
+
+        alert(err.message);
+
+    });
+
+}
+
+// =====================================
+// LOGOUT
+// =====================================
+
+function logout(){
+
+    fetch(
+    "http://localhost:3000/api/auth/logout",
+
+    {
+        credentials:"include"
+    })
+
+    .then(() => {
+
+        window.location.href =
+        "../login.html";
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

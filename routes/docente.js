@@ -2,127 +2,270 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// 🔐 Middleware
-function verificarDocente(req, res, next) {
-    if (!req.session.usuario || req.session.usuario.rol !== "docente") {
-        return res.status(403).json({ message: "Acceso denegado" });
+// =====================================
+// VERIFICAR SESIÓN
+// =====================================
+
+function verificarSesion(req, res, next){
+
+    if(!req.session.usuario){
+
+        return res.status(401).json({
+            message:"No autorizado"
+        });
+
     }
+
     next();
+
 }
 
-// 📚 Obtener materias del docente
-router.get("/mis-materias", verificarDocente, (req, res) => {
-    const docenteId = req.session.usuario.id;
+// =====================================
+// MIS MATERIAS
+// =====================================
+
+router.get(
+"/mis-materias",
+verificarSesion,
+
+(req, res) => {
+
+    const docenteId =
+    req.session.usuario.id;
 
     const sql = `
-    SELECT dm.id, m.nombre, dm.grado, dm.seccion
+    SELECT
+        dm.id,
+        m.nombre,
+        dm.grado,
+        dm.seccion,
+        dm.codigo_clase
     FROM docente_materias dm
-    JOIN materias m ON dm.materia_id = m.id
+    INNER JOIN materias m
+    ON dm.materia_id = m.id
     WHERE dm.docente_id = ?
     `;
 
-    db.query(sql, [docenteId], (err, result) => {
-        if (err) return res.status(500).json(err);
+    db.query(
+    sql,
+    [docenteId],
+
+    (err, result) => {
+
+        if(err){
+
+            console.log(err);
+
+            return res.status(500).json({
+                message:"Error servidor"
+            });
+
+        }
+
         res.json(result);
+
     });
+
 });
 
-// 👨‍🎓 Estudiantes por materia
-router.get("/estudiantes/:id", verificarDocente, (req, res) => {
+// =====================================
+// CREAR CLASE
+// =====================================
 
-    const sql = `
-    SELECT u.id, u.nombre
-    FROM usuarios u
-    JOIN docente_materias dm
-        ON u.grado = dm.grado AND u.seccion = dm.seccion
-    WHERE dm.id = ? AND u.rol = 'estudiante'
-    `;
+router.post(
+"/crear-clase",
+verificarSesion,
 
-    db.query(sql, [req.params.id], (err, result) => {
-        if (err) return res.status(500).json(err);
-        res.json(result);
-    });
-});
+(req, res) => {
 
-// 📝 Crear tarea
-router.post("/crear-tarea", verificarDocente, (req, res) => {
+    console.log(req.body);
 
-    const { materiaId, titulo } = req.body;
+    const docenteId =
+    req.session.usuario.id;
 
-    if (!materiaId || !titulo) {
-        return res.status(400).json({ message: "Datos incompletos" });
+    const {
+        nombreMateria,
+        grado,
+        seccion
+    } = req.body;
+
+    // VALIDAR
+
+    if(
+        !nombreMateria ||
+        !grado ||
+        !seccion
+    ){
+
+        return res.status(400).json({
+            message:"Complete todos los campos"
+        });
+
     }
 
-    const sql = `
-    INSERT INTO tareas (docente_materia_id, titulo, descripcion, fecha_entrega, valor)
-    VALUES (?, ?, '', NULL, NULL)
+    // =====================================
+    // BUSCAR MATERIA
+    // =====================================
+
+    const sqlBuscar = `
+    SELECT * FROM materias
+    WHERE nombre = ?
     `;
 
-    db.query(sql, [materiaId, titulo], (err) => {
-        if (err) return res.status(500).json({ message: "Error en servidor" });
+    db.query(
+    sqlBuscar,
+    [nombreMateria],
 
-        res.json({ message: "Tarea creada correctamente" });
+    (err, materia) => {
+
+        if(err){
+
+            console.log(err);
+
+            return res.status(500).json({
+                message:"Error servidor"
+            });
+
+        }
+
+        // =====================================
+        // SI NO EXISTE -> CREAR
+        // =====================================
+
+        if(materia.length === 0){
+
+            const sqlInsertMateria = `
+            INSERT INTO materias(nombre)
+            VALUES(?)
+            `;
+
+            db.query(
+            sqlInsertMateria,
+            [nombreMateria],
+
+            (err, nuevaMateria) => {
+
+                if(err){
+
+                    console.log(err);
+
+                    return res.status(500).json({
+                        message:"Error creando materia"
+                    });
+
+                }
+
+                crearClase(
+                    nuevaMateria.insertId
+                );
+
+            });
+
+        }
+
+        // =====================================
+        // SI EXISTE
+        // =====================================
+
+        else{
+
+            crearClase(
+                materia[0].id
+            );
+
+        }
+
     });
-});
 
-// 📥 Obtener tareas
-router.get("/tareas/:materiaId", verificarDocente, (req, res) => {
+    // =====================================
+    // FUNCIÓN CREAR CLASE
+    // =====================================
 
-    const sql = `
-    SELECT * FROM tareas
-    WHERE docente_materia_id = ?
-    `;
+    function crearClase(materiaId){
 
-    db.query(sql, [req.params.materiaId], (err, result) => {
-        if (err) return res.status(500).json(err);
-        res.json(result);
-    });
-});
+        // GENERAR CÓDIGO
 
-// 📊 Guardar notas
-router.post("/guardar-notas", verificarDocente, (req, res) => {
+        const codigo =
+        Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
 
-    const notas = req.body.notas;
+        const sqlClase = `
+        INSERT INTO docente_materias
+        (
+            docente_id,
+            materia_id,
+            grado,
+            seccion,
+            codigo_clase
+        )
+        VALUES (?, ?, ?, ?, ?)
+        `;
 
-    if (!notas || notas.length === 0) {
-        return res.json({ message: "No hay notas para guardar" });
+        db.query(
+        sqlClase,
+
+        [
+            docenteId,
+            materiaId,
+            grado,
+            seccion,
+            codigo
+        ],
+
+        (err, result) => {
+
+            if(err){
+
+                console.log(err);
+
+                return res.status(500).json({
+                    message:"Error al crear clase"
+                });
+
+            }
+
+            res.json({
+
+                message:
+                "Clase creada correctamente",
+
+                codigo_clase:
+                codigo
+
+            });
+
+        });
+
     }
 
-    const sql = `
-    INSERT INTO notas_tareas (tarea_id, estudiante_id, nota)
-    VALUES ?
-    `;
-
-    const values = notas.map(n => [n.tarea_id, n.estudiante_id, n.nota]);
-
-    db.query(sql, [values], (err) => {
-        if (err) return res.status(500).json(err);
-        res.json({ message: "Notas guardadas correctamente" });
-    });
 });
 
-// 📅 Asistencia
-router.post("/asistencia", verificarDocente, (req, res) => {
+// =====================================
+// ESTUDIANTES
+// =====================================
 
-    const asistencia = req.body.asistencia;
+router.get(
+"/estudiantes/:id",
 
-    if (!asistencia || asistencia.length === 0) {
-        return res.json({ message: "No hay datos de asistencia" });
-    }
+(req, res) => {
 
-    const sql = `
-    INSERT INTO asistencia (docente_materia_id, estudiante_id, fecha, presente)
-    VALUES ?
-    `;
+    res.json([]);
 
-    const values = asistencia.map(a =>
-        [a.docente_materia_id, a.estudiante_id, a.fecha, a.presente]
-    );
+});
 
-    db.query(sql, [values], (err) => {
-        if (err) return res.status(500).json(err);
-        res.json({ message: "Asistencia guardada correctamente" });
-    });
+// =====================================
+// TAREAS
+// =====================================
+
+router.get(
+"/tareas/:id",
+
+(req, res) => {
+
+    res.json([]);
+
 });
 
 module.exports = router;
