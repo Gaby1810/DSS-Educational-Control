@@ -229,5 +229,114 @@ router.get("/mis-clases", verificar, (req, res) => {
     );
 
 });
+// ======================================
+// DETALLE DE CLASE
+// ======================================
+
+router.get(
+"/clase/:id",
+verificar,
+(req,res)=>{
+
+const claseId=
+parseInt(req.params.id);
+
+if(isNaN(claseId)){
+
+return res.status(400)
+.json({
+
+message:"Clase inválida"
+
+});
+
+}
+
+const sql=`
+
+SELECT *
+
+FROM(
+
+SELECT
+
+m.id,
+m.titulo,
+m.descripcion,
+m.archivo,
+
+DATE_FORMAT(
+m.fecha_subida,
+'%Y-%m-%d %H:%i'
+)
+AS fecha,
+
+'Material'
+AS tipo
+
+FROM materiales m
+
+WHERE
+m.docente_materia_id=?
+
+UNION ALL
+
+SELECT
+
+t.id,
+t.titulo,
+t.descripcion,
+t.archivo,
+
+DATE_FORMAT(
+t.fecha_subida,
+'%Y-%m-%d %H:%i'
+)
+AS fecha,
+
+'Tarea'
+AS tipo
+
+FROM tareas t
+
+WHERE
+t.docente_materia_id=?
+
+) x
+
+ORDER BY x.id DESC
+
+`;
+
+db.query(
+
+sql,
+
+[
+claseId,
+claseId
+],
+
+(err,result)=>{
+
+if(err){
+
+console.log(err);
+
+return res.status(500)
+.json({
+
+message:
+"Error servidor"
+
+});
+
+}
+
+res.json(result);
+
+});
+
+});
 
 module.exports = router;

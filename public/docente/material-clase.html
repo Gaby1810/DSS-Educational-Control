@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Material Clase</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#eef4fb;
+    min-height:100vh;
+}
+
+/* TOPBAR */
+
+.topbar{
+    width:100%;
+    height:75px;
+    background:#18398b;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    color:white;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:20px;
+    font-weight:600;
+}
+
+.nav-links{
+    display:flex;
+    gap:20px;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* HERO */
+
+.hero{
+    width:100%;
+    height:180px;
+    background:
+    linear-gradient(rgba(255,255,255,0.7),
+    rgba(255,255,255,0.7)),
+    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200");
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 70px;
+}
+
+.hero h1{
+    font-size:48px;
+    color:#111827;
+}
+
+.publish-btn{
+    background:#18398b;
+    color:white;
+    border:none;
+    padding:15px 25px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+}
+
+.publish-btn:hover{
+    background:#10296a;
+}
+
+/* CONTENIDO */
+
+.container{
+    width:90%;
+    margin:auto;
+    padding:50px 0;
+}
+
+.material-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+.material-card{
+    background:white;
+    border-radius:22px;
+    padding:25px;
+    box-shadow:0 5px 18px rgba(0,0,0,0.08);
+}
+
+.material-icon{
+    width:65px;
+    height:65px;
+    border-radius:18px;
+    background:#dbeafe;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    margin-bottom:20px;
+}
+
+.material-card h2{
+    color:#111827;
+    margin-bottom:10px;
+}
+
+.material-card p{
+    color:#6b7280;
+    margin-bottom:8px;
+}
+
+.fecha{
+    color:#9ca3af;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+/* BOTONES */
+
+.buttons{
+    display:flex;
+    gap:10px;
+}
+
+.download-btn,
+.delete-btn{
+    flex:1;
+    text-align:center;
+    text-decoration:none;
+    padding:12px;
+    border-radius:12px;
+    font-weight:600;
+    border:none;
+    cursor:pointer;
+}
+
+.download-btn{
+    background:#18398b;
+    color:white;
+}
+
+.download-btn:hover{
+    background:#10296a;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:white;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+
+/* EMPTY */
+
+.empty-card{
+    background:white;
+    max-width:420px;
+    margin:auto;
+    border-radius:24px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.empty-card img{
+    width:250px;
+    margin-bottom:20px;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-content{
+    background:white;
+    width:90%;
+    max-width:500px;
+    border-radius:22px;
+    padding:30px;
+}
+
+.modal-content h2{
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #cbd5e1;
+}
+
+.modal-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.modal-buttons button{
+    flex:1;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.btn-save{
+    background:#18398b;
+    color:white;
+}
+
+.btn-cancel{
+    background:#ef4444;
+    color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-graduation-cap"></i>
+
+        <span>Educational Control</span>
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Inicio
+        </a>
+
+        <a href="clase.html">
+            Clases
+        </a>
+
+    </div>
+
+</div>
+
+<div class="hero">
+
+    <h1 id="materia">
+        Material Clase
+    </h1>
+
+    <button
+    class="publish-btn"
+    onclick="abrirModal()">
+
+        <i class="fa-solid fa-plus"></i>
+        Publicar material
+
+    </button>
+
+</div>
+
+<div class="container">
+
+    <div id="contenido"></div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-content">
+
+        <h2>Subir Material</h2>
+
+        <div class="input-group">
+
+            <label>Título</label>
+
+            <input
+            type="text"
+            id="titulo">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Archivo</label>
+
+            <input
+            type="file"
+            id="archivo">
+
+        </div>
+
+        <div class="modal-buttons">
+
+            <button
+            class="btn-save"
+            onclick="subirMaterial()">
+
+                Publicar
+
+            </button>
+
+            <button
+            class="btn-cancel"
+            onclick="cerrarModal()">
+
+                Cancelar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const id =
+new URLSearchParams(window.location.search)
+.get("id");
+
+// =========================
+// CARGAR CLASE
+// =========================
+
+fetch(
+"http://localhost:3000/api/docente/mis-clases",
+{
+    credentials:"include"
+})
+
+.then(res => res.json())
+
+.then(data => {
+
+    const clase =
+    data.find(c => c.id == id);
+
+    if(clase){
+
+        document
+        .getElementById("materia")
+        .innerText = clase.materia;
+
+    }
+
+});
+
+// =========================
+// FORMATEAR FECHA
+// =========================
+
+function formatearFecha(fecha){
+
+    const f = new Date(fecha);
+
+    return f.toLocaleString("es-SV", {
+
+        year:"numeric",
+        month:"long",
+        day:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+
+    });
+
+}
+
+// =========================
+// CARGAR MATERIALES
+// =========================
+
+function cargarMateriales(){
+
+fetch(
+`http://localhost:3000/api/materiales/${id}`,
+{
+    credentials:"include"
+})
+
+.then(res => res.json())
+
+.then(data => {
+
+    const contenido =
+    document.getElementById("contenido");
+
+    if(data.length === 0){
+
+        contenido.innerHTML = `
+
+        <div class="empty-card">
+
+            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png">
+
+            <h2>No hay material</h2>
+
+            <p>
+            No hay material publicado todavía
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+    let html =
+    `<div class="material-grid">`;
+
+    data.forEach(material => {
+
+        html += `
+
+        <div class="material-card">
+
+            <div class="material-icon">
+
+                <i class="fa-solid fa-file"></i>
+
+            </div>
+
+            <h2>${material.titulo}</h2>
+
+            <p>
+            Material publicado
+            </p>
+
+            <div class="fecha">
+                <i class="fa-regular fa-clock"></i>
+                ${formatearFecha(material.fecha)}
+            </div>
+
+            <div class="buttons">
+
+                <a
+                class="download-btn"
+                href="http://localhost:3000/uploads/${material.archivo}"
+                target="_blank">
+
+                    Ver archivo
+
+                </a>
+
+                <button
+                class="delete-btn">
+
+                    Eliminar
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+    html += `</div>`;
+
+    contenido.innerHTML = html;
+
+});
+
+}
+
+cargarMateriales();
+
+// =========================
+// MODAL
+// =========================
+
+function abrirModal(){
+
+    document
+    .getElementById("modal")
+    .style.display = "flex";
+
+}
+
+function cerrarModal(){
+
+    document
+    .getElementById("modal")
+    .style.display = "none";
+
+}
+
+// =========================
+// SUBIR MATERIAL
+// =========================
+
+function subirMaterial(){
+
+    const titulo =
+    document.getElementById("titulo").value;
+
+    const archivo =
+    document.getElementById("archivo").files[0];
+
+    if(!titulo || !archivo){
+
+        alert("Completa todos los campos");
+
+        return;
+
+    }
+
+    const formData =
+    new FormData();
+
+    formData.append(
+        "titulo",
+        titulo
+    );
+
+    formData.append(
+        "archivo",
+        archivo
+    );
+
+    fetch(
+    `http://localhost:3000/api/materiales/subir/${id}`,
+    {
+        method:"POST",
+        credentials:"include",
+        body:formData
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        alert(data.message);
+
+        cerrarModal();
+
+        cargarMateriales();
+
+        document.getElementById("titulo").value = "";
+        document.getElementById("archivo").value = "";
+
+    })
+
+    .catch(err => {
+
+        console.log(err);
+
+        alert("Error subiendo material");
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

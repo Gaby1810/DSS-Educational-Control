@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Tareas</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI';
+}
+
+body{
+background:#eef4fb;
+}
+
+.banner{
+
+height:250px;
+background:
+linear-gradient(
+rgba(24,57,139,.7),
+rgba(24,57,139,.7)
+),
+url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da');
+
+background-size:cover;
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:50px;
+color:white;
+}
+
+.crear{
+
+padding:15px 25px;
+border-radius:30px;
+border:none;
+background:white;
+color:#18398b;
+font-weight:bold;
+cursor:pointer;
+}
+
+.container{
+
+padding:30px;
+}
+
+.sin-tareas{
+
+background:white;
+padding:50px;
+text-align:center;
+border-radius:20px;
+font-size:22px;
+color:#666;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.1);
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fill,minmax(350px,1fr));
+
+gap:20px;
+
+}
+
+.card{
+
+background:white;
+border-radius:20px;
+overflow:hidden;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.1);
+
+}
+
+.card img{
+
+width:100%;
+height:180px;
+object-fit:cover;
+
+}
+
+.info{
+
+padding:20px;
+}
+
+.info h3{
+
+color:#18398b;
+margin-bottom:15px;
+}
+
+.stats{
+
+display:flex;
+justify-content:space-between;
+margin:15px 0;
+}
+
+button{
+
+padding:10px 15px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#2563eb;
+color:white;
+}
+
+.modal{
+
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.5);
+
+justify-content:center;
+align-items:center;
+
+}
+
+.form{
+
+background:white;
+padding:30px;
+border-radius:20px;
+width:500px;
+}
+
+.form input,
+.form textarea{
+
+width:100%;
+padding:12px;
+margin:10px 0;
+
+border-radius:10px;
+border:1px solid #ccc;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="banner">
+
+<div>
+
+<h1>Tareas</h1>
+<p>Gestiona actividades y entregas</p>
+
+</div>
+
+<button
+class="crear"
+onclick="abrirModal()">
+
++ Crear tarea
+
+</button>
+
+</div>
+
+<div class="container">
+
+<div id="contenido">
+
+</div>
+
+</div>
+
+
+<div class="modal"
+id="modal">
+
+<div class="form">
+
+<h2>Crear tarea</h2>
+
+<input
+id="titulo"
+placeholder="Título">
+
+<textarea
+id="descripcion"
+placeholder="Descripción">
+</textarea>
+
+<input
+type="datetime-local"
+id="fecha">
+
+<input
+type="number"
+id="puntaje"
+placeholder="Puntaje">
+
+<input
+type="file"
+id="archivo">
+
+<button onclick="guardar()">
+
+Publicar
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const id=
+new URLSearchParams(
+window.location.search
+).get("id");
+
+cargarTareas();
+
+function abrirModal(){
+
+document.getElementById(
+"modal"
+).style.display=
+"flex";
+
+}
+
+function guardar(){
+
+const formData=
+new FormData();
+
+formData.append(
+"titulo",
+titulo.value
+);
+
+formData.append(
+"descripcion",
+descripcion.value
+);
+
+formData.append(
+"fecha_entrega",
+fecha.value
+);
+
+formData.append(
+"puntaje",
+puntaje.value
+);
+
+if(
+archivo.files[0]
+){
+
+formData.append(
+"archivo",
+archivo.files[0]
+);
+
+}
+
+fetch(
+
+`http://localhost:3000/api/tareas/crear/${id}`,
+
+{
+
+method:"POST",
+body:formData,
+credentials:"include"
+
+}
+
+)
+
+.then(
+r=>r.json()
+)
+
+.then(()=>{
+
+location.reload();
+
+});
+
+}
+
+
+function cargarTareas(){
+
+fetch(
+`http://localhost:3000/api/tareas/${id}`
+)
+
+.then(
+r=>r.json()
+)
+
+.then(data=>{
+
+let html="";
+
+if(data.length==0){
+
+html=`
+
+<div class="sin-tareas">
+
+<i class="fa-solid fa-book"></i>
+
+<br><br>
+
+No hay tareas creadas
+
+</div>
+
+`;
+
+}else{
+
+html=`<div class="grid">`;
+
+data.forEach(t=>{
+
+html+=`
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173">
+
+<div class="info">
+
+<h3>${t.titulo}</h3>
+
+<p>${t.descripcion}</p>
+
+<p>
+
+📅 Fecha límite:
+
+${new Date(
+t.fecha_entrega
+).toLocaleDateString()}
+
+</p>
+
+<div class="stats">
+
+<span>
+
+✅ ${t.entregados||0}
+
+</span>
+
+<span>
+
+⏳ ${t.pendientes||0}
+
+</span>
+
+</div>
+
+<button
+onclick="location.href='calificar.html?tarea=${t.id}'">
+
+Calificar
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+html+="</div>";
+
+}
+
+contenido.innerHTML=
+html;
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>

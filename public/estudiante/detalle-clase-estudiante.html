@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Contenido de Clase</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#eef4fb;
+min-height:100vh;
+}
+
+/* TOPBAR */
+
+.topbar{
+
+height:75px;
+background:#0d2b7e;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:20px;
+color:white;
+
+}
+
+.back{
+
+width:40px;
+height:40px;
+
+border-radius:50%;
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+color:#0d2b7e;
+
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+
+height:180px;
+
+background:
+linear-gradient(
+rgba(13,43,126,.65),
+rgba(13,43,126,.65)
+),
+
+url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200");
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:white;
+
+}
+
+.hero h1{
+
+font-size:38px;
+
+}
+
+/* CONTENIDO */
+
+.container{
+
+width:92%;
+margin:auto;
+
+padding:30px 0 100px;
+
+}
+
+/* CARD */
+
+.card{
+
+background:white;
+
+padding:20px;
+
+margin-bottom:20px;
+
+border-radius:20px;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.08);
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:
+translateY(-4px);
+
+}
+
+.badge{
+
+display:inline-block;
+
+padding:8px 14px;
+
+border-radius:30px;
+
+font-size:12px;
+font-weight:bold;
+
+margin-bottom:15px;
+
+color:white;
+
+}
+
+.material{
+
+background:#2563eb;
+
+}
+
+.tarea{
+
+background:#16a34a;
+
+}
+
+.card h2{
+
+margin-bottom:12px;
+
+color:#1f2937;
+
+}
+
+.descripcion{
+
+margin-bottom:15px;
+
+line-height:1.6;
+
+color:#4b5563;
+
+}
+
+.fecha{
+
+font-size:13px;
+
+color:#64748b;
+
+}
+
+.btn{
+
+margin-top:15px;
+
+padding:12px 18px;
+
+border:none;
+
+border-radius:12px;
+
+background:#2563eb;
+
+color:white;
+
+cursor:pointer;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+background:#1d4ed8;
+
+}
+
+/* EMPTY */
+
+.empty{
+
+display:none;
+
+flex-direction:column;
+align-items:center;
+
+text-align:center;
+
+margin-top:50px;
+
+}
+
+.empty img{
+
+width:260px;
+
+margin-bottom:20px;
+
+}
+
+.empty h2{
+
+color:#1f2937;
+margin-bottom:10px;
+
+}
+
+.empty p{
+
+color:#64748b;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+<div class="back"
+onclick="history.back()">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</div>
+
+<h2>
+
+Mi Clase
+
+</h2>
+
+<div></div>
+
+</div>
+
+
+<div class="hero">
+
+<h1>
+
+Contenido de Clase
+
+</h1>
+
+</div>
+
+
+<div class="container">
+
+<div id="contenido">
+
+</div>
+
+<div
+id="empty"
+class="empty">
+
+<img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+
+<h2>
+
+No hay publicaciones
+
+</h2>
+
+<p>
+
+El docente todavía no ha publicado contenido
+
+</p>
+
+</div>
+
+</div>
+
+
+<script>
+
+const id=
+
+new URLSearchParams(
+window.location.search
+)
+
+.get("id");
+
+fetch(
+
+`http://localhost:3000/estudiante/clase/${id}`,
+
+{
+
+credentials:"include"
+
+}
+
+)
+
+.then(
+res=>res.json()
+)
+
+.then(data=>{
+
+const contenido=
+
+document.getElementById(
+"contenido"
+);
+
+const empty=
+
+document.getElementById(
+"empty"
+);
+
+contenido.innerHTML="";
+
+if(
+!Array.isArray(data)
+||
+data.length===0
+){
+
+empty.style.display=
+"flex";
+
+return;
+
+}
+
+empty.style.display=
+"none";
+
+data.forEach(item=>{
+
+contenido.innerHTML+=`
+
+<div class="card">
+
+<div class="badge ${
+item.tipo=="Material"
+?
+"material"
+:
+"tarea"
+}">
+
+${item.tipo}
+
+</div>
+
+<h2>
+
+${item.titulo}
+
+</h2>
+
+<div class="descripcion">
+
+${item.descripcion || "Sin descripción"}
+
+</div>
+
+<div class="fecha">
+
+<i class="fa-regular fa-calendar"></i>
+
+${item.fecha}
+
+</div>
+
+${
+item.archivo
+?
+
+`
+
+<button
+class="btn"
+
+onclick="
+window.open(
+'http://localhost:3000/uploads/${item.archivo}'
+)
+">
+
+<i class="fa-solid fa-file"></i>
+
+Ver archivo
+
+</button>
+
+`
+
+:
+
+""
+}
+
+</div>
+
+`;
+
+});
+
+})
+
+.catch(err=>{
+
+console.log(err);
+
+});
+
+</script>
+
+</body>
+</html>

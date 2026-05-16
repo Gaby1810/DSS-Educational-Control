@@ -20,7 +20,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 }
 
 body{
-    background:#f4f5f7;
+    background:#eef4fb;
     min-height:100vh;
 }
 
@@ -28,12 +28,16 @@ body{
 
 .topbar{
     background:#0f2c82;
-    height:90px;
-    padding:20px;
+    height:75px;
+    padding:0 30px;
     display:flex;
     justify-content:space-between;
     align-items:center;
     color:white;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
 }
 
 .topbar-left{
@@ -43,8 +47,8 @@ body{
 }
 
 .circle-btn{
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
     border-radius:50%;
     background:white;
     color:#0f2c82;
@@ -56,10 +60,29 @@ body{
 
 .topbar h2{
     font-size:20px;
+    font-weight:600;
+}
+
+.topbar small{
+    opacity:0.8;
+    font-size:12px;
 }
 
 .top-icons{
-    font-size:24px;
+    font-size:22px;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+    width:100%;
+    height:170px;
+    background:
+    linear-gradient(rgba(15,44,130,0.45),
+    rgba(15,44,130,0.45)),
+    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200");
+    background-size:cover;
+    background-position:center;
 }
 
 /* ===== CONTENIDO ===== */
@@ -68,29 +91,37 @@ body{
     width:100%;
     display:flex;
     justify-content:center;
-    align-items:center;
-    padding:40px 20px 120px;
+    padding:0 20px 120px;
 }
 
 /* ===== CARD ===== */
 
 .form-card{
     width:100%;
-    max-width:500px;
+    max-width:520px;
     background:white;
-    border-radius:22px;
+    border-radius:24px;
     padding:35px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    box-shadow:0 6px 22px rgba(0,0,0,0.08);
+    margin-top:-60px;
+    position:relative;
+    z-index:5;
 }
 
-.form-card h1{
-    color:#111827;
+.form-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.form-header h1{
+    color:#0f172a;
+    font-size:34px;
     margin-bottom:10px;
 }
 
-.form-card p{
-    color:#6b7280;
-    margin-bottom:30px;
+.form-header p{
+    color:#64748b;
+    font-size:15px;
 }
 
 /* ===== INPUTS ===== */
@@ -101,36 +132,53 @@ body{
 
 .input-group label{
     display:block;
-    margin-bottom:8px;
-    color:#374151;
+    margin-bottom:10px;
+    color:#1e293b;
     font-weight:600;
+    font-size:15px;
+}
+
+.input-box{
+    position:relative;
+}
+
+.input-box i{
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#3b82f6;
+    font-size:15px;
 }
 
 .input-group input{
     width:100%;
-    padding:14px;
+    padding:15px 15px 15px 45px;
     border-radius:14px;
     border:2px solid #dbeafe;
     outline:none;
     font-size:15px;
     transition:0.3s;
+    background:#f8fbff;
 }
 
 .input-group input:focus{
-    border-color:#2563eb;
+    border-color:#3b82f6;
+    background:white;
 }
 
 /* ===== BOTONES ===== */
 
 .buttons{
     display:flex;
-    justify-content:space-between;
-    margin-top:30px;
+    gap:15px;
+    margin-top:35px;
 }
 
 .btn{
+    flex:1;
     border:none;
-    padding:14px 24px;
+    padding:15px;
     border-radius:14px;
     cursor:pointer;
     font-weight:600;
@@ -139,16 +187,16 @@ body{
 }
 
 .btn-cancel{
-    background:#ef4444;
-    color:white;
+    background:#dbeafe;
+    color:#0f2c82;
 }
 
 .btn-cancel:hover{
-    background:#dc2626;
+    background:#bfdbfe;
 }
 
 .btn-create{
-    background:#0f2c82;
+    background:#2563eb;
     color:white;
 }
 
@@ -189,6 +237,24 @@ body{
     color:#2563eb;
 }
 
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+    .form-card{
+        padding:25px;
+    }
+
+    .form-header h1{
+        font-size:28px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+}
+
 </style>
 </head>
 
@@ -210,7 +276,7 @@ body{
                 Crear Clase
             </h2>
 
-            <small style="opacity:0.8;">
+            <small>
                 Educational Control
             </small>
 
@@ -224,21 +290,29 @@ body{
 
 </div>
 
+<!-- HERO -->
+
+<div class="hero"></div>
+
 <!-- CONTENIDO -->
 
 <div class="container">
 
     <div class="form-card">
 
-        <h1>
-            Nueva Clase
-        </h1>
+        <div class="form-header">
 
-        <p>
-            Completa los datos para crear una nueva clase.
-        </p>
+            <h1>
+                Nueva Clase
+            </h1>
 
-        <!-- FORM -->
+            <p>
+                Completa los datos para crear una nueva clase
+            </p>
+
+        </div>
+
+        <!-- INPUT -->
 
         <div class="input-group">
 
@@ -246,12 +320,20 @@ body{
                 Nombre de la materia
             </label>
 
-            <input
-            type="text"
-            id="nombreMateria"
-            placeholder="Ejemplo: Matemática">
+            <div class="input-box">
+
+                <i class="fa-solid fa-book"></i>
+
+                <input
+                type="text"
+                id="nombreMateria"
+                placeholder="Ejemplo: Matemática">
+
+            </div>
 
         </div>
+
+        <!-- INPUT -->
 
         <div class="input-group">
 
@@ -259,12 +341,20 @@ body{
                 Grado
             </label>
 
-            <input
-            type="number"
-            id="grado"
-            placeholder="Ejemplo: 9">
+            <div class="input-box">
+
+                <i class="fa-solid fa-school"></i>
+
+                <input
+                type="number"
+                id="grado"
+                placeholder="Ejemplo: 9">
+
+            </div>
 
         </div>
+
+        <!-- INPUT -->
 
         <div class="input-group">
 
@@ -272,10 +362,16 @@ body{
                 Sección
             </label>
 
-            <input
-            type="text"
-            id="seccion"
-            placeholder="Ejemplo: A">
+            <div class="input-box">
+
+                <i class="fa-solid fa-users"></i>
+
+                <input
+                type="text"
+                id="seccion"
+                placeholder="Ejemplo: A">
+
+            </div>
 
         </div>
 
@@ -285,7 +381,7 @@ body{
 
             <button
             class="btn btn-cancel"
-            onclick="window.location.href='clases.html'">
+            onclick="window.location.href='clase.html'">
 
                 Cancelar
 
@@ -314,7 +410,7 @@ body{
         Inicio
     </a>
 
-    <a href="clases.html" class="active">
+    <a href="clase.html" class="active">
         <i class="fa-solid fa-book"></i>
         Clases
     </a>
@@ -337,19 +433,17 @@ body{
 // CREAR CLASE
 // =====================================
 
-function crearClase(){
+function crearClase() {
 
-    fetch(
-    "http://localhost:3000/api/docente/crear-clase",
+    fetch("http://localhost:3000/api/docente/crear-clase", {
 
-    {
-        method:"POST",
+        method: "POST",
 
-        headers:{
-            "Content-Type":"application/json"
+        credentials: "include",
+
+        headers: {
+            "Content-Type": "application/json"
         },
-
-        credentials:"include",
 
         body: JSON.stringify({
 
@@ -366,34 +460,24 @@ function crearClase(){
 
     })
 
-    .then(async res => {
-
-        const data = await res.json();
-
-        if(!res.ok){
-
-            throw new Error(data.message);
-
-        }
-
-        return data;
-
-    })
+    .then(res => res.json())
 
     .then(data => {
 
         alert(data.message);
 
-        window.location.href =
-        "clases.html";
+        setTimeout(() => {
+
+            window.location.href =
+            "clase.html";
+
+        }, 500);
 
     })
 
     .catch(err => {
 
-        console.log(err);
-
-        alert(err.message);
+        alert("Error: " + err.message);
 
     });
 

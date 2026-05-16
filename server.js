@@ -1,33 +1,54 @@
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
-const cors = require("cors"); // 🔥 IMPORTANTE
+const cors = require("cors");
 
 const app = express();
 
-// 🔥 CONFIGURAR CORS
 app.use(cors({
-    origin: "http://127.0.0.1:5500", // tu frontend
+    origin: "http://localhost:5500",
     credentials: true
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🔥 SESIÓN
+app.set("trust proxy", 1);
+
 app.use(session({
     secret: "secreto123",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000*60*60 }
+    cookie: {
+        maxAge: 1000 * 60 * 60,
+        httpOnly: true
+    }
 }));
 
-// Archivos estáticos
+// =====================================
+// CARPETA PUBLIC
+// =====================================
+
 app.use(express.static(path.join(__dirname, "public")));
 
-// Rutas
-app.use("/api/auth", require("./routes/auth"));
-app.use("/estudiante", require("./routes/estudiante"));
-app.use("/api/docente", require("./routes/docente"));
+// =====================================
+// CARPETA UPLOADS
+// =====================================
 
-app.listen(3000, () => console.log("Servidor en puerto 3000"));
+app.use(
+"/uploads",
+express.static(path.join(__dirname,"uploads"))
+);
+
+// =====================================
+// RUTAS
+// =====================================
+
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/docente", require("./routes/docente"));
+app.use("/api/materiales", require("./routes/materiales"));
+app.use("/api/tareas", require("./routes/tareas"));
+app.use("/estudiante", require("./routes/estudiante"));
+
+app.listen(3000, () =>
+console.log("Servidor en puerto 3000"));

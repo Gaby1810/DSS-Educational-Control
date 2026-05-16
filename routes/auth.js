@@ -100,7 +100,6 @@ router.post("/register", async (req, res) => {
 // =========================
 // LOGIN
 // =========================
-
 router.post("/login", (req, res) => {
 
     const { correo, password } = req.body;
@@ -111,52 +110,41 @@ router.post("/login", (req, res) => {
         async (err, result) => {
 
             if (err) {
-                return res.json({
-                    message: "Error servidor"
-                });
+                return res.status(500).json({ message: "Error servidor" });
             }
 
             if (result.length === 0) {
-
-                return res.json({
-                    message: "Usuario no existe"
-                });
-
+                return res.status(400).json({ message: "Usuario no existe" });
             }
 
             const user = result[0];
 
-            const ok = await bcrypt.compare(
-                password,
-                user.password
-            );
+            const ok = await bcrypt.compare(password, user.password);
 
             if (!ok) {
-
-                return res.json({
-                    message: "Contraseña incorrecta"
-                });
-
+                return res.status(400).json({ message: "Contraseña incorrecta" });
             }
 
-        req.session.usuario = {
-            id: user.id,
-            nombre: user.nombre,
-            rol: user.rol
-        };
+            // 🔥 GUARDAR SESIÓN BIEN
+            req.session.usuario = {
+                id: user.id,
+                nombre: user.nombre,
+                rol: user.rol
+            };
 
-        console.log(user);
-        console.log(req.session.usuario);
-
-        res.json({
-            message: "Login correcto",
-            rol: user.rol
-        });
-
+            req.session.save((err) => {
+                if (err) {
+                    return res.status(500).json({ message: "Error guardando sesión" });
                 }
-            );
 
-        });
+                return res.json({
+                    message: "Login correcto",
+                    rol: user.rol
+                });
+            });
+        }
+    );
+});
 
 // LOGOUT
 
