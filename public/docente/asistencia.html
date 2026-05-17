@@ -3,7 +3,8 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Asistencia</title>
 
@@ -11,6 +12,8 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
+
+/* ===== RESET ===== */
 
 *{
 margin:0;
@@ -20,198 +23,209 @@ font-family:'Segoe UI',sans-serif;
 }
 
 body{
-background:#f4f6fb;
-display:flex;
+background:#eef4fb;
 min-height:100vh;
 }
 
-/* SIDEBAR */
+/* ===== TOPBAR ===== */
 
-.sidebar{
-
-width:240px;
-background:#132c7c;
-color:white;
-
-padding:25px 20px;
-
-display:flex;
-flex-direction:column;
-
-}
-
-.logo{
-
-font-size:24px;
-font-weight:bold;
-margin-bottom:40px;
-
-}
-
-.menu{
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-.menu a{
-
-text-decoration:none;
-color:white;
-
-padding:14px;
-border-radius:12px;
-
-transition:.3s;
-
-}
-
-.menu a:hover{
-background:rgba(255,255,255,.12);
-}
-
-.menu a.active{
-background:white;
-color:#132c7c;
-font-weight:bold;
-}
-
-/* MAIN */
-
-.main{
-flex:1;
-padding:30px;
-}
-
-/* TOP */
-
-.top{
-
+.topbar{
+background:#0f2c82;
+height:90px;
+padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-margin-bottom:30px;
-
-}
-
-.top h1{
-font-size:34px;
-color:#111827;
-}
-
-.fecha{
-color:#64748b;
-}
-
-/* GRID */
-
-.grid{
-
-display:grid;
-grid-template-columns:320px 1fr;
-gap:30px;
-
-}
-
-/* LEFT */
-
-.left{
-display:flex;
-flex-direction:column;
-gap:25px;
-}
-
-/* CARD */
-
-.card{
-
-background:white;
-padding:25px;
-border-radius:22px;
-
-box-shadow:
-0 4px 14px rgba(0,0,0,.05);
-
-}
-
-/* STATS */
-
-.stats{
-background:#132c7c;
 color:white;
+position:sticky;
+top:0;
+z-index:100;
 }
 
-.stats h4{
-font-size:14px;
-opacity:.8;
-margin-bottom:10px;
-}
-
-.percent{
-font-size:48px;
-font-weight:bold;
-margin-bottom:25px;
-}
-
-.mini-stats{
-
+.topbar-left{
 display:flex;
-justify-content:space-between;
-
+align-items:center;
+gap:15px;
 }
 
-.mini-stats div{
-text-align:center;
-}
+.circle-btn{
 
-.mini-stats h3{
-font-size:22px;
-}
-
-/* CALENDAR */
-
-.calendar h3{
-margin-bottom:20px;
-}
-
-.days{
-
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:10px;
-
-font-size:13px;
-
-}
-
-.day{
-
-height:35px;
-border-radius:10px;
+width:38px;
+height:38px;
+border-radius:50%;
+background:white;
+color:#0f2c82;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-background:#eef2ff;
+font-size:18px;
 
 }
 
-/* RIGHT */
+.back-btn{
 
-.right{
+background:white;
+color:#0f2c82;
+
+border:none;
+padding:10px 16px;
+
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+
+}
+
+/* ===== HERO ===== */
+
+.hero{
+
+width:100%;
+height:160px;
+
+background:
+linear-gradient(
+rgba(15,44,130,.7),
+rgba(15,44,130,.7)
+),
+
+url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3");
+
+background-size:cover;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+color:white;
+text-align:center;
+
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+/* ===== CONTENIDO ===== */
+
+.container{
+
+width:92%;
+margin:auto;
+
+padding:35px 0 120px;
+
+}
+
+/* ===== FILTROS ===== */
+
+.tools{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:25px;
+
+flex-wrap:wrap;
+gap:15px;
+
+}
+
+.fecha-box{
+
+display:flex;
+gap:10px;
+align-items:center;
+
+}
+
+.fecha-box input{
+
+padding:12px;
+border-radius:10px;
+border:1px solid #d1d5db;
+
+}
+
+.btn{
+
+border:none;
+padding:12px 18px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+color:white;
+
+}
+
+.btn-present{
+background:#16a34a;
+}
+
+.btn-absent{
+background:#dc2626;
+}
+
+/* ===== ESTADÍSTICAS ===== */
+
+.stats{
+
+display:grid;
+grid-template-columns:
+repeat(4,1fr);
+
+gap:20px;
+margin-bottom:30px;
+
+}
+
+.stat-card{
+
+background:white;
+padding:20px;
+
+border-radius:18px;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.05);
+
+text-align:center;
+
+}
+
+.stat-card h2{
+
+font-size:30px;
+color:#0f2c82;
+
+}
+
+.stat-card p{
+
+color:#64748b;
+margin-top:8px;
+
+}
+
+/* ===== ESTUDIANTES ===== */
+
+.lista{
+
 display:flex;
 flex-direction:column;
 gap:20px;
-}
 
-/* STUDENT */
+}
 
 .student{
 
 background:white;
 padding:20px;
+
 border-radius:20px;
 
 display:flex;
@@ -224,17 +238,19 @@ box-shadow:
 }
 
 .student-left{
+
 display:flex;
 align-items:center;
 gap:15px;
+
 }
 
 .avatar{
 
 width:60px;
 height:60px;
-border-radius:50%;
 
+border-radius:50%;
 background:#2563eb;
 color:white;
 
@@ -245,10 +261,6 @@ align-items:center;
 font-size:24px;
 font-weight:bold;
 
-}
-
-.student h2{
-font-size:22px;
 }
 
 .status{
@@ -268,75 +280,72 @@ color:#dc2626;
 }
 
 .resumen{
-margin-top:10px;
+
 font-size:13px;
 color:#64748b;
-line-height:1.6;
-}
 
-/* BUTTONS */
+margin-top:10px;
+
+}
 
 .actions{
+
 display:flex;
 gap:10px;
-}
-
-.btn{
-
-border:none;
-padding:12px 18px;
-
-border-radius:12px;
-cursor:pointer;
-
-font-weight:bold;
-color:white;
 
 }
 
-.btn-present{
-background:#16a34a;
+/* ===== NAVBAR ===== */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:75px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -2px 10px rgba(0,0,0,0.08);
+    z-index:999;
 }
 
-.btn-absent{
-background:#dc2626;
+.bottom-nav a{
+    text-decoration:none;
+    color:#6b7280;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    font-size:13px;
+    transition:.3s;
 }
 
-/* FECHA */
-
-.fecha-box{
-display:flex;
-gap:10px;
-align-items:center;
+.bottom-nav a i{
+    font-size:22px;
 }
 
-.fecha-box input{
-padding:10px;
-border-radius:10px;
-border:1px solid #d1d5db;
+.bottom-nav a.active{
+    color:#2563eb;
 }
-
-/* RESPONSIVE */
+/* ===== RESPONSIVE ===== */
 
 @media(max-width:900px){
 
-body{
-flex-direction:column;
-}
-
-.sidebar{
-width:100%;
-flex-direction:row;
-justify-content:space-between;
-align-items:center;
-}
-
-.menu{
-flex-direction:row;
-}
-
-.grid{
+.stats{
 grid-template-columns:1fr;
+}
+
+.student{
+flex-direction:column;
+gap:20px;
+align-items:flex-start;
+}
+
+.tools{
+flex-direction:column;
+align-items:flex-start;
 }
 
 }
@@ -346,50 +355,54 @@ grid-template-columns:1fr;
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- TOPBAR -->
 
-<div class="sidebar">
+<div class="topbar">
 
-<div class="logo">
-Educational Control
-</div>
+<div class="topbar-left">
 
-<div class="menu">
-
-<a href="dashboard-docente.html">
-<i class="fa-solid fa-house"></i>
- Inicio
-</a>
-
-<a href="#" class="active">
+<div class="circle-btn">
 <i class="fa-solid fa-user-check"></i>
- Asistencia
-</a>
+</div>
 
-<a href="#">
-<i class="fa-solid fa-book"></i>
- Clases
-</a>
+<h2>
+Control Asistencia
+</h2>
 
 </div>
 
+<button
+class="back-btn"
+onclick="history.back()">
+
+<i class="fa-solid fa-arrow-left"></i>
+Volver
+
+</button>
+
 </div>
 
-<!-- MAIN -->
+<!-- HERO -->
 
-<div class="main">
-
-<div class="top">
+<div class="hero">
 
 <div>
 
-<h1>
-Control de Asistencia
-</h1>
+<h1>Asistencia</h1>
 
-<p class="fecha" id="fechaTexto"></p>
+<p id="fechaTexto">
+Control de estudiantes
+</p>
 
 </div>
+
+</div>
+
+<!-- CONTENIDO -->
+
+<div class="container">
+
+<div class="tools">
 
 <div class="fecha-box">
 
@@ -405,127 +418,92 @@ Buscar
 
 </button>
 
-<button
-onclick="history.back()"
-class="btn btn-absent">
-
-Volver
-
-</button>
-
 </div>
 
 </div>
 
-<div class="grid">
+<!-- STATS -->
 
-<!-- LEFT -->
+<div class="stats">
 
-<div class="left">
-
-<div class="card stats">
-
-<h4>
-ASISTENCIA TOTAL
-</h4>
-
-<div
-class="percent"
-id="porcentaje">
-
-0%
-
+<div class="stat-card">
+<h2 id="porcentaje">0%</h2>
+<p>Asistencia</p>
 </div>
 
-<div class="mini-stats">
-
-<div>
-
-<h3 id="presentes">
-0
-</h3>
-
+<div class="stat-card">
+<h2 id="presentes">0</h2>
 <p>Presentes</p>
-
 </div>
 
-<div>
-
-<h3 id="ausentes">
-0
-</h3>
-
+<div class="stat-card">
+<h2 id="ausentes">0</h2>
 <p>Ausentes</p>
-
 </div>
 
-<div>
-
-<h3 id="total">
-0
-</h3>
-
+<div class="stat-card">
+<h2 id="total">0</h2>
 <p>Total</p>
-
 </div>
 
 </div>
-
-</div>
-
-</div>
-
-<!-- RIGHT -->
 
 <div
-class="right"
+class="lista"
 id="lista">
 
 </div>
 
 </div>
 
+<!-- NAVBAR -->
+
+<!-- NAVBAR -->
+
+<div class="bottom-nav">
+
+    <a href="dashboard-docente.html">
+        <i class="fa-solid fa-house"></i>
+        Inicio
+    </a>
+
+    <a href="clase.html">
+        <i class="fa-solid fa-book"></i>
+        Clases
+    </a>
+
+    <a href="#" class="active">
+        <i class="fa-solid fa-users"></i>
+        Estudiantes
+    </a>
+
+    <a href="#">
+        <i class="fa-regular fa-user"></i>
+        Perfil
+    </a>
+
 </div>
 
 <script>
 
-const clase =
+const clase=
 new URLSearchParams(
 location.search
 ).get("id");
 
 let estudiantes=[];
 
-// =====================================
-// FECHA HOY
-// =====================================
-
-const hoy = new Date();
-
-const year = hoy.getFullYear();
-
-const month =
-String(hoy.getMonth()+1)
-.padStart(2,"0");
-
-const day =
-String(hoy.getDate())
-.padStart(2,"0");
-
-const fechaHoy =
-`${year}-${month}-${day}`;
+const hoy=new Date();
 
 document.getElementById(
 "fecha"
-).value = fechaHoy;
-
-// =====================================
-// CARGAR
-// =====================================
+).value=
+hoy.toISOString()
+.split("T")[0];
 
 function cargar(){
 
-const fecha =
+const fecha=
 document.getElementById(
 "fecha"
 ).value;
@@ -538,13 +516,13 @@ fetch(
 
 .then(data=>{
 
-estudiantes =
+estudiantes=
 data.estudiantes;
 
 document.getElementById(
 "fechaTexto"
-).innerHTML =
-`Fecha seleccionada: ${data.fecha}`;
+).innerHTML=
+`Fecha: ${data.fecha}`;
 
 render();
 
@@ -552,16 +530,7 @@ render();
 
 }
 
-// =====================================
-// RENDER
-// =====================================
-
 function render(){
-
-const lista =
-document.getElementById(
-"lista"
-);
 
 lista.innerHTML="";
 
@@ -570,10 +539,12 @@ let ausentes=0;
 
 estudiantes.forEach(e=>{
 
-let estado="Sin registrar";
+let estado=
+"Sin registrar";
+
 let claseEstado="";
 
-if(Number(e.presente)===1){
+if(Number(e.presente)==1){
 
 estado="Presente";
 claseEstado="present";
@@ -581,17 +552,13 @@ presentes++;
 
 }
 
-if(Number(e.presente)===0){
+if(Number(e.presente)==0){
 
 estado="Ausente";
 claseEstado="absent";
 ausentes++;
 
 }
-
-const inicial=
-e.nombre.charAt(0)
-.toUpperCase();
 
 lista.innerHTML+=`
 
@@ -600,14 +567,14 @@ lista.innerHTML+=`
 <div class="student-left">
 
 <div class="avatar">
-${inicial}
+
+${e.nombre.charAt(0)}
+
 </div>
 
 <div>
 
-<h2>
-${e.nombre}
-</h2>
+<h2>${e.nombre}</h2>
 
 <div class="status ${claseEstado}">
 ${estado}
@@ -615,13 +582,13 @@ ${estado}
 
 <div class="resumen">
 
-<div>
-✅ ${e.total_presentes || 0} presentes
-</div>
+✅ ${e.total_presentes||0}
+presentes
 
-<div>
-❌ ${e.total_ausentes || 0} ausencias
-</div>
+<br>
+
+❌ ${e.total_ausentes||0}
+ausencias
 
 </div>
 
@@ -655,53 +622,32 @@ onclick="guardar(${e.id},0)">
 
 });
 
-document.getElementById(
-"presentes"
-).innerHTML =
-presentes;
+presentes.innerHTML=presentes;
+ausentes.innerHTML=ausentes;
+total.innerHTML=estudiantes.length;
 
-document.getElementById(
-"ausentes"
-).innerHTML =
-ausentes;
-
-document.getElementById(
-"total"
-).innerHTML =
-estudiantes.length;
-
-const porcentaje =
+porcentaje.innerHTML=
 estudiantes.length
 ?
 Math.round(
 (presentes*100)
 /estudiantes.length
-)
+)+"%"
 :
-0;
-
-document.getElementById(
-"porcentaje"
-).innerHTML =
-`${porcentaje}%`;
+"0%";
 
 }
 
-// =====================================
-// GUARDAR
-// =====================================
+async function guardar(
+id,presente){
 
-async function guardar(id,presente){
-
-const fecha =
+const fecha=
 document.getElementById(
 "fecha"
 ).value;
 
 await fetch(
-
 "http://localhost:3000/api/asistencia/guardar",
-
 {
 
 method:"POST",
@@ -726,8 +672,6 @@ fecha
 cargar();
 
 }
-
-// =====================================
 
 cargar();
 

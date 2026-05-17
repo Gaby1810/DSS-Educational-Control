@@ -13,6 +13,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <style>
 
+/* ===== RESET ===== */
+
 *{
 margin:0;
 padding:0;
@@ -25,65 +27,139 @@ background:#eef4fb;
 min-height:100vh;
 }
 
+/* ===== TOPBAR ===== */
+
 .topbar{
 
 background:#0f2c82;
-color:white;
-
-padding:15px 25px;
+height:90px;
+padding:20px;
 
 display:flex;
 justify-content:space-between;
 align-items:center;
+
+color:white;
+
+position:sticky;
+top:0;
+z-index:100;
+
 }
 
-.hero{
+.topbar-left{
 
-height:150px;
+display:flex;
+align-items:center;
+gap:15px;
+
+}
+
+.circle-btn{
+
+width:38px;
+height:38px;
+
+border-radius:50%;
+background:white;
+color:#0f2c82;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
+font-size:18px;
+
+}
+
+.back-btn{
+
+background:white;
+color:#0f2c82;
+
+border:none;
+padding:10px 16px;
+
+border-radius:12px;
+cursor:pointer;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.back-btn:hover{
+
+background:#dbeafe;
+
+}
+
+/* ===== HERO ===== */
+
+.hero{
+
+height:180px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+
 background:
 linear-gradient(
-rgba(15,44,130,.6),
-rgba(15,44,130,.6)
+rgba(15,44,130,.65),
+rgba(15,44,130,.65)
 ),
 
 url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200");
 
 background-size:cover;
+background-position:center;
 
 color:white;
+text-align:center;
 
 }
 
 .hero h1{
 
-font-size:35px;
+font-size:40px;
+margin-bottom:10px;
 
 }
+
+.hero p{
+
+opacity:.9;
+
+}
+
+/* ===== CONTENEDOR ===== */
 
 .container{
 
 width:92%;
 margin:auto;
 
-padding:30px;
+padding:35px 0 120px;
 
 }
+
+/* ===== GRID ===== */
 
 .grid{
 
 display:grid;
 
 grid-template-columns:
-repeat(3,1fr);
+repeat(auto-fit,minmax(320px,1fr));
 
-gap:20px;
+gap:25px;
 
 }
+
+/* ===== TARJETA ===== */
 
 .card{
 
@@ -96,48 +172,63 @@ overflow:hidden;
 box-shadow:
 0 4px 15px rgba(0,0,0,.08);
 
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:
+translateY(-5px);
+
 }
 
 .card-header{
 
-height:90px;
+height:100px;
 
 background:#2563eb;
 
 display:flex;
-
 justify-content:center;
 align-items:center;
 
-font-size:35px;
+font-size:40px;
 color:white;
 
 }
 
 .card-content{
 
-padding:15px;
+padding:20px;
 
 }
 
 .card-content h3{
 
-margin-bottom:10px;
+color:#0f2c82;
+
+margin-bottom:15px;
+
+font-size:22px;
 
 }
 
 .info{
 
 color:#64748b;
-line-height:1.7;
+
+line-height:2;
 
 }
+
+/* ===== VACIO ===== */
 
 .empty{
 
 display:none;
-
 flex-direction:column;
+
 align-items:center;
 
 margin-top:60px;
@@ -149,33 +240,76 @@ text-align:center;
 .empty img{
 
 width:250px;
+margin-bottom:20px;
 
 }
 
 .empty p{
 
-margin-top:20px;
 font-size:25px;
+color:#64748b;
 
 }
+
+/* ===== NAVBAR ===== */
+
+.bottom-nav{
+
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+
+height:75px;
+background:white;
+
+display:flex;
+justify-content:space-around;
+align-items:center;
+
+box-shadow:
+0 -2px 10px rgba(0,0,0,.08);
+
+z-index:999;
+
+}
+
+.bottom-nav a{
+
+text-decoration:none;
+
+color:#6b7280;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+
+gap:5px;
+
+font-size:13px;
+
+}
+
+.bottom-nav a i{
+
+font-size:22px;
+
+}
+
+.bottom-nav a.active{
+
+color:#2563eb;
+
+}
+
+/* ===== RESPONSIVE ===== */
 
 @media(max-width:768px){
 
-.grid{
+.hero h1{
 
-grid-template-columns:
-repeat(2,1fr);
-
-}
-
-}
-
-@media(max-width:500px){
-
-.grid{
-
-grid-template-columns:
-1fr;
+font-size:32px;
 
 }
 
@@ -187,21 +321,44 @@ grid-template-columns:
 
 <body>
 
+<!-- TOPBAR -->
+
 <div class="topbar">
+
+<div class="topbar-left">
+
+<div class="circle-btn">
+
+<i class="fa-solid fa-user-graduate"></i>
+
+</div>
+
+<div>
 
 <h2>
 Estudiantes
 </h2>
 
+<small>
+Lista de alumnos inscritos
+</small>
+
+</div>
+
+</div>
+
 <button
+class="back-btn"
 onclick="history.back()">
 
+<i class="fa-solid fa-arrow-left"></i>
 Volver
 
 </button>
 
 </div>
 
+<!-- HERO -->
 
 <div class="hero">
 
@@ -211,8 +368,15 @@ Estudiantes inscritos
 
 </h1>
 
+<p>
+
+Gestiona los estudiantes de tu clase
+
+</p>
+
 </div>
 
+<!-- CONTENIDO -->
 
 <div class="container">
 
@@ -221,7 +385,6 @@ id="lista"
 class="grid">
 
 </div>
-
 
 <div
 id="empty"
@@ -239,6 +402,44 @@ No hay estudiantes inscritos
 
 </div>
 
+<!-- NAVBAR -->
+
+<div class="bottom-nav">
+
+<a href="dashboard-docente.html">
+
+<i class="fa-solid fa-house"></i>
+
+Inicio
+
+</a>
+
+<a href="clase.html">
+
+<i class="fa-solid fa-book"></i>
+
+Clases
+
+</a>
+
+<a href="#" class="active">
+
+<i class="fa-solid fa-users"></i>
+
+Estudiantes
+
+</a>
+
+<a href="#">
+
+<i class="fa-regular fa-user"></i>
+
+Perfil
+
+</a>
+
+</div>
+
 <script>
 
 const clase=
@@ -248,7 +449,6 @@ window.location.search
 )
 
 .get("id");
-
 
 fetch(
 
@@ -315,25 +515,19 @@ ${e.nombre}
 
 <p>
 
-Correo:
-
-${e.correo}
+📧 ${e.correo}
 
 </p>
 
 <p>
 
-Grado:
-
-${e.grado}
+🎓 ${e.grado}
 
 </p>
 
 <p>
 
-Sección:
-
-${e.seccion}
+🏫 ${e.seccion}
 
 </p>
 

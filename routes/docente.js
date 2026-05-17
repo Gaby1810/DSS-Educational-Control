@@ -4,15 +4,19 @@ const db = require("../db");
 const multer = require("multer");
 const path = require("path");
 
+// =====================================
+// MULTER
+// =====================================
+
 const storage = multer.diskStorage({
 
-    destination: (req, file, cb) => {
+    destination:(req,file,cb)=>{
 
-        cb(null, "uploads");
+        cb(null,"uploads");
 
     },
 
-    filename: (req, file, cb) => {
+    filename:(req,file,cb)=>{
 
         cb(
             null,
@@ -29,57 +33,80 @@ const upload = multer({
 });
 
 // =====================================
-// MIS CLASES
+// VERIFICAR SESIÓN
 // =====================================
 
-router.get("/mis-clases", (req, res) => {
+function verificar(req,res,next){
 
-    if (!req.session.usuario) {
+    if(!req.session.usuario){
 
         return res.status(401).json({
-            message: "No autorizado"
+            message:"No autorizado"
         });
 
     }
 
-    const docenteId = req.session.usuario.id;
+    next();
 
-    const sql = `
-    SELECT
-        dm.id,
-        m.nombre AS materia,
-        dm.grado,
-        dm.seccion,
-        dm.codigo_clase,
-        u.nombre AS profesor
-    FROM docente_materias dm
+}
 
-    INNER JOIN materias m
-    ON dm.materia_id = m.id
+// =====================================
+// MIS CLASES
+// =====================================
 
-    INNER JOIN usuarios u
-    ON dm.docente_id = u.id
+router.get("/mis-clases",verificar,(req,res)=>{
 
-    WHERE dm.docente_id = ?
+const docenteId=
+req.session.usuario.id;
 
-    ORDER BY dm.id DESC
-    `;
+const sql=`
 
-    db.query(sql, [docenteId], (err, result) => {
+SELECT
+dm.id,
+m.nombre AS materia,
+dm.grado,
+dm.seccion,
+dm.codigo_clase,
+u.nombre AS profesor
 
-        if(err){
+FROM docente_materias dm
 
-            console.log(err);
+INNER JOIN materias m
+ON dm.materia_id=m.id
 
-            return res.status(500).json({
-                message:"Error servidor"
-            });
+INNER JOIN usuarios u
+ON dm.docente_id=u.id
 
-        }
+WHERE dm.docente_id=?
 
-        res.json(result);
+ORDER BY dm.id DESC
 
-    });
+`;
+
+db.query(
+
+sql,
+[docenteId],
+
+(err,result)=>{
+
+if(err){
+
+console.log(err);
+
+return res.status(500).json({
+
+message:"Error servidor"
+
+});
+
+}
+
+res.json(result);
+
+}
+
+);
 
 });
 
@@ -87,237 +114,133 @@ router.get("/mis-clases", (req, res) => {
 // CREAR CLASE
 // =====================================
 
-router.post("/crear-clase", (req, res) => {
+router.post("/crear-clase",verificar,(req,res)=>{
 
-    if (!req.session.usuario) {
+const docenteId=
+req.session.usuario.id;
 
-        return res.status(401).json({
-            message: "No autorizado"
-        });
+const {
+nombreMateria,
+grado,
+seccion
+}=req.body;
 
-    }
+if(!nombreMateria || !grado || !seccion){
 
-    const docenteId = req.session.usuario.id;
+return res.json({
 
-    const {
-        nombreMateria,
-        grado,
-        seccion
-    } = req.body;
-
-    if(!nombreMateria || !grado || !seccion){
-
-        return res.json({
-            message:"Completa todos los campos"
-        });
-
-    }
-
-    db.query(
-        "SELECT * FROM materias WHERE nombre = ?",
-        [nombreMateria],
-        (err, materiaResult) => {
-
-            if(err){
-
-                console.log(err);
-
-                return res.status(500).json({
-                    message:"Error servidor"
-                });
-
-            }
-
-            if(materiaResult.length === 0){
-
-                db.query(
-                    "INSERT INTO materias(nombre) VALUES(?)",
-                    [nombreMateria],
-                    (err, insertResult) => {
-
-                        if(err){
-
-                            console.log(err);
-
-                            return res.status(500).json({
-                                message:"Error creando materia"
-                            });
-
-                        }
-
-                        crearRelacion(insertResult.insertId);
-
-                    }
-                );
-
-            }else{
-
-                crearRelacion(materiaResult[0].id);
-
-            }
-
-        }
-    );
-
-    function crearRelacion(materiaId){
-
-        const codigo =
-        Math.random()
-        .toString(36)
-        .substring(2,8)
-        .toUpperCase();
-
-        const sql = `
-        INSERT INTO docente_materias
-        (
-            docente_id,
-            materia_id,
-            grado,
-            seccion,
-            codigo_clase
-        )
-        VALUES (?, ?, ?, ?, ?)
-        `;
-
-        db.query(
-            sql,
-            [
-                docenteId,
-                materiaId,
-                grado,
-                seccion,
-                codigo
-            ],
-            (err) => {
-
-                if(err){
-
-                    console.log(err);
-
-                    return res.status(500).json({
-                        message:"Error creando clase"
-                    });
-
-                }
-
-                res.json({
-                    message:"Clase creada correctamente"
-                });
-
-            }
-        );
-
-    }
+message:"Completa todos los campos"
 
 });
 
-// =====================================
-// EDITAR CLASE
-// =====================================
+}
 
-router.put("/editar-clase/:id", (req, res) => {
+db.query(
 
-    if (!req.session.usuario) {
+"SELECT * FROM materias WHERE nombre=?",
 
-        return res.status(401).json({
-            message: "No autorizado"
-        });
+[nombreMateria],
 
-    }
+(err,materia)=>{
 
-    const id = req.params.id;
+if(err){
 
-    const {
-        materia,
-        grado,
-        seccion
-    } = req.body;
+console.log(err);
 
-    db.query(
-        "SELECT * FROM materias WHERE nombre = ?",
-        [materia],
-        (err, result) => {
+return res.status(500).json({
 
-            if(err){
+message:"Error"
 
-                console.log(err);
+});
 
-                return res.status(500).json({
-                    message:"Error buscando materia"
-                });
+}
 
-            }
+if(materia.length>0){
 
-            if(result.length === 0){
+crearRelacion(
+materia[0].id
+);
 
-                db.query(
-                    "INSERT INTO materias(nombre) VALUES(?)",
-                    [materia],
-                    (err, insertResult) => {
+}else{
 
-                        if(err){
+db.query(
 
-                            console.log(err);
+"INSERT INTO materias(nombre) VALUES(?)",
 
-                            return res.status(500).json({
-                                message:"Error creando materia"
-                            });
+[nombreMateria],
 
-                        }
+(err,nueva)=>{
 
-                        actualizarClase(insertResult.insertId);
+crearRelacion(
+nueva.insertId
+);
 
-                    }
-                );
+}
 
-            }else{
+);
 
-                actualizarClase(result[0].id);
+}
 
-            }
+}
 
-        }
-    );
+);
 
-    function actualizarClase(materiaId){
+function crearRelacion(materiaId){
 
-        const sql = `
-        UPDATE docente_materias
-        SET
-            materia_id = ?,
-            grado = ?,
-            seccion = ?
-        WHERE id = ?
-        `;
+const codigo=
+Math.random()
+.toString(36)
+.substring(2,8)
+.toUpperCase();
 
-        db.query(
-            sql,
-            [
-                materiaId,
-                grado,
-                seccion,
-                id
-            ],
-            (err, result) => {
+db.query(
 
-                if(err){
+`
+INSERT INTO docente_materias
+(
+docente_id,
+materia_id,
+grado,
+seccion,
+codigo_clase
+)
 
-                    console.log(err);
+VALUES(?,?,?,?,?)
+`,
 
-                    return res.status(500).json({
-                        message:"Error actualizando clase"
-                    });
+[
+docenteId,
+materiaId,
+grado,
+seccion,
+codigo
+],
 
-                }
+(err)=>{
 
-                res.json({
-                    message:"Clase actualizada correctamente"
-                });
+if(err){
 
-            }
-        );
+console.log(err);
 
-    }
+return res.status(500).json({
+
+message:"Error creando"
+
+});
+
+}
+
+res.json({
+
+message:"Clase creada correctamente"
+
+});
+
+}
+
+);
+
+}
 
 });
 
@@ -325,47 +248,53 @@ router.put("/editar-clase/:id", (req, res) => {
 // ELIMINAR CLASE
 // =====================================
 
-router.delete("/eliminar-clase/:id", (req, res) => {
+router.delete(
+"/eliminar-clase/:id",
+verificar,
+(req,res)=>{
 
-    if (!req.session.usuario) {
+const id=
+req.params.id;
 
-        return res.status(401).json({
-            message: "No autorizado"
-        });
+db.query(
 
-    }
+"DELETE FROM docente_materias WHERE id=?",
 
-    const id = req.params.id;
+[id],
 
-    db.query(
-        "DELETE FROM docente_materias WHERE id = ?",
-        [id],
-        (err, result) => {
+(err)=>{
 
-            if(err){
+if(err){
 
-                console.log(err);
+console.log(err);
 
-                return res.status(500).json({
-                    message:"Error eliminando clase"
-                });
+return res.status(500).json({
 
-            }
-
-            res.json({
-                message:"Clase eliminada correctamente"
-            });
-
-        }
-    );
+message:"Error eliminando"
 
 });
+
+}
+
+res.json({
+
+message:"Clase eliminada"
+
+});
+
+}
+
+);
+
+});
+
 // =====================================
-// VER ESTUDIANTES DE UNA CLASE
+// VER ESTUDIANTES
 // =====================================
 
 router.get(
 "/estudiantes/:id",
+verificar,
 (req,res)=>{
 
 const claseId=
@@ -378,13 +307,16 @@ SELECT
 u.id,
 u.nombre,
 u.correo,
-u.grado,
-u.seccion
+dm.grado,
+dm.seccion
 
 FROM estudiante_materias em
 
 INNER JOIN usuarios u
 ON em.estudiante_id=u.id
+
+INNER JOIN docente_materias dm
+ON em.docente_materia_id=dm.id
 
 WHERE em.docente_materia_id=?
 
@@ -414,11 +346,11 @@ message:
 
 }
 
-res.json(
-result
-);
+res.json(result);
 
-});
+}
+
+);
 
 });
 

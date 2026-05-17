@@ -282,7 +282,24 @@ body{
 .bottom-nav a.active{
     color:#2563eb;
 }
+.logout-btn{
+    background:white;
+    color:#0f2c82;
+    border:none;
+    padding:10px 16px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:0.3s;
+}
 
+.logout-btn:hover{
+    background:#dbeafe;
+    transform:scale(1.03);
+}
 /* ===== RESPONSIVE ===== */
 
 @media(max-width:768px){
@@ -318,19 +335,37 @@ body{
     <div class="topbar-left">
 
         <div class="circle-btn">
-            <i class="fa-solid fa-book"></i>
+            <i class="fa-solid fa-graduation-cap"></i>
         </div>
 
-        <h2>
-            Detalle de Clase
-        </h2>
+        <div>
+
+            <h2>
+                Detalle Clase
+            </h2>
+
+            <small style="opacity:0.8;">
+                Educational Control
+            </small>
+
+        </div>
 
     </div>
 
-    <button class="back-btn" onclick="volver()">
-        <i class="fa-solid fa-arrow-left"></i>
-        Volver
-    </button>
+    <div style="display:flex;align-items:center;gap:15px;">
+
+        <div class="top-icons">
+            <i class="fa-regular fa-bell"></i>
+        </div>
+
+        <button class="logout-btn" onclick="volver()">
+
+            <i class="fa-solid fa-arrow-left"></i>
+            Volver
+
+        </button>
+
+    </div>
 
 </div>
 
@@ -454,27 +489,28 @@ body{
 </div>
         <!-- NOTAS -->
 
-        <div class="module-card">
+        <div class="module-card"
+        onclick="abrirNotas()">
 
-            <div class="module-icon">
-                <i class="fa-solid fa-clipboard"></i>
-            </div>
+    <div class="module-icon">
+        <i class="fa-solid fa-file"></i>
+    </div>
 
-            <div class="module-info">
+    <div class="module-info">
 
-                <h2>Notas</h2>
+        <h2>Notas</h2>
 
-                <p>
-                    Calificaciones de alumnos
-                </p>
+        <p>
+            Calificaciones de alumnos
+        </p>
 
-            </div>
+    </div>
 
-            <div class="module-arrow">
-                Ver más..
-            </div>
+    <div class="module-arrow">
+        Ver más..
+    </div>
 
-        </div>
+</div>
 
         <!-- TAREAS -->
 
@@ -554,7 +590,7 @@ body{
 
 </div>
 
-<!-- NAV -->
+<!-- NAVBAR -->
 
 <div class="bottom-nav">
 
@@ -573,7 +609,7 @@ body{
         Estudiantes
     </a>
 
-    <a href="#">
+    <a href="#" onclick="logout()">
         <i class="fa-regular fa-user"></i>
         Perfil
     </a>
@@ -671,7 +707,16 @@ function abrirAsistencia(){
     `asistencia.html?id=${id}`;
 
 }
+// ==========================
+// ABRIR Notas
+// ==========================
 
+function abrirNotas(){
+
+    window.location.href =
+    `notas.html?id=${id}`;
+
+}
 // ==========================
 // VOLVER
 // ==========================
