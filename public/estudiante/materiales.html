@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Material de Clase</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:#f1f5f9;
+}
+
+/* TOP */
+
+.topbar{
+background:#0f2c82;
+color:white;
+padding:15px;
+font-size:20px;
+}
+
+/* HERO */
+
+.hero{
+background:#0f2c82;
+color:white;
+padding:40px;
+text-align:center;
+font-size:30px;
+}
+
+/* CONTAINER */
+
+.container{
+width:90%;
+margin:auto;
+padding:20px 0;
+}
+
+/* CARD */
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:15px;
+box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.titulo{
+font-size:20px;
+font-weight:bold;
+}
+
+.descripcion{
+color:#64748b;
+margin:10px 0;
+}
+
+/* FECHA */
+
+.fecha{
+display:inline-block;
+padding:5px 10px;
+border-radius:10px;
+background:#e0f2fe;
+color:#075985;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* BOTÓN */
+
+.btn{
+margin-top:10px;
+padding:10px 15px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:10px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+Material de Clase
+</div>
+
+<div class="hero">
+📚 Recursos de la Clase
+</div>
+
+<div class="container">
+
+<div id="lista"></div>
+
+</div>
+
+<script>
+
+const clase = new URLSearchParams(location.search).get("id");
+
+fetch(`http://localhost:3000/estudiante/materiales/${clase}`)
+.then(r => r.json())
+.then(data => {
+
+const lista = document.getElementById("lista");
+lista.innerHTML = "";
+
+data.forEach(m => {
+
+let fecha = "Sin fecha";
+
+if (m.fecha) {
+const f = new Date(m.fecha);
+if (!isNaN(f.getTime())) {
+fecha = f.toLocaleString("es-SV");
+}
+}
+
+lista.innerHTML += `
+<div class="card">
+
+<div class="titulo">${m.titulo}</div>
+
+<div class="descripcion">
+${m.descripcion || "Sin descripción"}
+</div>
+
+<div class="fecha">
+📅 ${fecha}
+</div>
+
+${
+m.archivo
+? `
+<button class="btn"
+onclick="window.open('http://localhost:3000/uploads/${m.archivo}')">
+📄 Ver archivo
+</button>
+`
+: ""
+}
+
+</div>
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

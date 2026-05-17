@@ -1,11 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Calificaciones</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entregas Classroom</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -20,140 +19,235 @@ font-family:'Segoe UI',sans-serif;
 }
 
 body{
-background:#eef4fb;
-min-height:100vh;
+background:#f1f3f4;
 }
 
 /* TOPBAR */
 
 .topbar{
-background:#0f2c82;
-height:75px;
-padding:15px 25px;
+height:70px;
+background:white;
+border-bottom:1px solid #dadce0;
 display:flex;
-justify-content:space-between;
 align-items:center;
-color:white;
+justify-content:space-between;
+padding:0 25px;
 position:sticky;
 top:0;
 z-index:100;
 }
 
-.topbar-left{
+.left-top{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.menu-btn{
+width:42px;
+height:42px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.3s;
+}
+
+.menu-btn:hover{
+background:#eef2ff;
+}
+
+.logo{
 display:flex;
 align-items:center;
 gap:12px;
 }
 
-.circle-btn{
-width:36px;
-height:36px;
+.logo i{
+font-size:28px;
+color:#2563eb;
+}
+
+.logo h2{
+font-size:23px;
+font-weight:600;
+color:#374151;
+}
+
+.right-top{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.circle{
+width:42px;
+height:42px;
 border-radius:50%;
-background:white;
-color:#0f2c82;
+background:#2563eb;
+color:white;
 display:flex;
 align-items:center;
 justify-content:center;
-}
-
-.logout-btn{
-background:white;
-color:#0f2c82;
-border:none;
-padding:9px 15px;
-border-radius:10px;
-font-weight:600;
-cursor:pointer;
+font-weight:bold;
 }
 
 /* HERO */
 
 .hero{
-width:100%;
-height:160px;
-
+width:95%;
+height:220px;
+margin:25px auto;
+border-radius:28px;
+overflow:hidden;
+position:relative;
 background:
-linear-gradient(
-rgba(15,44,130,.65),
-rgba(15,44,130,.65)
-),
-
-url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200");
-
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop');
 background-size:cover;
 background-position:center;
-
 display:flex;
-justify-content:center;
-align-items:center;
+align-items:flex-end;
+padding:30px;
+}
 
+.hero-content{
 color:white;
 }
 
-.hero h1{
-font-size:38px;
+.hero-content h1{
+font-size:42px;
+margin-bottom:10px;
 }
 
-/* CONTENIDO */
+.hero-content p{
+font-size:18px;
+opacity:.95;
+}
 
-.container{
-width:92%;
+/* LAYOUT */
+
+.main{
+width:95%;
 margin:auto;
-padding:35px 0 120px;
-}
-
-.grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:22px;
+grid-template-columns:320px 1fr;
+gap:25px;
+padding-bottom:80px;
 }
 
-/* TARJETA */
+/* LEFT */
+
+.sidebar{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.box{
+background:white;
+border-radius:20px;
+padding:22px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.box h3{
+margin-bottom:18px;
+color:#111827;
+}
+
+.stat{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:18px;
+}
+
+.stat-icon{
+width:50px;
+height:50px;
+border-radius:15px;
+background:#dbeafe;
+color:#2563eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+}
+
+.stat p{
+font-size:14px;
+color:#6b7280;
+}
+
+.stat h2{
+font-size:24px;
+color:#111827;
+}
+
+/* ENTREGAS */
+
+.content{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
 
 .student-card{
 background:white;
-border-radius:18px;
-overflow:hidden;
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
+border-radius:22px;
+padding:22px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:20px;
 transition:.3s;
 }
 
 .student-card:hover{
-transform:translateY(-5px);
+transform:translateY(-3px);
 }
 
-.card-header{
-height:110px;
-background:#2563eb;
+.student-left{
 display:flex;
-justify-content:center;
 align-items:center;
-font-size:40px;
+gap:18px;
+}
+
+.avatar{
+width:65px;
+height:65px;
+border-radius:50%;
+background:#2563eb;
 color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+font-weight:bold;
 }
 
-.card-content{
-padding:15px;
-}
-
-.card-content h3{
-margin-bottom:10px;
+.student-info h2{
+font-size:20px;
+margin-bottom:6px;
 color:#111827;
 }
 
-.student-text{
-font-size:13px;
-color:#64748b;
-margin-bottom:10px;
+.student-info p{
+color:#6b7280;
+font-size:14px;
 }
 
-.estado{
-display:inline-block;
-padding:6px 12px;
-border-radius:20px;
+.badge{
+padding:7px 15px;
+border-radius:30px;
 font-size:12px;
 font-weight:bold;
-margin-bottom:15px;
+display:inline-block;
+margin-top:10px;
 }
 
 .entregado{
@@ -166,361 +260,336 @@ background:#fee2e2;
 color:#991b1b;
 }
 
-.card-content input{
-width:100%;
-padding:10px;
-border-radius:10px;
-border:1px solid #cbd5e1;
-margin-bottom:10px;
+.student-right{
+display:flex;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
 }
 
-.card-content button{
-width:100%;
+.grade-input{
+width:110px;
+padding:12px;
+border-radius:12px;
+border:1px solid #d1d5db;
+font-size:15px;
+}
+
+.btn{
+padding:12px 18px;
 border:none;
-padding:10px;
-border-radius:10px;
-color:white;
+border-radius:14px;
 font-weight:600;
 cursor:pointer;
-margin-bottom:8px;
+transition:.3s;
 }
 
-.btn-file{
-background:#3b82f6;
+.btn-view{
+background:#2563eb;
+color:white;
 }
 
 .btn-save{
-background:#2563eb;
+background:#16a34a;
+color:white;
 }
 
-/* NAV */
+.btn-empty{
+background:#94a3b8;
+color:white;
+}
 
-.bottom-nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:75px;
+.btn:hover{
+transform:scale(1.03);
+}
+
+.empty{
+display:none;
 background:white;
-display:flex;
-justify-content:space-around;
-align-items:center;
-box-shadow:0 -2px 10px rgba(0,0,0,0.08);
+padding:40px;
+text-align:center;
+border-radius:20px;
 }
 
-.bottom-nav a{
-text-decoration:none;
-color:#6b7280;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:5px;
-font-size:13px;
-}
-
-.bottom-nav a.active{
-color:#2563eb;
-}
-
-.bottom-nav i{
-font-size:22px;
+.empty img{
+width:200px;
+margin-bottom:20px;
 }
 
 /* RESPONSIVE */
 
-@media(max-width:768px){
+@media(max-width:900px){
 
-.grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-}
-
-@media(max-width:500px){
-
-.grid{
+.main{
 grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:700px){
+
+.student-card{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.student-right{
+width:100%;
+}
+
+.grade-input{
+width:100%;
+}
+
+.btn{
+width:100%;
+}
+
+.hero-content h1{
+font-size:30px;
 }
 
 }
 
 </style>
 </head>
-
 <body>
+
+<!-- TOPBAR -->
 
 <div class="topbar">
 
-<div class="topbar-left">
+<div class="left-top">
 
-<div class="circle-btn">
-<i class="fa-solid fa-file-pen"></i>
+<div class="menu-btn">
+<i class="fa-solid fa-bars"></i>
 </div>
 
-<div>
-<h2>Calificaciones</h2>
-<small>Educational Control</small>
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+<h2>Educational Classroom</h2>
 </div>
-
-</div>
-
-<button
-class="logout-btn"
-onclick="history.back()">
-
-Volver
-
-</button>
 
 </div>
 
+<div class="right-top">
+
+<i class="fa-regular fa-bell" style="font-size:22px;color:#4b5563"></i>
+
+<div class="circle">
+D
+</div>
+
+</div>
+
+</div>
+
+<!-- HERO -->
 
 <div class="hero">
 
-<h1>
-Entregas y Calificaciones
-</h1>
+<div class="hero-content">
 
-</div>
+<h1>Entregas y Calificaciones</h1>
 
-
-<div class="container">
-
-<div
-id="lista"
-class="grid">
+<p>
+Administra tareas, revisa archivos y califica estudiantes
+</p>
 
 </div>
 
 </div>
 
+<!-- MAIN -->
 
-<div class="bottom-nav">
+<div class="main">
 
-<a href="#">
-<i class="fa-solid fa-house"></i>
-Inicio
-</a>
+<!-- SIDEBAR -->
 
-<a href="#" class="active">
-<i class="fa-solid fa-file"></i>
-Calificar
-</a>
+<div class="sidebar">
 
-<a href="#">
+<div class="box">
+
+<h3>Resumen</h3>
+
+<div class="stat">
+<div class="stat-icon">
 <i class="fa-solid fa-users"></i>
-Estudiantes
-</a>
+</div>
+<div>
+<p>Estudiantes</p>
+<h2 id="total">0</h2>
+</div>
+</div>
 
-<a href="#">
-<i class="fa-regular fa-user"></i>
-Perfil
-</a>
+<div class="stat">
+<div class="stat-icon">
+<i class="fa-solid fa-file-circle-check"></i>
+</div>
+<div>
+<p>Entregados</p>
+<h2 id="entregados">0</h2>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">
+<i class="fa-solid fa-clock"></i>
+</div>
+<div>
+<p>Pendientes</p>
+<h2 id="pendientes">0</h2>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<div id="lista"></div>
+
+<div id="empty" class="empty">
+
+<img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+
+<h2>
+No hay estudiantes registrados
+</h2>
+
+</div>
+
+</div>
 
 </div>
 
 <script>
 
-const tarea =
-new URLSearchParams(
-window.location.search
-).get("tarea");
-
-const lista =
-document.getElementById("lista");
-
-cargarDatos();
-
-function cargarDatos(){
+const tarea=
+new URLSearchParams(location.search)
+.get("tarea");
 
 fetch(
-
 `http://localhost:3000/api/tareas/entregas/${tarea}`
-
 )
 
-.then(res=>{
-
-if(!res.ok){
-
-throw new Error(
-"Error servidor"
-);
-
-}
-
-return res.json();
-
-})
-
+.then(r=>r.json())
 .then(data=>{
 
-if(
-!Array.isArray(data)
-||
-data.length===0
-){
-
-mostrarDemo();
-
-return;
-
-}
-
-mostrarEstudiantes(data);
-
-})
-
-.catch(err=>{
-
-console.log(err);
-
-mostrarDemo();
-
-});
-
-}
-
-
-function mostrarDemo(){
-
-const demo=[
-
-{
-id:1,
-nombre:"Estudiante 1",
-estado:"Pendiente",
-nota:"",
-archivo:null,
-demo:true
-},
-
-{
-id:2,
-nombre:"Estudiante 2",
-estado:"Pendiente",
-nota:"",
-archivo:null,
-demo:true
-},
-
-{
-id:3,
-nombre:"Estudiante 3",
-estado:"Pendiente",
-nota:"",
-archivo:null,
-demo:true
-}
-
-];
-
-mostrarEstudiantes(
-demo
-);
-
-}
-
-
-function mostrarEstudiantes(data){
+const lista=document.getElementById("lista");
+const empty=document.getElementById("empty");
 
 lista.innerHTML="";
 
+if(!data.length){
+empty.style.display="block";
+return;
+}
+
+let entregados=0;
+let pendientes=0;
+
+empty.style.display="none";
+
+// CONTADORES
+
+document.getElementById("total")
+.innerHTML=data.length;
+
+
 data.forEach(e=>{
 
-const estadoClass=
+if(e.estado==="Pendiente"){
+pendientes++;
+}else{
+entregados++;
+}
 
-e.estado==="Pendiente"
-?
-"pendiente"
-:
-"entregado";
+const badge=
 
+ e.estado==="Pendiente"
+ ? "pendiente"
+ : "entregado";
+
+const inicial=
+e.nombre.charAt(0)
+.toUpperCase();
 
 lista.innerHTML+=`
 
 <div class="student-card">
 
-<div class="card-header">
+<div class="student-left">
 
-<i class="fa-solid fa-user-graduate"></i>
-
+<div class="avatar">
+${inicial}
 </div>
 
-<div class="card-content">
+<div class="student-info">
 
-<h3>
-
+<h2>
 ${e.nombre}
-
-</h3>
-
-<p class="student-text">
-
-${e.demo
-?
-"Vista previa"
-:
-"Estudiante registrado"}
-
-</p>
-
-<div class="estado ${estadoClass}">
-
-${e.estado}
-
-</div>
+</h2>
 
 <p>
-
-<b>Nota actual:</b>
-
-${e.nota || "Sin nota"}
-
+Estudiante registrado
 </p>
 
+<div class="badge ${badge}">
+${e.estado}
+</div>
+
+</div>
+
+</div>
+
+<div class="student-right">
+
 <input
+class="grade-input"
 id="nota${e.id}"
 type="number"
-placeholder="Ingresar nota"
-value="${e.nota||''}">
+placeholder="Nota"
+value="${e.nota || ''}">
 
 ${
-e.archivo ?
+ e.archivo
+ ?
 
-`
+ `
 
-<button
-class="btn-file"
-onclick="
-window.open(
-'http://localhost:3000/uploads/${e.archivo}'
-)
-">
+ <button
+ class="btn btn-view"
+ onclick="window.open('http://localhost:3000/uploads/${e.archivo}')">
 
-Ver entrega
+ <i class="fa-solid fa-file"></i>
+ Ver entrega
 
-</button>
+ </button>
 
-`
+ `
 
-:
+ :
 
-""
+ `
+
+ <button class="btn btn-empty">
+ Sin entrega
+ </button>
+
+ `
+
 }
 
 <button
-class="btn-save"
+class="btn btn-save"
+onclick="guardar(${e.id})">
 
-onclick="${
-e.demo
-?
-`alert('No hay estudiantes reales registrados todavía')`
-:
-`guardar(${e.id})`
-}">
-
-Guardar nota
+<i class="fa-solid fa-floppy-disk"></i>
+Guardar
 
 </button>
 
@@ -532,30 +601,29 @@ Guardar nota
 
 });
 
-}
+
+document.getElementById("entregados")
+.innerHTML=entregados;
+
+
+document.getElementById("pendientes")
+.innerHTML=pendientes;
+
+});
 
 
 function guardar(id){
 
 const nota=
-
-document.getElementById(
-`nota${id}`
-).value;
+document.getElementById(`nota${id}`).value;
 
 fetch(
-
 "http://localhost:3000/api/tareas/calificar",
-
 {
-
 method:"POST",
-
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
-
 body:JSON.stringify({
 
 tarea_id:tarea,
@@ -563,25 +631,19 @@ estudiante_id:id,
 nota
 
 })
-
 }
-
 )
 
-.then(
-r=>r.json()
-)
-
+.then(r=>r.json())
 .then(data=>{
 
-alert(
-data.message
-);
+alert(data.message);
 
 });
 
 }
 
 </script>
+
 </body>
 </html>

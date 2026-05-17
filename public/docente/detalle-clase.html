@@ -503,28 +503,28 @@ body{
 
         <!-- ASISTENCIA -->
 
-        <div class="module-card">
+        <div class="module-card"
+        onclick="abrirAsistencia()">
 
-            <div class="module-icon">
-                <i class="fa-solid fa-calendar-check"></i>
-            </div>
+    <div class="module-icon">
+        <i class="fa-solid fa-file"></i>
+    </div>
 
-            <div class="module-info">
+    <div class="module-info">
 
-                <h2>Asistencia</h2>
+        <h2>Asistencia</h2>
 
-                <p>
-                    Control de asistencia
-                </p>
+        <p>
+            Gestiona asistencia
+        </p>
 
-            </div>
+    </div>
 
-            <div class="module-arrow">
-                Ver más..
-            </div>
+    <div class="module-arrow">
+        Ver más..
+    </div>
 
-        </div>
-
+</div>
         <!-- MATERIALES -->
 
         <div class="module-card"
@@ -659,6 +659,16 @@ function abrirEstudiantes(){
 
     window.location.href =
     `estudiantes-clase.html?id=${id}`;
+
+}
+// ==========================
+// ABRIR ASISTENCIA
+// ==========================
+
+function abrirAsistencia(){
+
+    window.location.href =
+    `asistencia.html?id=${id}`;
 
 }
 

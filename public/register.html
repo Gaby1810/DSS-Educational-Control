@@ -11,11 +11,11 @@
     box-sizing:border-box;
 }
 
-html, body{
+html,body{
     margin:0;
     padding:0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #0f172a, #1e3a8a);
+    font-family:Arial,sans-serif;
+      background:linear-gradient(to bottom,#0f172a,#072463);
 }
 
 /* HEADER */
@@ -41,7 +41,7 @@ html, body{
     width:500px;
     padding:40px;
     border-radius:18px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
     text-align:center;
 }
 
@@ -57,12 +57,13 @@ h2{
 }
 
 /* ROLES */
+
 .role-switch{
     display:flex;
     background:#eef1f6;
     border-radius:12px;
-    margin-bottom:20px;
     overflow:hidden;
+    margin-bottom:20px;
 }
 
 .role-switch button{
@@ -80,53 +81,104 @@ h2{
 }
 
 /* INPUTS */
-input, select{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:12px;
-    border:1px solid #ddd;
-    outline:none;
+
+input,select{
+
+width:100%;
+padding:12px;
+margin:10px 0;
+
+border-radius:12px;
+border:1px solid #ddd;
+outline:none;
+
 }
 
-input:focus, select:focus{
-    border-color:#2563eb;
+input:focus,
+select:focus{
+
+border-color:#2563eb;
+
 }
 
-/* SECCION EXTRA */
+/* EXTRA */
+
 .section-box{
-    background:#eef2ff;
-    padding:15px;
-    border-radius:12px;
-    margin-top:10px;
+
+background:#eef2ff;
+padding:15px;
+border-radius:12px;
+margin-top:10px;
+
 }
 
-/* BOTON */
-button.primary-btn{
-    width:100%;
-    padding:14px;
-    margin-top:20px;
-    border:none;
-    border-radius:14px;
-    background:#1e3a8a;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
+/* BOTÓN */
+
+.primary-btn{
+
+width:100%;
+padding:14px;
+margin-top:20px;
+
+border:none;
+border-radius:14px;
+
+background:#1e3a8a;
+color:white;
+
+font-weight:bold;
+cursor:pointer;
+
 }
 
-button.primary-btn:hover{
-    background:#1e40af;
+.primary-btn:hover{
+
+background:#1e40af;
+
 }
 
 /* LINK */
+
 .link{
-    margin-top:15px;
+
+margin-top:15px;
+
 }
 
 .link a{
-    color:#2563eb;
-    font-weight:bold;
-    text-decoration:none;
+
+color:#2563eb;
+font-weight:bold;
+text-decoration:none;
+
+}
+
+/* VALIDACIONES */
+
+.input-error{
+border:2px solid #ef4444 !important;
+}
+
+.input-success{
+border:2px solid #22c55e !important;
+}
+
+.msg{
+
+font-size:12px;
+text-align:left;
+
+margin-top:-6px;
+margin-bottom:6px;
+
+}
+
+.msg.error{
+color:#ef4444;
+}
+
+.msg.ok{
+color:#22c55e;
 }
 
 </style>
@@ -134,229 +186,326 @@ button.primary-btn:hover{
 
 <body>
 
-<!-- HEADER -->
 <div class="header"></div>
 
-<!-- CARD -->
 <div class="main">
+
 <div class="card">
 
 <h2>Crear Cuenta 👨‍🎓</h2>
-<div class="subtitle">Regístrate para acceder al sistema</div>
 
-<div class="role-switch">
-    <button id="btnEst" class="active" onclick="setRol('estudiante')">Estudiante</button>
-    <button id="btnDoc" onclick="setRol('docente')">Docente</button>
-    <button id="btnAdmin" onclick="setRol('admin')">Admin</button>
+<div class="subtitle">
+Regístrate para acceder al sistema
 </div>
 
-<input type="text" id="nombre" placeholder="Nombre completo">
-<input type="email" id="correo" placeholder="Correo institucional">
-<input type="password" id="password" placeholder="Contraseña">
+<div class="role-switch">
+
+<button id="btnEst"
+class="active"
+onclick="setRol('estudiante')">
+
+Estudiante
+
+</button>
+
+<button id="btnDoc"
+onclick="setRol('docente')">
+
+Docente
+
+</button>
+
+<button id="btnAdmin"
+onclick="setRol('admin')">
+
+Admin
+
+</button>
+
+</div>
+
+<input id="nombre"
+placeholder="Nombre completo">
+
+<div id="msgNombre"
+class="msg"></div>
+
+<input id="correo"
+placeholder="Correo">
+
+<div id="msgCorreo"
+class="msg"></div>
+
+<input id="password"
+type="password"
+placeholder="Contraseña">
+
+<div id="msgPass"
+class="msg"></div>
 
 <div id="extra"></div>
 
-<button type="button" class="primary-btn" onclick="registrar()">Crear cuenta</button>
+<button
+class="primary-btn"
+onclick="registrar()">
+
+Crear cuenta
+
+</button>
 
 <div class="link">
-    ¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a>
+
+¿Ya tienes cuenta?
+<a href="login.html">
+Iniciar sesión
+</a>
+
 </div>
 
 </div>
 </div>
+
 <script>
 
-let rolSeleccionado = "estudiante";
+let rol="estudiante";
 
-function setRol(rol) {
+function setRol(r){
 
-    rolSeleccionado = rol;
+rol=r;
 
-    document.getElementById("btnEst").classList.remove("active");
-    document.getElementById("btnDoc").classList.remove("active");
-    document.getElementById("btnAdmin").classList.remove("active");
+btnEst.classList.remove("active");
+btnDoc.classList.remove("active");
+btnAdmin.classList.remove("active");
 
-    if (rol === "estudiante")
-        document.getElementById("btnEst").classList.add("active");
+if(r==="estudiante")
+btnEst.classList.add("active");
 
-    if (rol === "docente")
-        document.getElementById("btnDoc").classList.add("active");
+if(r==="docente")
+btnDoc.classList.add("active");
 
-    if (rol === "admin")
-        document.getElementById("btnAdmin").classList.add("active");
+if(r==="admin")
+btnAdmin.classList.add("active");
 
-    mostrarCampos();
-}
+extra.innerHTML="";
 
-function mostrarCampos() {
+/* ESTUDIANTE */
 
-    const extra = document.getElementById("extra");
+if(r==="estudiante"){
 
-    if (rolSeleccionado === "estudiante") {
+extra.innerHTML=`
 
-        extra.innerHTML = `
-        <div class="section-box">
+<div class="section-box">
 
-            <select id="grado">
-                <option value="">Seleccione grado</option>
-                <option value="1">1°</option>
-                <option value="2">2°</option>
-                <option value="3">3°</option>
-            </select>
+<select id="tipo_bachillerato">
 
-            <input
-                type="text"
-                id="seccion"
-                placeholder="Sección"
-            >
+<option value="">
+Tipo Bachillerato
+</option>
 
-            <select id="turno">
-                <option value="">Turno</option>
-                <option value="Matutino">Matutino</option>
-                <option value="Vespertino">Vespertino</option>
-            </select>
+<option value="Tecnico">
+Técnico
+</option>
 
-        </div>
-        `;
-    }
+<option value="General">
+General
+</option>
 
-    else if (rolSeleccionado === "docente") {
+</select>
 
-        extra.innerHTML = `
-        <div class="section-box">
+<select id="anio">
 
-            <input
-                type="text"
-                id="materia_principal"
-                placeholder="Materia principal"
-            >
+<option value="">
+Año
+</option>
 
-            <input
-                type="text"
-                id="telefono"
-                placeholder="Teléfono"
-            >
+<option value="1">
+1° Año
+</option>
 
-        </div>
-        `;
-    }
+<option value="2">
+2° Año
+</option>
 
-    else {
+<option value="3">
+3° Año
+</option>
 
-        extra.innerHTML = `
-        <div class="section-box">
+</select>
 
-            <input
-                type="password"
-                id="codigo_admin"
-                placeholder="Código admin"
-            >
-
-        </div>
-        `;
-    }
+</div>
+`;
 
 }
 
-mostrarCampos();
+/* DOCENTE */
 
-function registrar() {
+if(r==="docente"){
 
-    const nombre =
-    document.getElementById("nombre").value;
+extra.innerHTML=`
 
-    const correo =
-    document.getElementById("correo").value;
+<div class="section-box">
 
-    const password =
-    document.getElementById("password").value;
+<input
+id="dui"
+placeholder="DUI (12345678-9)">
 
-    let datosExtra = {};
+<div id="msgDui"
+class="msg"></div>
 
-    // ESTUDIANTE
-    if (rolSeleccionado === "estudiante") {
+<input
+id="telefono"
+placeholder="Teléfono">
 
-        datosExtra = {
+</div>
 
-            grado:
-            document.getElementById("grado").value,
+`;
 
-            seccion:
-            document.getElementById("seccion").value,
+}
 
-            turno:
-            document.getElementById("turno").value
+/* ADMIN */
 
-        };
+if(r==="admin"){
 
-    }
+extra.innerHTML=`
 
-    // DOCENTE
-    if (rolSeleccionado === "docente") {
+<div class="section-box">
 
-        datosExtra = {
+<input
+id="dui"
+placeholder="DUI (12345678-9)">
 
-            materia_principal:
-            document.getElementById("materia_principal").value,
+<div id="msgDui"
+class="msg"></div>
 
-            telefono:
-            document.getElementById("telefono").value
+</div>
 
-        };
+`;
 
-    }
+}
 
-    fetch(
-        "http://localhost:3000/api/auth/register",
-        {
+}
 
-            method: "POST",
+setRol("estudiante");
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+/* VALIDACIONES */
 
-            credentials: "include",
+document.addEventListener("input",()=>{
 
-            body: JSON.stringify({
+validarNombre();
+validarCorreo();
+validarPass();
+validarDUI();
 
-                nombre,
-                correo,
-                password,
+});
 
-                rol: rolSeleccionado,
+function validarNombre(){
 
-                ...datosExtra
+let v=nombre.value;
 
-            })
+msgNombre.textContent=
+v.length<3
+?"Muy corto"
+:"✓";
 
-        }
-    )
+}
 
-    .then(res => res.json())
+function validarCorreo(){
 
-    .then(data => {
+let r=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (
-            data.message.includes("correctamente")
-        ) {
+msgCorreo.textContent=
+!r.test(correo.value)
+?"Correo inválido"
+:"✓";
 
-            alert("Usuario creado");
+}
 
-            window.location.href = "login.html";
+function validarPass(){
 
-        }
+let r=/^(?=.*\d).{6,}$/;
 
-        else {
+msgPass.textContent=
+!r.test(password.value)
+?"Débil"
+:"✓ segura";
 
-            alert(data.message);
+}
 
-        }
+function validarDUI(){
 
-    });
+let d=document.getElementById("dui");
+
+if(!d) return;
+
+let r=/^\d{8}-\d$/;
+
+let msg=document.getElementById("msgDui");
+
+msg.textContent=
+!r.test(d.value)
+?"12345678-9"
+:"✓";
+
+}
+
+function registrar(){
+
+const data={
+
+nombre:nombre.value,
+correo:correo.value,
+password:password.value,
+rol:rol,
+
+dui:
+document.getElementById("dui")?.value,
+
+tipo_bachillerato:
+document.getElementById("tipo_bachillerato")?.value,
+
+anio:
+document.getElementById("anio")?.value,
+
+telefono:
+document.getElementById("telefono")?.value
+
+};
+
+fetch(
+"http://localhost:3000/api/auth/register",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify(data)
+
+}
+
+)
+
+.then(r=>r.json())
+
+.then(d=>{
+
+alert(d.message);
+
+if(
+d.message.includes("correctamente")
+){
+
+location.href="login.html";
+
+}
+
+});
 
 }
 
 </script>
+
 </body>
 </html>

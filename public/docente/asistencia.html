@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Asistencia</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f4f6fb;
+display:flex;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+
+width:240px;
+background:#132c7c;
+color:white;
+
+padding:25px 20px;
+
+display:flex;
+flex-direction:column;
+
+}
+
+.logo{
+
+font-size:24px;
+font-weight:bold;
+margin-bottom:40px;
+
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.menu a{
+
+text-decoration:none;
+color:white;
+
+padding:14px;
+border-radius:12px;
+
+transition:.3s;
+
+}
+
+.menu a:hover{
+background:rgba(255,255,255,.12);
+}
+
+.menu a.active{
+background:white;
+color:#132c7c;
+font-weight:bold;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+padding:30px;
+}
+
+/* TOP */
+
+.top{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:30px;
+
+}
+
+.top h1{
+font-size:34px;
+color:#111827;
+}
+
+.fecha{
+color:#64748b;
+}
+
+/* GRID */
+
+.grid{
+
+display:grid;
+grid-template-columns:320px 1fr;
+gap:30px;
+
+}
+
+/* LEFT */
+
+.left{
+display:flex;
+flex-direction:column;
+gap:25px;
+}
+
+/* CARD */
+
+.card{
+
+background:white;
+padding:25px;
+border-radius:22px;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.05);
+
+}
+
+/* STATS */
+
+.stats{
+background:#132c7c;
+color:white;
+}
+
+.stats h4{
+font-size:14px;
+opacity:.8;
+margin-bottom:10px;
+}
+
+.percent{
+font-size:48px;
+font-weight:bold;
+margin-bottom:25px;
+}
+
+.mini-stats{
+
+display:flex;
+justify-content:space-between;
+
+}
+
+.mini-stats div{
+text-align:center;
+}
+
+.mini-stats h3{
+font-size:22px;
+}
+
+/* CALENDAR */
+
+.calendar h3{
+margin-bottom:20px;
+}
+
+.days{
+
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:10px;
+
+font-size:13px;
+
+}
+
+.day{
+
+height:35px;
+border-radius:10px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:#eef2ff;
+
+}
+
+/* RIGHT */
+
+.right{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+/* STUDENT */
+
+.student{
+
+background:white;
+padding:20px;
+border-radius:20px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.05);
+
+}
+
+.student-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.avatar{
+
+width:60px;
+height:60px;
+border-radius:50%;
+
+background:#2563eb;
+color:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:24px;
+font-weight:bold;
+
+}
+
+.student h2{
+font-size:22px;
+}
+
+.status{
+
+margin-top:5px;
+font-size:14px;
+font-weight:bold;
+
+}
+
+.present{
+color:#16a34a;
+}
+
+.absent{
+color:#dc2626;
+}
+
+.resumen{
+margin-top:10px;
+font-size:13px;
+color:#64748b;
+line-height:1.6;
+}
+
+/* BUTTONS */
+
+.actions{
+display:flex;
+gap:10px;
+}
+
+.btn{
+
+border:none;
+padding:12px 18px;
+
+border-radius:12px;
+cursor:pointer;
+
+font-weight:bold;
+color:white;
+
+}
+
+.btn-present{
+background:#16a34a;
+}
+
+.btn-absent{
+background:#dc2626;
+}
+
+/* FECHA */
+
+.fecha-box{
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.fecha-box input{
+padding:10px;
+border-radius:10px;
+border:1px solid #d1d5db;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+body{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+flex-direction:row;
+justify-content:space-between;
+align-items:center;
+}
+
+.menu{
+flex-direction:row;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="logo">
+Educational Control
+</div>
+
+<div class="menu">
+
+<a href="dashboard-docente.html">
+<i class="fa-solid fa-house"></i>
+ Inicio
+</a>
+
+<a href="#" class="active">
+<i class="fa-solid fa-user-check"></i>
+ Asistencia
+</a>
+
+<a href="#">
+<i class="fa-solid fa-book"></i>
+ Clases
+</a>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="top">
+
+<div>
+
+<h1>
+Control de Asistencia
+</h1>
+
+<p class="fecha" id="fechaTexto"></p>
+
+</div>
+
+<div class="fecha-box">
+
+<input
+type="date"
+id="fecha">
+
+<button
+class="btn btn-present"
+onclick="cargar()">
+
+Buscar
+
+</button>
+
+<button
+onclick="history.back()"
+class="btn btn-absent">
+
+Volver
+
+</button>
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<!-- LEFT -->
+
+<div class="left">
+
+<div class="card stats">
+
+<h4>
+ASISTENCIA TOTAL
+</h4>
+
+<div
+class="percent"
+id="porcentaje">
+
+0%
+
+</div>
+
+<div class="mini-stats">
+
+<div>
+
+<h3 id="presentes">
+0
+</h3>
+
+<p>Presentes</p>
+
+</div>
+
+<div>
+
+<h3 id="ausentes">
+0
+</h3>
+
+<p>Ausentes</p>
+
+</div>
+
+<div>
+
+<h3 id="total">
+0
+</h3>
+
+<p>Total</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div
+class="right"
+id="lista">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const clase =
+new URLSearchParams(
+location.search
+).get("id");
+
+let estudiantes=[];
+
+// =====================================
+// FECHA HOY
+// =====================================
+
+const hoy = new Date();
+
+const year = hoy.getFullYear();
+
+const month =
+String(hoy.getMonth()+1)
+.padStart(2,"0");
+
+const day =
+String(hoy.getDate())
+.padStart(2,"0");
+
+const fechaHoy =
+`${year}-${month}-${day}`;
+
+document.getElementById(
+"fecha"
+).value = fechaHoy;
+
+// =====================================
+// CARGAR
+// =====================================
+
+function cargar(){
+
+const fecha =
+document.getElementById(
+"fecha"
+).value;
+
+fetch(
+`http://localhost:3000/api/asistencia/${clase}?fecha=${fecha}`
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+estudiantes =
+data.estudiantes;
+
+document.getElementById(
+"fechaTexto"
+).innerHTML =
+`Fecha seleccionada: ${data.fecha}`;
+
+render();
+
+});
+
+}
+
+// =====================================
+// RENDER
+// =====================================
+
+function render(){
+
+const lista =
+document.getElementById(
+"lista"
+);
+
+lista.innerHTML="";
+
+let presentes=0;
+let ausentes=0;
+
+estudiantes.forEach(e=>{
+
+let estado="Sin registrar";
+let claseEstado="";
+
+if(Number(e.presente)===1){
+
+estado="Presente";
+claseEstado="present";
+presentes++;
+
+}
+
+if(Number(e.presente)===0){
+
+estado="Ausente";
+claseEstado="absent";
+ausentes++;
+
+}
+
+const inicial=
+e.nombre.charAt(0)
+.toUpperCase();
+
+lista.innerHTML+=`
+
+<div class="student">
+
+<div class="student-left">
+
+<div class="avatar">
+${inicial}
+</div>
+
+<div>
+
+<h2>
+${e.nombre}
+</h2>
+
+<div class="status ${claseEstado}">
+${estado}
+</div>
+
+<div class="resumen">
+
+<div>
+✅ ${e.total_presentes || 0} presentes
+</div>
+
+<div>
+❌ ${e.total_ausentes || 0} ausencias
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn btn-present"
+onclick="guardar(${e.id},1)">
+
+✓ Presente
+
+</button>
+
+<button
+class="btn btn-absent"
+onclick="guardar(${e.id},0)">
+
+✕ Ausente
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"presentes"
+).innerHTML =
+presentes;
+
+document.getElementById(
+"ausentes"
+).innerHTML =
+ausentes;
+
+document.getElementById(
+"total"
+).innerHTML =
+estudiantes.length;
+
+const porcentaje =
+estudiantes.length
+?
+Math.round(
+(presentes*100)
+/estudiantes.length
+)
+:
+0;
+
+document.getElementById(
+"porcentaje"
+).innerHTML =
+`${porcentaje}%`;
+
+}
+
+// =====================================
+// GUARDAR
+// =====================================
+
+async function guardar(id,presente){
+
+const fecha =
+document.getElementById(
+"fecha"
+).value;
+
+await fetch(
+
+"http://localhost:3000/api/asistencia/guardar",
+
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+clase_id:Number(clase),
+estudiante_id:Number(id),
+presente,
+fecha
+
+})
+
+}
+
+);
+
+cargar();
+
+}
+
+// =====================================
+
+cargar();
+
+</script>
+
+</body>
+</html>

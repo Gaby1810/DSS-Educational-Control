@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Tareas</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f1f5f9;
+min-height:100vh;
+}
+
+/* TOP */
+
+.topbar{
+
+height:75px;
+background:#0f2c82;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 25px;
+color:white;
+
+}
+
+.top-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.back{
+
+width:42px;
+height:42px;
+
+border-radius:50%;
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+color:#0f2c82;
+cursor:pointer;
+
+}
+
+.topbar h2{
+font-size:24px;
+}
+
+/* HERO */
+
+.hero{
+
+height:180px;
+
+background:
+linear-gradient(
+rgba(15,44,130,.65),
+rgba(15,44,130,.65)
+),
+
+url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200");
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:white;
+
+}
+
+.hero h1{
+font-size:42px;
+}
+
+/* CONTENIDO */
+
+.container{
+width:92%;
+margin:auto;
+padding:35px 0 100px;
+}
+
+/* LISTA */
+
+.task{
+
+background:white;
+
+padding:22px;
+border-radius:18px;
+
+margin-bottom:18px;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.06);
+
+border-left:6px solid #2563eb;
+
+}
+
+.task-top{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:12px;
+gap:20px;
+
+}
+
+.task-title{
+font-size:24px;
+font-weight:bold;
+color:#111827;
+}
+
+.estado{
+
+padding:8px 15px;
+border-radius:30px;
+
+font-size:12px;
+font-weight:bold;
+
+}
+
+.pendiente{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.entregado{
+background:#dcfce7;
+color:#166534;
+}
+
+.calificado{
+background:#dbeafe;
+color:#1d4ed8;
+}
+
+.descripcion{
+color:#64748b;
+margin-bottom:15px;
+line-height:1.5;
+}
+
+.meta{
+
+display:flex;
+gap:25px;
+flex-wrap:wrap;
+
+margin-bottom:18px;
+
+font-size:14px;
+color:#475569;
+
+}
+
+.meta i{
+margin-right:6px;
+}
+
+/* NOTA */
+
+.nota-box{
+
+background:#f8fafc;
+padding:14px;
+
+border-radius:14px;
+
+margin-bottom:18px;
+
+}
+
+.nota-box h4{
+margin-bottom:6px;
+color:#0f172a;
+}
+
+.nota{
+font-size:28px;
+font-weight:bold;
+color:#16a34a;
+}
+
+/* SUBIR */
+
+.upload{
+
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+
+align-items:center;
+
+}
+
+.upload input{
+
+padding:10px;
+border:1px solid #d1d5db;
+
+border-radius:12px;
+background:white;
+
+}
+
+/* BUTTONS */
+
+.btn{
+
+border:none;
+padding:12px 18px;
+
+border-radius:12px;
+
+cursor:pointer;
+font-weight:bold;
+
+color:white;
+
+}
+
+.btn-file{
+background:#2563eb;
+}
+
+.btn-upload{
+background:#16a34a;
+}
+
+/* EMPTY */
+
+.empty{
+
+display:none;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+margin-top:60px;
+
+}
+
+.empty img{
+width:220px;
+margin-bottom:20px;
+}
+.comentario{
+
+width:100%;
+min-height:90px;
+
+padding:14px;
+
+border-radius:14px;
+border:1px solid #d1d5db;
+
+resize:none;
+
+font-size:14px;
+
+outline:none;
+
+}
+
+.comentario:focus{
+
+border-color:#2563eb;
+
+}
+.fecha{
+padding:6px 10px;
+border-radius:10px;
+font-weight:bold;
+display:inline-block;
+margin-top:10px;
+}
+
+.fecha.normal{
+background:#e0f2fe;
+color:#075985;
+}
+
+.fecha.urgente{
+background:#fef9c3;
+color:#92400e;
+}
+
+.fecha.vencida{
+background:#fee2e2;
+color:#991b1b;
+}
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+.task-top{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.upload{
+flex-direction:column;
+align-items:stretch;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="top-left">
+        <div class="back" onclick="history.back()">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <h2>Tareas</h2>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Actividades de Clase</h1>
+</div>
+
+<div class="container">
+
+<div id="lista"></div>
+
+<div id="empty" class="empty">
+    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+    <h2>No hay tareas publicadas</h2>
+    <p>El docente aún no ha publicado tareas</p>
+</div>
+
+</div>
+<script>
+
+const clase = new URLSearchParams(location.search).get("id");
+
+fetch(`http://localhost:3000/estudiante/tareas/${clase}`, {
+    credentials: "include"
+})
+.then(r => r.json())
+.then(data => {
+
+    const lista = document.getElementById("lista");
+    const empty = document.getElementById("empty");
+
+    lista.innerHTML = "";
+
+    if (!data.length) {
+        empty.style.display = "flex";
+        return;
+    }
+
+    empty.style.display = "none";
+
+    data.forEach(t => {
+
+        // =========================
+        // FECHA SEGURA (FIX INVALID DATE)
+        // =========================
+
+        const hoy = new Date();
+        let entrega = null;
+
+        if (t.fecha_entrega) {
+            const fechaTemp = new Date(t.fecha_entrega);
+
+            if (!isNaN(fechaTemp.getTime())) {
+                entrega = fechaTemp;
+            }
+        }
+
+        let estadoFecha = "normal";
+
+        if (entrega) {
+            const diff = entrega - hoy;
+            const horas = diff / (1000 * 60 * 60);
+
+            if (horas < 0) {
+                estadoFecha = "vencida";
+            } else if (horas <= 24) {
+                estadoFecha = "urgente";
+            }
+        }
+
+        // =========================
+        // ESTADO TAREA
+        // =========================
+
+        let estadoClase = "";
+
+        if (t.estado === "Pendiente") estadoClase = "pendiente";
+        if (t.estado === "Entregado") estadoClase = "entregado";
+        if (t.estado === "Calificado") estadoClase = "calificado";
+
+        // =========================
+        // FECHA FORMATEADA SEGURA
+        // =========================
+
+        let fechaFormateada = "Sin fecha";
+
+        if (entrega) {
+            fechaFormateada = entrega.toLocaleString("es-SV", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }
+
+        // =========================
+        // RENDER
+        // =========================
+
+        lista.innerHTML += `
+        <div class="task">
+
+            <div class="task-top">
+                <div class="task-title">${t.titulo}</div>
+                <div class="estado ${estadoClase}">
+                    ${t.estado}
+                </div>
+            </div>
+
+            <div class="descripcion">
+                ${t.descripcion || "Sin descripción"}
+            </div>
+
+            ${
+            estadoFecha === "vencida" && t.estado === "Pendiente"
+            ? `<div style="color:red;font-weight:bold;margin-top:10px;">
+                ⛔ Fecha vencida
+               </div>`
+            : ""
+            }
+
+            <div class="meta">
+                <div>
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <div class="fecha ${estadoFecha}">
+                        📅 ${fechaFormateada}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="nota-box">
+                <h4>Calificación</h4>
+                <div class="nota">${t.nota || "--"}</div>
+            </div>
+
+            <div class="upload">
+
+                ${
+                    t.estado === "Pendiente"
+                    ? `
+                        <input type="file" id="archivo${t.id}">
+                        <textarea id="comentario${t.id}" class="comentario" placeholder="Comentario..."></textarea>
+
+                        <button class="btn btn-upload" onclick="entregar(${t.id})">
+                            <i class="fa-solid fa-upload"></i> Entregar tarea
+                        </button>
+                    `
+                    : `
+                        <div style="color:#64748b;font-weight:bold;">
+                            ✔ Ya fue ${t.estado}
+                        </div>
+                    `
+                }
+
+            </div>
+
+        </div>
+        `;
+    });
+
+});
+
+function entregar(id){
+
+const archivo = document.getElementById(`archivo${id}`).files[0];
+const comentario = document.getElementById(`comentario${id}`).value;
+
+if(!archivo){
+    alert("Selecciona un archivo");
+    return;
+}
+
+const formData = new FormData();
+formData.append("archivo", archivo);
+formData.append("comentario", comentario);
+
+fetch(`http://localhost:3000/estudiante/entregar/${id}`, {
+    method: "POST",
+    credentials: "include",
+    body: formData
+})
+.then(r => r.json())
+.then(data => {
+    alert(data.message);
+    location.reload();
+});
+
+}
+
+</script>
+</body>
+</html>
