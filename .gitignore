@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 node_modules/
 .env
 .DS_Store
@@ -8,3 +9,8 @@ uploads/*
 .idea/
 dist/
 .expo/
+=======
+node_modules
+.env
+DS_Store
+>>>>>>> d8b637490602872ebaae8320255b6368dfaa5421

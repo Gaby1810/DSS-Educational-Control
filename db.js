@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 require("dotenv").config();
 const mysql = require("mysql2");
 
@@ -24,3 +25,23 @@ pool.getConnection((err, conn) => {
 });
 
 module.exports = pool;
+=======
+const mysql = require("mysql2");
+
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "gaby1810",
+    database: "educational_control"
+});
+
+db.connect(err => {
+    if (err) {
+        console.log("❌ Error de conexión:", err);
+    } else {
+        console.log("✅ MySQL conectado");
+    }
+});
+
+module.exports = db;
+>>>>>>> d8b637490602872ebaae8320255b6368dfaa5421
