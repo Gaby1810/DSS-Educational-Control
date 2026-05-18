@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tareas</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+<style>
+
+/* ===== RESET ===== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#eef4fb;
+    min-height:100vh;
+}
+
+/* ===== TOPBAR ===== */
+
+.topbar{
+    background:#0f2c82;
+    height:90px;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.topbar-left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.circle-btn{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:white;
+    color:#0f2c82;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+}
+
+.topbar h2{
+    font-size:20px;
+    font-weight:600;
+}
+
+.topbar small{
+    opacity:.8;
+    font-size:12px;
+}
+
+.back-btn{
+    background:white;
+    color:#0f2c82;
+    border:none;
+    padding:10px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#dbeafe;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+    width:100%;
+    height:160px;
+
+    background:
+    linear-gradient(
+    rgba(15,44,130,.7),
+    rgba(15,44,130,.7)
+    ),
+
+    url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3");
+
+    background-size:cover;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 60px;
+    color:white;
+}
+
+/* ===== BOTON CREAR TAREA ===== */
+
+.create-task{
+    background:white;
+    color:#0f2c82;
+    padding:12px 18px;
+    border-radius:14px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+}
+
+.create-task:hover{
+    transform:scale(1.05);
+}
+
+/* ===== CONTENIDO ===== */
+
+.container{
+    width:92%;
+    margin:auto;
+    padding:35px 0 100px;
+}
+
+/* ===== GRID ===== */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+/* ===== TARJETAS ===== */
+
+.task-card{
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.task-image{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+}
+
+.task-content{
+    padding:15px;
+}
+
+.task-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.task-icon{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    background:#dbeafe;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#2563eb;
+}
+
+.buttons{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.buttons button{
+    flex:1;
+    padding:8px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.btn-grade{
+    background:#3b82f6;
+}
+
+.btn-view{
+    background:#2563eb;
+}
+
+/* ===== EMPTY ===== */
+
+.empty-state{
+    text-align:center;
+    display:none;
+}
+
+/* ===== MODAL ===== */
+
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    background:white;
+    padding:30px;
+    width:450px;
+    border-radius:20px;
+}
+
+.modal-content input,
+.modal-content textarea{
+
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:10px;
+    border:1px solid #ccc;
+
+}
+
+/* ===== NAVBAR INFERIOR ===== */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:75px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -2px 10px rgba(0,0,0,.08);
+    z-index:999;
+}
+
+.bottom-nav a{
+    text-decoration:none;
+    color:#6b7280;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    font-size:13px;
+}
+
+.bottom-nav a i{
+    font-size:22px;
+}
+
+.bottom-nav a.active{
+    color:#2563eb;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+.grid{
+    grid-template-columns:1fr;
+}
+
+.hero{
+    flex-direction:column;
+    justify-content:center;
+    gap:15px;
+    text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+    <div class="topbar-left">
+
+        <div class="circle-btn">
+            <i class="fa-solid fa-file"></i>
+        </div>
+
+        <div>
+
+            <h2>
+                Tareas
+            </h2>
+
+            <small>
+                Educational Control
+            </small>
+
+        </div>
+
+    </div>
+
+<button class="back-btn"
+onclick="history.back()">
+
+<i class="fa-solid fa-arrow-left"></i>
+Volver
+
+</button>
+
+</div>
+
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div>
+
+<h1>
+Gestión de Tareas
+</h1>
+
+<p>
+Publica y administra actividades académicas
+</p>
+
+</div>
+
+
+<div class="create-task"
+onclick="abrirModal()">
+
+<i class="fa-solid fa-plus"></i>
+
+Crear tarea
+
+</div>
+
+</div>
+
+
+<!-- CONTENIDO -->
+
+<div class="container">
+
+<div id="contenedor"
+class="grid">
+
+</div>
+
+<div id="empty"
+class="empty-state">
+
+<i class="fa-solid fa-book-open"
+style="
+font-size:70px;
+margin-bottom:20px;
+color:#2563eb;
+"></i>
+
+<h2>
+No hay tareas publicadas
+</h2>
+
+<p style="
+margin-top:10px;
+color:#64748b;
+">
+
+Crea tu primera tarea para comenzar
+
+</p>
+
+</div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal"
+id="modal">
+
+<div class="modal-content">
+
+<h2 style="
+margin-bottom:20px;
+color:#0f2c82;
+">
+
+Nueva tarea
+
+</h2>
+
+<input
+id="titulo"
+placeholder="Título de la tarea">
+
+<textarea
+id="descripcion"
+placeholder="Descripción">
+
+</textarea>
+
+<input
+type="datetime-local"
+id="fecha">
+
+<input
+type="number"
+id="puntaje"
+placeholder="Puntaje">
+
+<input
+type="file"
+id="archivo">
+
+
+<div style="
+display:flex;
+gap:10px;
+margin-top:20px;
+">
+
+<button
+onclick="guardar()"
+
+style="
+flex:1;
+background:#2563eb;
+padding:12px;
+border:none;
+color:white;
+border-radius:12px;
+cursor:pointer;
+">
+
+Publicar
+
+</button>
+
+
+<button
+onclick="cerrarModal()"
+
+style="
+flex:1;
+background:#dbeafe;
+padding:12px;
+border:none;
+color:#0f2c82;
+border-radius:12px;
+cursor:pointer;
+">
+
+Cancelar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- NAVBAR -->
+
+<div class="bottom-nav">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Inicio
+
+</a>
+
+<a href="clase.html"
+class="active">
+
+<i class="fa-solid fa-book"></i>
+
+Clases
+
+</a>
+
+<a href="#">
+
+<i class="fa-solid fa-users"></i>
+
+Estudiantes
+
+</a>
+
+<a href="#">
+
+<i class="fa-regular fa-user"></i>
+
+Perfil
+
+</a>
+
+</div>
+<script>
+
+const id = new URLSearchParams(location.search).get("id");
+
+function abrirModal(){
+modal.style.display = "flex";
+}
+
+function cerrarModal(){
+modal.style.display = "none";
+}
+
+// =====================================
+// ✅ CREAR TAREA (FIXED)
+// =====================================
+function guardar(){
+
+const form = new FormData();
+form.append("titulo", titulo.value);
+form.append("descripcion", descripcion.value);
+form.append("fecha_entrega", fecha.value);
+form.append("puntaje", puntaje.value);
+
+if(archivo.files[0]){
+form.append("archivo", archivo.files[0]);
+}
+
+fetch(`http://localhost:3000/api/tareas/crear/${id}`, {
+method: "POST",
+body: form
+})
+.then(r => r.json())
+.then(res => {
+alert(res.message);
+location.reload();
+});
+}
+
+// =====================================
+// ✅ CARGAR TAREAS (FIXED)
+// =====================================
+function cargar(){
+
+fetch(`http://localhost:3000/api/tareas/${id}`)
+.then(r => r.json())
+.then(data => {
+
+contenedor.innerHTML = "";
+
+if(!data || data.length === 0){
+empty.style.display = "block";
+return;
+}
+
+empty.style.display = "none";
+
+const imgs = [
+"https://images.unsplash.com/photo-1513258496099-48168024aec0",
+"https://images.unsplash.com/photo-1509062522246-3755977927d7",
+"https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+];
+
+data.forEach((t,i) => {
+
+contenedor.innerHTML += `
+<div class="task-card">
+
+<img class="task-image" src="${imgs[i % 3]}">
+
+<div class="task-content">
+
+<div class="task-title">
+<div class="task-icon"><i class="fa fa-book"></i></div>
+<h3>${t.titulo}</h3>
+</div>
+
+<p>📅 ${t.fecha_entrega ? new Date(t.fecha_entrega).toLocaleString() : "Sin fecha"}</p>
+<p>⭐ ${t.valor || 10} puntos</p>
+
+<p>📌 Entregados: ${t.entregados || 0}</p>
+<p>⏳ Pendientes: ${t.pendientes || 0}</p>
+
+<div class="buttons">
+<button class="btn-grade"
+onclick="location.href='calificar.html?tarea=${t.id}'">
+Calificar
+</button>
+</div>
+
+</div>
+</div>
+`;
+});
+
+});
+}
+
+window.onload = cargar;
+
+</script>
+
+</body>
+</html>

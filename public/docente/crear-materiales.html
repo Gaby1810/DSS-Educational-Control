@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Subir Material</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#eef4fb;
+    padding:40px;
+}
+
+.card{
+    background:white;
+    max-width:550px;
+    margin:auto;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+h1{
+    color:#18398b;
+    margin-bottom:25px;
+}
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #d1d5db;
+    font-size:15px;
+}
+
+textarea{
+    min-height:120px;
+    resize:none;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>
+        Publicar Material
+    </h1>
+
+    <div class="input-group">
+
+        <label>
+            Título
+        </label>
+
+        <input
+        type="text"
+        id="titulo"
+        placeholder="Ejemplo: Guía Semana 1">
+
+    </div>
+
+    <div class="input-group">
+
+        <label>
+            Descripción
+        </label>
+
+        <textarea
+        id="descripcion"
+        placeholder="Escribe una descripción">
+        </textarea>
+
+    </div>
+
+    <div class="input-group">
+
+        <label>
+            Archivo
+        </label>
+
+        <input
+        type="file"
+        id="archivo">
+
+    </div>
+
+    <button onclick="subirMaterial()">
+
+        Publicar Material
+
+    </button>
+
+</div>
+
+<script>
+
+const id =
+new URLSearchParams(window.location.search)
+.get("id");
+
+function subirMaterial(){
+
+    const titulo =
+    document.getElementById("titulo").value;
+
+    const descripcion =
+    document.getElementById("descripcion").value;
+
+    const archivoInput =
+    document.getElementById("archivo");
+
+    if(!archivoInput.files[0]){
+
+        alert("Selecciona un archivo");
+        return;
+
+    }
+
+    const formData =
+    new FormData();
+
+    formData.append(
+    "titulo",
+    titulo
+    );
+
+    formData.append(
+    "descripcion",
+    descripcion
+    );
+
+    formData.append(
+    "archivo",
+    archivoInput.files[0]
+    );
+
+    fetch(
+    `http://localhost:3000/api/materiales/subir/${id}`,
+    {
+        method:"POST",
+        credentials:"include",
+        body:formData
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        alert(data.message);
+
+        window.location.href =
+        `material-clase.html?id=${id}`;
+
+    })
+
+    .catch(err => {
+
+        console.log(err);
+
+        alert("Error subiendo material");
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

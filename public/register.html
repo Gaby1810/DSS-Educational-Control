@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crear cuenta - Educational Control</title>
+<link rel="stylesheet" href="/css/theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body {
+    min-height: 100vh;
+    background: var(--ec-gradient-hero);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+}
+.card-register {
+    background: #fff; width: 100%; max-width: 540px;
+    border-radius: var(--ec-radius-xl);
+    padding: 40px;
+    box-shadow: var(--ec-shadow-xl);
+    animation: ec-fade-in .5s ease-out;
+}
+.header-section { text-align: center; margin-bottom: 28px; }
+.logo-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px;
+    background: var(--ec-blue-50);
+    color: var(--ec-blue-800);
+    border-radius: var(--ec-radius-full);
+    font-weight: 600; font-size: 13px;
+    margin-bottom: 14px;
+}
+.header-section h1 {
+    font-size: 26px; font-weight: 800;
+    color: var(--ec-slate-900); margin-bottom: 6px;
+}
+.subtitle { color: var(--ec-slate-500); font-size: 14px; }
+.role-switch {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    background: var(--ec-slate-100);
+    padding: 6px;
+    border-radius: var(--ec-radius);
+    margin-bottom: 22px;
+}
+.role-switch button {
+    padding: 12px; border: none; background: transparent;
+    border-radius: var(--ec-radius-sm);
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    color: var(--ec-slate-600); cursor: pointer;
+    transition: var(--ec-transition);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.role-switch button.active {
+    background: #fff; color: var(--ec-blue-700);
+    box-shadow: var(--ec-shadow-sm);
+}
+.section-box {
+    background: var(--ec-blue-50);
+    padding: 16px;
+    border-radius: var(--ec-radius);
+    border: 1px solid var(--ec-blue-100);
+    margin-bottom: 8px;
+}
+.field { margin-bottom: 14px; }
+.alert-box { margin-bottom: 16px; display: none; }
+.link-bottom {
+    margin-top: 22px; text-align: center;
+    font-size: 14px; color: var(--ec-slate-600);
+}
+</style>
+</head>
+<body>
+
+<div class="card-register">
+
+    <div class="header-section">
+        <div class="logo-pill"><i class="fa-solid fa-graduation-cap"></i> Educational Control</div>
+        <h1>Crear cuenta</h1>
+        <p class="subtitle">Registrate como estudiante o docente</p>
+    </div>
+
+    <div id="alertBox" class="ec-alert ec-alert-danger alert-box"></div>
+
+    <div class="role-switch">
+        <button id="btnEst" class="active" onclick="setRol('estudiante')">
+            <i class="fa-solid fa-user-graduate"></i> Estudiante
+        </button>
+        <button id="btnDoc" onclick="setRol('docente')">
+            <i class="fa-solid fa-chalkboard-user"></i> Docente
+        </button>
+    </div>
+
+    <form id="registerForm" onsubmit="registrar(event)">
+        <div class="field">
+            <label class="ec-label">Nombre completo</label>
+            <input id="nombre" class="ec-input" placeholder="Ej. Carlos Martinez" required>
+            <div id="msgNombre" class="ec-help"></div>
+        </div>
+
+        <div class="field">
+            <label class="ec-label">Correo electronico</label>
+            <input id="correo" type="email" class="ec-input" placeholder="ejemplo@centro.edu.sv" required>
+            <div id="msgCorreo" class="ec-help"></div>
+        </div>
+
+        <div class="field">
+            <label class="ec-label">Contrasena</label>
+            <input id="password" type="password" class="ec-input" placeholder="Minimo 8 caracteres" required>
+            <div id="msgPass" class="ec-help">Debe incluir 8+ caracteres, letras y numeros.</div>
+        </div>
+
+        <div id="extra"></div>
+
+        <button type="submit" id="submitBtn" class="ec-btn ec-btn-primary ec-btn-block ec-mt-2">
+            <i class="fa-solid fa-user-plus"></i> Crear cuenta
+        </button>
+    </form>
+
+    <div class="link-bottom">
+        Ya tienes cuenta? <a href="/login.html"><strong>Iniciar sesion</strong></a>
+    </div>
+</div>
+
+<script>
+var rol = "estudiante";
+function $(id) { return document.getElementById(id); }
+
+function setRol(r) {
+    rol = r;
+    $("btnEst").classList.toggle("active", r === "estudiante");
+    $("btnDoc").classList.toggle("active", r === "docente");
+
+    if (r === "estudiante") {
+        $("extra").innerHTML =
+            '<div class="section-box">' +
+            '<label class="ec-label">Tipo de bachillerato</label>' +
+            '<select id="tipo_bachillerato" class="ec-select">' +
+            '<option value="">Selecciona...</option>' +
+            '<option value="General">General</option>' +
+            '<option value="Tecnico">Tecnico</option>' +
+            '</select>' +
+            '<label class="ec-label ec-mt-2">Ano en curso</label>' +
+            '<select id="anio" class="ec-select">' +
+            '<option value="">Selecciona...</option>' +
+            '<option value="1">1 Ano</option>' +
+            '<option value="2">2 Ano</option>' +
+            '<option value="3">3 Ano</option>' +
+            '</select>' +
+            '</div>';
+    } else {
+        $("extra").innerHTML =
+            '<div class="section-box">' +
+            '<label class="ec-label">DUI</label>' +
+            '<input id="dui" class="ec-input" placeholder="12345678-9">' +
+            '<div id="msgDui" class="ec-help">Formato: 12345678-9</div>' +
+            '<label class="ec-label ec-mt-2">Telefono</label>' +
+            '<input id="telefono" class="ec-input" placeholder="7777-7777">' +
+            '</div>';
+    }
+}
+setRol("estudiante");
+
+document.addEventListener("input", function () {
+    validar("nombre", $("nombre").value.length >= 3, "Minimo 3 caracteres", "Nombre valido");
+    validar("correo", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("correo").value), "Correo invalido", "Correo valido");
+    validar("pass",   /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test($("password").value), "Debil: 8+, letras y numeros", "Contrasena segura");
+    if ($("dui")) validar("dui", /^\d{8}-\d$/.test($("dui").value), "Formato 12345678-9", "DUI valido");
+});
+
+function validar(key, ok, errMsg, okMsg) {
+    var inputId = key === "pass" ? "password" : key;
+    var msgId   = "msg" + key.charAt(0).toUpperCase() + key.slice(1);
+    var input   = $(inputId); var msg = $(msgId);
+    if (!input || !msg) return;
+    if (!input.value) { input.className = "ec-input"; msg.className = "ec-help"; msg.textContent = ""; return; }
+    if (ok) { input.className = "ec-input ec-input-ok"; msg.className = "ec-help ok"; msg.textContent = "OK " + okMsg; }
+    else    { input.className = "ec-input ec-input-error"; msg.className = "ec-help error"; msg.textContent = errMsg; }
+}
+
+function showAlert(msg, type) {
+    type = type || "danger";
+    var box = $("alertBox");
+    box.className = "ec-alert ec-alert-" + type + " alert-box";
+    box.textContent = msg;
+    box.style.display = "block";
+}
+
+async function registrar(e) {
+    e.preventDefault();
+    var btn = $("submitBtn");
+    var data = {
+        nombre:   $("nombre").value.trim(),
+        correo:   $("correo").value.trim(),
+        password: $("password").value,
+        rol: rol,
+        dui: $("dui") ? $("dui").value : null,
+        tipo_bachillerato: $("tipo_bachillerato") ? $("tipo_bachillerato").value : null,
+        anio: $("anio") ? $("anio").value : null,
+        telefono: $("telefono") ? $("telefono").value : null,
+    };
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
+    try {
+        var res = await fetch("/api/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+        var d = await res.json();
+        if (!res.ok) {
+            showAlert(d.message);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Crear cuenta';
+            return;
+        }
+        showAlert("OK " + d.message, "success");
+        setTimeout(function () { location.href = "/login.html"; }, 1200);
+    } catch (err) {
+        showAlert("Error de conexion");
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Crear cuenta';
+    }
+}
+</script>
+</body>
+</html>

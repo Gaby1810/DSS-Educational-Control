@@ -1,0 +1,649 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entregas Classroom</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f1f3f4;
+}
+
+/* TOPBAR */
+
+.topbar{
+height:70px;
+background:white;
+border-bottom:1px solid #dadce0;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.left-top{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.menu-btn{
+width:42px;
+height:42px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.3s;
+}
+
+.menu-btn:hover{
+background:#eef2ff;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo i{
+font-size:28px;
+color:#2563eb;
+}
+
+.logo h2{
+font-size:23px;
+font-weight:600;
+color:#374151;
+}
+
+.right-top{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.circle{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#2563eb;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+width:95%;
+height:220px;
+margin:25px auto;
+border-radius:28px;
+overflow:hidden;
+position:relative;
+background:
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:flex-end;
+padding:30px;
+}
+
+.hero-content{
+color:white;
+}
+
+.hero-content h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.hero-content p{
+font-size:18px;
+opacity:.95;
+}
+
+/* LAYOUT */
+
+.main{
+width:95%;
+margin:auto;
+display:grid;
+grid-template-columns:320px 1fr;
+gap:25px;
+padding-bottom:80px;
+}
+
+/* LEFT */
+
+.sidebar{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.box{
+background:white;
+border-radius:20px;
+padding:22px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.box h3{
+margin-bottom:18px;
+color:#111827;
+}
+
+.stat{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:18px;
+}
+
+.stat-icon{
+width:50px;
+height:50px;
+border-radius:15px;
+background:#dbeafe;
+color:#2563eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+}
+
+.stat p{
+font-size:14px;
+color:#6b7280;
+}
+
+.stat h2{
+font-size:24px;
+color:#111827;
+}
+
+/* ENTREGAS */
+
+.content{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.student-card{
+background:white;
+border-radius:22px;
+padding:22px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:20px;
+transition:.3s;
+}
+
+.student-card:hover{
+transform:translateY(-3px);
+}
+
+.student-left{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.avatar{
+width:65px;
+height:65px;
+border-radius:50%;
+background:#2563eb;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+font-weight:bold;
+}
+
+.student-info h2{
+font-size:20px;
+margin-bottom:6px;
+color:#111827;
+}
+
+.student-info p{
+color:#6b7280;
+font-size:14px;
+}
+
+.badge{
+padding:7px 15px;
+border-radius:30px;
+font-size:12px;
+font-weight:bold;
+display:inline-block;
+margin-top:10px;
+}
+
+.entregado{
+background:#dcfce7;
+color:#166534;
+}
+
+.pendiente{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.student-right{
+display:flex;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.grade-input{
+width:110px;
+padding:12px;
+border-radius:12px;
+border:1px solid #d1d5db;
+font-size:15px;
+}
+
+.btn{
+padding:12px 18px;
+border:none;
+border-radius:14px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn-view{
+background:#2563eb;
+color:white;
+}
+
+.btn-save{
+background:#16a34a;
+color:white;
+}
+
+.btn-empty{
+background:#94a3b8;
+color:white;
+}
+
+.btn:hover{
+transform:scale(1.03);
+}
+
+.empty{
+display:none;
+background:white;
+padding:40px;
+text-align:center;
+border-radius:20px;
+}
+
+.empty img{
+width:200px;
+margin-bottom:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.main{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:700px){
+
+.student-card{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.student-right{
+width:100%;
+}
+
+.grade-input{
+width:100%;
+}
+
+.btn{
+width:100%;
+}
+
+.hero-content h1{
+font-size:30px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div class="left-top">
+
+<div class="menu-btn">
+<i class="fa-solid fa-bars"></i>
+</div>
+
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+<h2>Educational Classroom</h2>
+</div>
+
+</div>
+
+<div class="right-top">
+
+<i class="fa-regular fa-bell" style="font-size:22px;color:#4b5563"></i>
+
+<div class="circle">
+D
+</div>
+
+</div>
+
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div class="hero-content">
+
+<h1>Entregas y Calificaciones</h1>
+
+<p>
+Administra tareas, revisa archivos y califica estudiantes
+</p>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="box">
+
+<h3>Resumen</h3>
+
+<div class="stat">
+<div class="stat-icon">
+<i class="fa-solid fa-users"></i>
+</div>
+<div>
+<p>Estudiantes</p>
+<h2 id="total">0</h2>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">
+<i class="fa-solid fa-file-circle-check"></i>
+</div>
+<div>
+<p>Entregados</p>
+<h2 id="entregados">0</h2>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">
+<i class="fa-solid fa-clock"></i>
+</div>
+<div>
+<p>Pendientes</p>
+<h2 id="pendientes">0</h2>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<div id="lista"></div>
+
+<div id="empty" class="empty">
+
+<img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
+
+<h2>
+No hay estudiantes registrados
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const tarea=
+new URLSearchParams(location.search)
+.get("tarea");
+
+fetch(
+`http://localhost:3000/api/tareas/entregas/${tarea}`
+)
+
+.then(r=>r.json())
+.then(data=>{
+
+const lista=document.getElementById("lista");
+const empty=document.getElementById("empty");
+
+lista.innerHTML="";
+
+if(!data.length){
+empty.style.display="block";
+return;
+}
+
+let entregados=0;
+let pendientes=0;
+
+empty.style.display="none";
+
+// CONTADORES
+
+document.getElementById("total")
+.innerHTML=data.length;
+
+
+data.forEach(e=>{
+
+if(e.estado==="Pendiente"){
+pendientes++;
+}else{
+entregados++;
+}
+
+const badge=
+
+ e.estado==="Pendiente"
+ ? "pendiente"
+ : "entregado";
+
+const inicial=
+e.nombre.charAt(0)
+.toUpperCase();
+
+lista.innerHTML+=`
+
+<div class="student-card">
+
+<div class="student-left">
+
+<div class="avatar">
+${inicial}
+</div>
+
+<div class="student-info">
+
+<h2>
+${e.nombre}
+</h2>
+
+<p>
+Estudiante registrado
+</p>
+
+<div class="badge ${badge}">
+${e.estado}
+</div>
+
+</div>
+
+</div>
+
+<div class="student-right">
+
+<input
+class="grade-input"
+id="nota${e.id}"
+type="number"
+placeholder="Nota"
+value="${e.nota || ''}">
+
+${
+ e.archivo
+ ?
+
+ `
+
+ <button
+ class="btn btn-view"
+ onclick="window.open('http://localhost:3000/uploads/${e.archivo}')">
+
+ <i class="fa-solid fa-file"></i>
+ Ver entrega
+
+ </button>
+
+ `
+
+ :
+
+ `
+
+ <button class="btn btn-empty">
+ Sin entrega
+ </button>
+
+ `
+
+}
+
+<button
+class="btn btn-save"
+onclick="guardar(${e.id})">
+
+<i class="fa-solid fa-floppy-disk"></i>
+Guardar
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("entregados")
+.innerHTML=entregados;
+
+
+document.getElementById("pendientes")
+.innerHTML=pendientes;
+
+});
+
+
+function guardar(id){
+
+const nota=
+document.getElementById(`nota${id}`).value;
+
+fetch(
+"http://localhost:3000/api/tareas/calificar",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+
+tarea_id:tarea,
+estudiante_id:id,
+nota
+
+})
+}
+)
+
+.then(r=>r.json())
+.then(data=>{
+
+alert(data.message);
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

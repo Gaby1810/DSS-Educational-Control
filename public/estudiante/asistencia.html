@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Mi Asistencia</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f4f6fb;
+padding:30px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.top h1{
+color:#132c7c;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 4px 14px rgba(0,0,0,.05);
+text-align:center;
+}
+
+.card h2{
+font-size:40px;
+margin-top:10px;
+}
+
+.present{
+color:#16a34a;
+}
+
+.absent{
+color:#dc2626;
+}
+
+.percent{
+color:#2563eb;
+}
+
+.historial{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 4px 14px rgba(0,0,0,.05);
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+padding:15px 0;
+border-bottom:1px solid #eee;
+}
+
+.estado{
+font-weight:bold;
+}
+
+@media(max-width:800px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top">
+
+<h1>
+Mi Asistencia
+</h1>
+
+<button
+onclick="history.back()"
+style="
+padding:10px 15px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+">
+
+Volver
+
+</button>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<p>Presentes</p>
+
+<h2
+class="present"
+id="presentes">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<p>Ausencias</p>
+
+<h2
+class="absent"
+id="ausencias">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<p>Porcentaje</p>
+
+<h2
+class="percent"
+id="porcentaje">
+
+0%
+
+</h2>
+
+</div>
+
+</div>
+
+<div class="historial">
+
+<h2 style="margin-bottom:20px;">
+Historial
+</h2>
+
+<div id="lista"></div>
+
+</div>
+
+<script>
+
+const clase =
+new URLSearchParams(
+location.search
+).get("id");
+
+fetch(
+`http://localhost:3000/estudiante/asistencia/${clase}`,
+{
+credentials:"include"
+}
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+const presentes =
+data.resumen.presentes || 0;
+
+const ausencias =
+data.resumen.ausencias || 0;
+
+const total =
+presentes + ausencias;
+
+const porcentaje =
+total
+?
+Math.round(
+(presentes*100)/total
+)
+:
+0;
+
+document.getElementById(
+"presentes"
+).innerHTML =
+presentes;
+
+document.getElementById(
+"ausencias"
+).innerHTML =
+ausencias;
+
+document.getElementById(
+"porcentaje"
+).innerHTML =
+`${porcentaje}%`;
+
+const lista =
+document.getElementById(
+"lista"
+);
+
+data.historial.forEach(a=>{
+
+const estado =
+Number(a.presente) === 1
+?
+"Presente"
+:
+"Ausente";
+
+const color =
+Number(a.presente) === 1
+?
+"#16a34a"
+:
+"#dc2626";
+
+lista.innerHTML += `
+
+<div class="item">
+
+<div>
+${a.fecha}
+</div>
+
+<div
+class="estado"
+style="color:${color}">
+
+${estado}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

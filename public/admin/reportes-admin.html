@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reportes Admin</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f4f6fb;
+color:#111827;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+height:70px;
+background:#1e3a8a;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 30px;
+color:white;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:28px;
+font-weight:bold;
+}
+
+.logo i{
+font-size:22px;
+}
+
+.menu{
+display:flex;
+gap:40px;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+font-size:15px;
+font-weight:500;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+padding:30px;
+}
+
+.title{
+margin-bottom:30px;
+}
+
+.title h1{
+font-size:50px;
+margin-bottom:8px;
+}
+
+.title p{
+color:#6b7280;
+font-size:20px;
+}
+
+/* ================= TOP CARDS ================= */
+
+.top-cards{
+display:grid;
+grid-template-columns:2fr 1fr 1fr;
+gap:25px;
+margin-bottom:30px;
+}
+
+.card{
+background:white;
+border-radius:24px;
+padding:30px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.main-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.main-card h4{
+font-size:15px;
+color:#6b7280;
+margin-bottom:20px;
+}
+
+.main-card h1{
+font-size:75px;
+color:#4f46e5;
+margin-bottom:10px;
+}
+
+.main-card p{
+color:#ef4444;
+font-size:18px;
+}
+
+.main-icon{
+font-size:70px;
+color:#6366f1;
+}
+
+.small-card{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+.small-card i{
+font-size:55px;
+margin-bottom:15px;
+color:#6366f1;
+}
+
+.small-card h2{
+font-size:55px;
+margin-bottom:10px;
+}
+
+.small-card p{
+font-size:18px;
+color:#6b7280;
+}
+
+/* ================= BOTTOM ================= */
+
+.bottom{
+display:grid;
+grid-template-columns:1.4fr 1fr;
+gap:25px;
+}
+
+.chart-box{
+background:white;
+padding:25px;
+border-radius:24px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.chart-box h2{
+margin-bottom:25px;
+font-size:32px;
+}
+
+.grades{
+background:white;
+padding:25px;
+border-radius:24px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.grades-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.grades-top h2{
+font-size:32px;
+}
+
+.grades-top a{
+text-decoration:none;
+color:#4f46e5;
+font-weight:600;
+}
+
+.grade-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px;
+border:1px solid #eee;
+border-radius:18px;
+margin-bottom:15px;
+}
+
+.grade-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.dot{
+width:16px;
+height:16px;
+border-radius:50%;
+}
+
+.grade-info h3{
+font-size:25px;
+margin-bottom:5px;
+}
+
+.grade-info p{
+font-size:15px;
+color:#6b7280;
+}
+
+.badge{
+padding:10px 18px;
+background:#eef2ff;
+color:#4f46e5;
+border-radius:20px;
+font-weight:600;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1200px){
+
+.top-cards{
+grid-template-columns:1fr;
+}
+
+.bottom{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+Educational Control
+</div>
+
+<div class="menu">
+<a href="#">Inicio</a>
+<a href="#">Reportes</a>
+<a href="#">Administrador</a>
+</div>
+
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+<div class="title">
+<h1>Reportes</h1>
+<p>Resumen institucional del sistema</p>
+</div>
+
+<!-- TOP -->
+<div class="top-cards">
+
+<!-- MAIN -->
+<div class="card main-card">
+
+<div>
+
+<h4>RENDIMIENTO INSTITUCIONAL</h4>
+
+<h1 id="asistencia">0%</h1>
+
+<p>+2.4% este mes</p>
+
+</div>
+
+<div class="main-icon">
+<i class="fa-regular fa-calendar-check"></i>
+</div>
+
+</div>
+
+<!-- PROMEDIO -->
+<div class="card small-card">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+<h2 id="promedio">0</h2>
+
+<p>Promedio Sistema</p>
+
+</div>
+
+<!-- ALUMNOS -->
+<div class="card small-card">
+
+<i class="fa-solid fa-users"></i>
+
+<h2 id="alumnos">0</h2>
+
+<p>Total Alumnos</p>
+
+</div>
+
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom">
+
+<!-- CHART -->
+<div class="chart-box">
+
+<h2>Estudiantes por año</h2>
+
+<canvas id="chart"></canvas>
+
+</div>
+
+<!-- GRADOS -->
+<div class="grades">
+
+<div class="grades-top">
+
+<h2>Años Bachillerato</h2>
+
+<a href="#">
+Ver todas
+</a>
+
+</div>
+
+<div id="listaGrados"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+// ================= FETCH REPORTES =================
+
+fetch("http://localhost:3000/api/admin/reportes",{
+credentials:"include"
+})
+.then(r=>r.json())
+.then(data=>{
+
+// ================= KPIS =================
+
+document.getElementById("asistencia")
+.innerText=data.asistencia+"%";
+
+document.getElementById("promedio")
+.innerText=data.promedio;
+
+document.getElementById("alumnos")
+.innerText=data.alumnos;
+
+// ================= CHART =================
+
+new Chart(document.getElementById("chart"),{
+
+type:"bar",
+
+data:{
+
+labels:data.graficos.map(g=>g.grado),
+
+datasets:[{
+
+data:data.graficos.map(g=>g.total),
+
+backgroundColor:[
+"#4f46e5",
+"#6366f1",
+"#8b5cf6"
+],
+
+borderRadius:10
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+legend:{
+display:false
+}
+},
+
+scales:{
+y:{
+beginAtZero:true
+}
+}
+
+}
+
+});
+
+// ================= LISTA =================
+
+let colores=[
+"#4f46e5",
+"#ef4444",
+"#10b981"
+];
+
+let box=document.getElementById("listaGrados");
+
+data.graficos.forEach((g,index)=>{
+
+box.innerHTML+=`
+
+<div class="grade-item">
+
+<div class="grade-left">
+
+<div
+class="dot"
+style="background:${colores[index]}">
+</div>
+
+<div class="grade-info">
+
+<h3>${g.grado}</h3>
+
+<p>
+${g.total} estudiantes
+</p>
+
+</div>
+
+</div>
+
+<div class="badge">
+${g.clases} clases
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

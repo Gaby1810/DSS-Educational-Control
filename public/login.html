@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar sesion - Educational Control</title>
+<link rel="stylesheet" href="/css/theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body {
+    min-height: 100vh;
+    background: var(--ec-gradient-hero);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; position: relative; overflow-x: hidden;
+}
+.login-container {
+    width: 100%; max-width: 950px;
+    background: #fff;
+    border-radius: var(--ec-radius-xl);
+    box-shadow: var(--ec-shadow-xl);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    animation: ec-fade-in .5s ease-out;
+}
+.brand-side {
+    background: var(--ec-gradient-primary);
+    color: #fff;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.brand-logo {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 22px; font-weight: 800;
+}
+.brand-logo .icon {
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,.2);
+    border-radius: var(--ec-radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+}
+.brand-tagline h1 { font-size: 32px; line-height: 1.15; font-weight: 800; margin-bottom: 16px; }
+.brand-tagline p  { font-size: 15px; opacity: .85; line-height: 1.65; }
+.brand-features { display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
+.brand-features div { display: flex; gap: 10px; align-items: center; }
+.brand-features i {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,.18);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+}
+.form-side {
+    padding: 56px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+}
+.form-side h2 {
+    font-size: 26px; font-weight: 800;
+    color: var(--ec-slate-900); margin-bottom: 6px;
+}
+.form-side .subtitle { color: var(--ec-slate-500); margin-bottom: 28px; font-size: 14px; }
+.input-group { position: relative; margin-bottom: 16px; }
+.input-group > i {
+    position: absolute; left: 16px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--ec-slate-400); font-size: 16px;
+}
+.input-group .ec-input { padding-left: 46px; height: 50px; }
+.input-group .toggle-pass {
+    position: absolute; right: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--ec-slate-400); cursor: pointer;
+    background: none; border: none; padding: 4px;
+}
+.divider {
+    text-align: center; margin: 24px 0 16px;
+    color: var(--ec-slate-400); font-size: 12px; position: relative;
+}
+.register-link { text-align: center; font-size: 14px; color: var(--ec-slate-600); }
+.alert-box { margin-bottom: 16px; display: none; }
+@media (max-width: 768px) {
+    .login-container { grid-template-columns: 1fr; max-width: 440px; }
+    .brand-side { display: none; }
+    .form-side { padding: 36px 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+
+    <aside class="brand-side">
+        <div class="brand-logo">
+            <span class="icon"><i class="fa-solid fa-graduation-cap"></i></span>
+            Educational Control
+        </div>
+        <div class="brand-tagline">
+            <h1>Bienvenido a tu plataforma escolar</h1>
+            <p>Sistema integral para bachilleratos de El Salvador. Gestiona clases, tareas, asistencia y reportes en un solo lugar.</p>
+        </div>
+        <div class="brand-features">
+            <div><i class="fa-solid fa-check"></i> Acceso para estudiantes, docentes y administradores</div>
+            <div><i class="fa-solid fa-shield"></i> Seguridad y privacidad de datos</div>
+            <div><i class="fa-solid fa-mobile-screen"></i> Disponible 24/7 desde cualquier dispositivo</div>
+        </div>
+    </aside>
+
+    <main class="form-side">
+        <h2>Iniciar sesion</h2>
+        <p class="subtitle">Ingresa tus credenciales para acceder al sistema</p>
+
+        <div id="alertBox" class="ec-alert ec-alert-danger alert-box"></div>
+
+        <form id="loginForm" onsubmit="iniciarSesion(event)" autocomplete="on">
+            <label class="ec-label" for="correo">Correo electronico</label>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="correo" class="ec-input"
+                       placeholder="ejemplo@centro.edu.sv" required autocomplete="username">
+            </div>
+
+            <label class="ec-label" for="password">Contrasena</label>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" class="ec-input"
+                       placeholder="Tu contrasena" required autocomplete="current-password">
+                <button type="button" class="toggle-pass" onclick="togglePass()" aria-label="Mostrar">
+                    <i id="eyeIcon" class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+
+            <button type="submit" id="submitBtn" class="ec-btn ec-btn-primary ec-btn-block ec-mt-2">
+                <i class="fa-solid fa-right-to-bracket"></i> Entrar
+            </button>
+        </form>
+
+        <div class="divider">o</div>
+        <div class="register-link">
+            No tienes cuenta? <a href="/register.html"><strong>Crear cuenta</strong></a>
+        </div>
+    </main>
+</div>
+
+<script>
+function togglePass() {
+    const input = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
+    if (input.type === "password") { input.type = "text"; icon.className = "fa-solid fa-eye-slash"; }
+    else { input.type = "password"; icon.className = "fa-solid fa-eye"; }
+}
+function showAlert(msg, type) {
+    type = type || "danger";
+    const box = document.getElementById("alertBox");
+    box.className = "ec-alert ec-alert-" + type + " alert-box";
+    box.textContent = msg;
+    box.style.display = "block";
+}
+async function iniciarSesion(e) {
+    e.preventDefault();
+    const correo = document.getElementById("correo").value.trim();
+    const password = document.getElementById("password").value;
+    const btn = document.getElementById("submitBtn");
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verificando...';
+
+    try {
+        const res = await fetch("/api/auth/login", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ correo: correo, password: password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+            showAlert(data.message || "Credenciales incorrectas");
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar';
+            return;
+        }
+        if (data.rol === "docente") window.location.href = "/docente/dashboard.html";
+        else if (data.rol === "estudiante") window.location.href = "/estudiante/clases.html";
+        else if (data.rol === "admin") window.location.href = "/admin/dashboard-admin.html";
+        else showAlert("Rol desconocido");
+    } catch (err) {
+        showAlert("Error de conexion con el servidor");
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar';
+    }
+}
+</script>
+
+</body>
+</html>
