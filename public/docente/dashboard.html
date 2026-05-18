@@ -375,7 +375,7 @@ body{
         Inicio
     </a>
 
-    <a href="/public/docente/clase.html">
+    <a href="clase.html">
         <i class="fa-solid fa-book"></i>
         Clases
     </a>
@@ -393,14 +393,12 @@ body{
 </div>
 
 
-<script src="dashboard.js"></script>
-
 <script>
 
 function logout(){
 
     fetch(
-    "http://localhost:3000/api/auth/logout",
+    "/api/auth/logout",
     {
         credentials:"include"
     })
@@ -413,8 +411,6 @@ function logout(){
     });
 
 }
-
-</script>
 
 </script>
 

@@ -554,7 +554,7 @@ new URLSearchParams(window.location.search)
 // =========================
 
 fetch(
-"http://localhost:3000/api/docente/mis-clases",
+"/api/docente/mis-clases",
 {
     credentials:"include"
 })
@@ -603,7 +603,7 @@ function formatearFecha(fecha){
 function cargarMateriales(){
 
 fetch(
-`http://localhost:3000/api/materiales/${id}`,
+`/api/materiales/${id}`,
 {
     credentials:"include"
 })
@@ -667,7 +667,7 @@ fetch(
 
                 <a
                 class="download-btn"
-                href="http://localhost:3000/uploads/${material.archivo}"
+                href="/uploads/${material.archivo}"
                 target="_blank">
 
                     Ver archivo
@@ -753,7 +753,7 @@ function subirMaterial(){
     );
 
     fetch(
-    `http://localhost:3000/api/materiales/subir/${id}`,
+    `/api/materiales/subir/${id}`,
     {
         method:"POST",
         credentials:"include",
@@ -787,7 +787,7 @@ function subirMaterial(){
 function logout(){
 
 fetch(
-"http://localhost:3000/api/auth/logout",
+"/api/auth/logout",
 {
 credentials:"include"
 })

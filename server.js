@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // =====================================
 // EDUCATIONAL CONTROL - SERVIDOR PRINCIPAL
 // =====================================
@@ -21,6 +20,7 @@ for (const key of required) {
 }
 
 const isProd = process.env.NODE_ENV === "production";
+const forceHttps = process.env.FORCE_HTTPS === "true";
 
 // Seguridad - headers HTTP
 app.use(helmet({
@@ -29,11 +29,15 @@ app.use(helmet({
 }));
 
 // CORS
-const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000")
-    .split(",").map(o => o.trim());
+const allowedOrigins = (process.env.CORS_ORIGIN || "")
+    .split(",")
+    .map(o => o.trim())
+    .filter(Boolean);
 app.use(cors({
     origin: (origin, cb) => {
-        if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+        if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+            return cb(null, true);
+        }
         return cb(new Error("Origen no permitido por CORS: " + origin));
     },
     credentials: true,
@@ -43,6 +47,15 @@ app.use(cors({
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 app.set("trust proxy", 1);
+
+if (forceHttps) {
+    app.use((req, res, next) => {
+        if (req.secure || req.get("x-forwarded-proto") === "https") {
+            return next();
+        }
+        return res.redirect(301, "https://" + req.headers.host + req.originalUrl);
+    });
+}
 
 // Rate limit
 const loginLimiter = rateLimit({
@@ -112,139 +125,3 @@ app.listen(PORT, () => {
     console.log("Servidor Educational Control en http://localhost:" + PORT);
     console.log("Entorno:", process.env.NODE_ENV || "development");
 });
-=======
-const express = require("express");
-const session = require("express-session");
-const path = require("path");
-const cors = require("cors");
-
-const app = express();
-
-// =====================================
-// CONFIGURACIÓN
-// =====================================
-
-app.use(cors({
-    origin: "http://localhost:5500",
-    credentials: true
-}));
-
-app.use(express.json());
-
-app.use(express.urlencoded({
-    extended: true
-}));
-
-app.set("trust proxy", 1);
-
-// =====================================
-// SESIONES
-// =====================================
-
-app.use(session({
-
-    secret: "secreto123",
-
-    resave: false,
-
-    saveUninitialized: false,
-
-    cookie: {
-
-        maxAge: 1000 * 60 * 60,
-
-        httpOnly: true
-
-    }
-
-}));
-
-// =====================================
-// CARPETA PUBLIC
-// =====================================
-
-app.use(
-
-    express.static(
-        path.join(__dirname, "public")
-    )
-
-);
-
-// =====================================
-// CARPETA UPLOADS
-// =====================================
-
-app.use(
-
-    "/uploads",
-
-    express.static(
-        path.join(__dirname, "uploads")
-    )
-
-);
-
-// =====================================
-// RUTAS API
-// =====================================
-
-app.use(
-    "/api/auth",
-    require("./routes/auth")
-);
-
-app.use(
-    "/api/docente",
-    require("./routes/docente")
-);
-
-app.use(
-    "/api/materiales",
-    require("./routes/materiales")
-);
-
-app.use(
-    "/api/tareas",
-    require("./routes/tareas")
-);
-
-app.use(
-    "/estudiante",
-    require("./routes/estudiante")
-);
-
-// =====================================
-// ✅ NUEVA RUTA ASISTENCIA
-// =====================================
-
-app.use(
-    "/api/asistencia",
-    require("./routes/asistencia")
-);
-app.use(
-    "/api/admin",
-    require("./routes/admin")
-);
-// =====================================
-// RUTA PRINCIPAL
-// =====================================
-
-app.get("/", (req, res) => {
-
-    res.send("Servidor funcionando");
-
-});
-
-// =====================================
-// SERVIDOR
-// =====================================
-
-app.listen(3000, () => {
-
-    console.log(
-        "✅ Servidor ejecutándose en puerto 3000"
-    );
-
-});
->>>>>>> d8b637490602872ebaae8320255b6368dfaa5421

@@ -554,7 +554,7 @@ if(archivo.files[0]){
 form.append("archivo", archivo.files[0]);
 }
 
-fetch(`http://localhost:3000/api/tareas/crear/${id}`, {
+fetch(`/api/tareas/crear/${id}`, {
 method: "POST",
 body: form
 })
@@ -570,7 +570,7 @@ location.reload();
 // =====================================
 function cargar(){
 
-fetch(`http://localhost:3000/api/tareas/${id}`)
+fetch(`/api/tareas/${id}`)
 .then(r => r.json())
 .then(data => {
 

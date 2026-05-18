@@ -370,7 +370,7 @@ align-items:stretch;
 
 const clase = new URLSearchParams(location.search).get("id");
 
-fetch(`http://localhost:3000/estudiante/tareas/${clase}`, {
+fetch(`/estudiante/tareas/${clase}`, {
     credentials: "include"
 })
 .then(r => r.json())
@@ -527,7 +527,7 @@ const formData = new FormData();
 formData.append("archivo", archivo);
 formData.append("comentario", comentario);
 
-fetch(`http://localhost:3000/estudiante/entregar/${id}`, {
+fetch(`/estudiante/entregar/${id}`, {
     method: "POST",
     credentials: "include",
     body: formData

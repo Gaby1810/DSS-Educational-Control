@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudiantes por clase</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", sans-serif; }
+body { background: #eef4fb; color: #1f2937; min-height: 100vh; }
+.topbar {
+    background: #1e3a8a;
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.topbar h1 { font-size: 22px; }
+.topbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+.container { width: min(1100px, 92%); margin: 30px auto 100px; }
+.panel {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    padding: 28px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.header h2 { color: #0f2c82; font-size: 28px; }
+.header p { color: #64748b; margin-top: 6px; }
+.pill {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+.card {
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 18px;
+    background: #f8fafc;
+}
+.avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e3a8a;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+.card h3 { margin-bottom: 8px; color: #0f172a; }
+.meta { color: #475569; font-size: 14px; line-height: 1.7; }
+.empty {
+    text-align: center;
+    color: #64748b;
+    padding: 34px 20px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 18px;
+    background: #f8fafc;
+}
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+.btn {
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-primary { background: #1e3a8a; color: white; }
+.btn-secondary { background: #e2e8f0; color: #0f172a; }
+</style>
+</head>
+<body>
+<div class="topbar">
+    <h1><i class="fa-solid fa-users"></i> Listado de estudiantes</h1>
+    <a href="dashboard-admin.html">Volver al panel</a>
+</div>
+
+<div class="container">
+    <div class="panel">
+        <div class="header">
+            <div>
+                <h2 id="titulo">Estudiantes inscritos</h2>
+                <p>Vista administrativa de la clase seleccionada.</p>
+            </div>
+            <div class="pill" id="contador">0 estudiantes</div>
+        </div>
+
+        <div id="contenido" class="grid"></div>
+
+        <div class="actions">
+            <a class="btn btn-primary" href="clases-admin.html">Volver a clases</a>
+            <a class="btn btn-secondary" href="reportes-admin.html">Ir a reportes</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const claseId = new URLSearchParams(window.location.search).get("id");
+const contenido = document.getElementById("contenido");
+const contador = document.getElementById("contador");
+
+if (!claseId) {
+    contenido.innerHTML = '<div class="empty">No se recibió el identificador de la clase.</div>';
+} else {
+    fetch(`/api/docente/estudiantes/${claseId}`, {
+        credentials: "include",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (!Array.isArray(data) || data.length === 0) {
+                contador.textContent = "0 estudiantes";
+                contenido.innerHTML = '<div class="empty">Esta clase todavía no tiene estudiantes inscritos.</div>';
+                return;
+            }
+
+            contador.textContent = `${data.length} estudiantes`;
+            document.getElementById("titulo").textContent = `Estudiantes inscritos (${data.length})`;
+            contenido.innerHTML = data.map((estudiante) => `
+                <article class="card">
+                    <div class="avatar">${estudiante.nombre.charAt(0).toUpperCase()}</div>
+                    <h3>${estudiante.nombre}</h3>
+                    <div class="meta">
+                        <div><strong>Correo:</strong> ${estudiante.correo}</div>
+                        <div><strong>Grado:</strong> ${estudiante.grado || "N/D"}</div>
+                        <div><strong>Sección:</strong> ${estudiante.seccion || "N/D"}</div>
+                    </div>
+                </article>
+            `).join("");
+        })
+        .catch(() => {
+            contenido.innerHTML = '<div class="empty">No fue posible cargar los estudiantes de esta clase.</div>';
+        });
+}
+</script>
+</body>
+</html>

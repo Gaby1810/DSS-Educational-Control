@@ -111,7 +111,7 @@ Material de Clase
 
 const clase = new URLSearchParams(location.search).get("id");
 
-fetch(`http://localhost:3000/estudiante/materiales/${clase}`)
+fetch(`/estudiante/materiales/${clase}`)
 .then(r => r.json())
 .then(data => {
 
@@ -146,7 +146,7 @@ ${
 m.archivo
 ? `
 <button class="btn"
-onclick="window.open('http://localhost:3000/uploads/${m.archivo}')">
+onclick="window.open('/uploads/${m.archivo}')">
 📄 Ver archivo
 </button>
 `

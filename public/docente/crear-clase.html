@@ -465,7 +465,7 @@ if(!grado){
     return;
 
 }
-    fetch("http://localhost:3000/api/docente/crear-clase", {
+    fetch("/api/docente/crear-clase", {
 
         method: "POST",
 
@@ -520,7 +520,7 @@ if(!grado){
 function logout(){
 
     fetch(
-    "http://localhost:3000/api/auth/logout",
+    "/api/auth/logout",
 
     {
         credentials:"include"

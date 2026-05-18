@@ -473,7 +473,7 @@ new URLSearchParams(location.search)
 .get("tarea");
 
 fetch(
-`http://localhost:3000/api/tareas/entregas/${tarea}`
+`/api/tareas/entregas/${tarea}`
 )
 
 .then(r=>r.json())
@@ -563,7 +563,7 @@ ${
 
  <button
  class="btn btn-view"
- onclick="window.open('http://localhost:3000/uploads/${e.archivo}')">
+ onclick="window.open('/uploads/${e.archivo}')">
 
  <i class="fa-solid fa-file"></i>
  Ver entrega
@@ -618,7 +618,7 @@ const nota=
 document.getElementById(`nota${id}`).value;
 
 fetch(
-"http://localhost:3000/api/tareas/calificar",
+"/api/tareas/calificar",
 {
 method:"POST",
 headers:{

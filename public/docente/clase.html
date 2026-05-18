@@ -543,7 +543,7 @@ body{
 function cargarClases(){
 
     fetch(
-    "http://localhost:3000/api/docente/mis-clases",
+    "/api/docente/mis-clases",
     {
         credentials:"include"
     })
@@ -717,7 +717,7 @@ function guardarCambios(){
     document.getElementById("editId").value;
 
     fetch(
-    `http://localhost:3000/api/docente/editar-clase/${id}`,
+    `/api/docente/editar-clase/${id}`,
     {
 
         method:"PUT",
@@ -766,7 +766,7 @@ function eliminarClase(id){
     }
 
     fetch(
-    `http://localhost:3000/api/docente/eliminar-clase/${id}`,
+    `/api/docente/eliminar-clase/${id}`,
     {
 
         method:"DELETE",
@@ -790,7 +790,7 @@ function eliminarClase(id){
 function logout(){
 
     fetch(
-    "http://localhost:3000/api/auth/logout",
+    "/api/auth/logout",
     {
         credentials:"include"
     })

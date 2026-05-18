@@ -271,7 +271,7 @@ id="lista">
 
 <div class="bottom-nav">
 
-<a href="dashboard-docente.html">
+<a href="dashboard.html">
 <i class="fa-solid fa-house"></i>
 Inicio
 </a>
@@ -312,7 +312,7 @@ document.getElementById(
 ).value;
 
 const r=await fetch(
-`http://localhost:3000/api/asistencia/${clase}?fecha=${fecha}`,
+`/api/asistencia/${clase}?fecha=${fecha}`,
 {
 credentials:"include"
 }
@@ -448,7 +448,7 @@ document.getElementById(
 ).value;
 
 await fetch(
-"http://localhost:3000/api/asistencia/guardar",
+"/api/asistencia/guardar",
 {
 method:"POST",
 

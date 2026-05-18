@@ -193,7 +193,7 @@ Ciclo 2024
 
 <script>
 
-fetch("http://localhost:3000/api/admin/clases",{
+fetch("/api/admin/clases",{
 credentials:"include"
 })
 .then(r=>r.json())
@@ -280,7 +280,7 @@ Ver Listado
 function verClase(id){
 
 window.location.href=
-`detalle-clase.html?id=${id}`;
+`estudiantes-clase-admin.html?id=${id}`;
 
 }
 
