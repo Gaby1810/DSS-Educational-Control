@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gestión de Estudiantes</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    padding:40px;
+}
+
+h2{
+    margin-bottom:25px;
+    color:#111827;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom:35px;
+}
+
+input{
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    margin-right:10px;
+}
+
+input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 2px rgba(37,99,235,0.2);
+}
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#1e40af;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-danger:hover{
+    background:#b91c1c;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th, td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+
+th{
+    background:#f9fafb;
+    text-align:left;
+}
+
+tr:hover{
+    background:#f3f4f6;
+}
+</style>
+</head>
+<body>
+
+<h2>👨‍🎓 Gestión de Estudiantes</h2>
+
+<div class="card">
+    <h3>➕ Crear Estudiante</h3>
+    <input type="text" id="nombre" placeholder="Nombre completo">
+    <input type="email" id="correo" placeholder="Correo">
+    <button class="btn-primary" onclick="crearEstudiante()">Crear</button>
+</div>
+
+<div class="card">
+    <h3>📋 Lista de Estudiantes</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tablaEstudiantes"></tbody>
+    </table>
+</div>
+
+<script>
+
+let estudiantes = [];
+
+function cargarEstudiantes(){
+    fetch("/api/docente/estudiantes",{
+        credentials:"include"
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        estudiantes = data;
+        renderTabla();
+    });
+}
+
+function renderTabla(){
+    const tabla = document.getElementById("tablaEstudiantes");
+    tabla.innerHTML = "";
+
+    estudiantes.forEach(e=>{
+        tabla.innerHTML += `
+        <tr>
+            <td>${e.nombre}</td>
+            <td>${e.correo}</td>
+            <td>
+                <button class="btn-danger" onclick="eliminar(${e.id})">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+}
+
+function crearEstudiante(){
+    const nombre = document.getElementById("nombre").value;
+    const correo = document.getElementById("correo").value;
+
+    if(!nombre || !correo){
+        alert("Completa todos los campos");
+        return;
+    }
+
+    fetch("/api/docente/crear-estudiante",{
+        method:"POST",
+        credentials:"include",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({nombre, correo})
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        alert(data.message);
+        cargarEstudiantes();
+    });
+}
+
+function eliminar(id){
+    if(!confirm("¿Eliminar estudiante?")) return;
+
+    fetch("/api/docente/eliminar-estudiante/"+id,{
+        method:"DELETE",
+        credentials:"include"
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        alert(data.message);
+        cargarEstudiantes();
+    });
+}
+
+cargarEstudiantes();
+
+</script>
+
+</body>
+</html>

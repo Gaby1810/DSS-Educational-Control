@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Clases Docente</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#eef4fb;
+    min-height:100vh;
+}
+
+/* ===== TOPBAR ===== */
+
+.topbar{
+    background:#0f2c82;
+    height:75px;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.topbar-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.circle-btn{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:white;
+    color:#0f2c82;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+}
+
+.logout-btn{
+    background:white;
+    color:#0f2c82;
+    border:none;
+    padding:9px 15px;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.logout-btn:hover{
+    background:#dbeafe;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+    width:100%;
+    height:160px;
+    background:
+    linear-gradient(rgba(15,44,130,0.65),
+    rgba(15,44,130,0.65)),
+    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 60px;
+    color:white;
+}
+
+.hero h1{
+    font-size:38px;
+    font-weight:700;
+}
+
+.create-class{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:white;
+    font-size:20px;
+    font-weight:600;
+}
+
+.plus-btn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:3px solid white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    transition:0.3s;
+}
+
+.plus-btn:hover{
+    background:white;
+    color:#0f2c82;
+}
+
+/* ===== CONTENIDO ===== */
+
+.container{
+    width:92%;
+    margin:auto;
+    padding:35px 0 120px;
+}
+
+/* ===== GRID ===== */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+}
+
+/* ===== CARD ===== */
+
+.class-card{
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.class-card:hover{
+    transform:translateY(-4px);
+}
+
+.class-image{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+}
+
+.class-content{
+    padding:14px;
+}
+
+.class-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.class-icon{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    background:#dbeafe;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+}
+
+.class-title h3{
+    font-size:18px;
+    color:#111827;
+}
+
+.class-info{
+    color:#4b5563;
+    line-height:1.5;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.code{
+    margin-top:6px;
+    font-size:12px;
+    color:#2563eb;
+    font-weight:600;
+}
+
+/* ===== BOTONES ===== */
+
+.buttons{
+    display:flex;
+    gap:8px;
+}
+
+.class-card button{
+    flex:1;
+    border:none;
+    padding:8px;
+    border-radius:9px;
+    color:white;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.btn-view{
+    background:#2563eb;
+}
+
+.btn-edit{
+    background:#3b82f6;
+}
+
+.btn-delete{
+    background:#1d4ed8;
+}
+
+.class-card button:hover{
+    opacity:0.9;
+}
+
+/* ===== EMPTY ===== */
+
+.empty-state{
+    text-align:center;
+    margin-top:40px;
+}
+
+.empty-state img{
+    width:220px;
+}
+
+.empty-state h2{
+    margin-top:20px;
+    font-size:28px;
+    color:#0f172a;
+}
+
+.empty-state p{
+    margin-top:10px;
+    color:#64748b;
+}
+
+/* ===== MODAL ===== */
+
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-content{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    width:90%;
+    max-width:450px;
+}
+
+.modal-content h2{
+    margin-bottom:20px;
+    color:#0f2c82;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#1e293b;
+}
+
+.input-group input{
+    width:100%;
+    padding:11px;
+    border-radius:10px;
+    border:1px solid #cbd5e1;
+    font-size:14px;
+}
+
+.modal-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.modal-buttons button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    color:white;
+    font-weight:600;
+}
+
+.btn-save{
+    background:#2563eb;
+}
+
+.btn-cancel{
+    background:#1d4ed8;
+}
+
+/* ===== NAV ===== */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:75px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -2px 10px rgba(0,0,0,0.08);
+}
+
+.bottom-nav a{
+    text-decoration:none;
+    color:#6b7280;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    font-size:13px;
+}
+
+.bottom-nav a.active{
+    color:#2563eb;
+}
+
+.bottom-nav i{
+    font-size:22px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+    .hero{
+        flex-direction:column;
+        justify-content:center;
+        gap:15px;
+        text-align:center;
+        padding:20px;
+        height:190px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:500px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+    <div class="topbar-left">
+
+        <div class="circle-btn">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+
+        <div>
+            <h2>Clases</h2>
+            <small>Educational Control</small>
+        </div>
+
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+        Salir
+    </button>
+
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+    <h1>Clases</h1>
+
+    <a href="crear-clase.html" class="create-class">
+
+        <span>Crear una clase</span>
+
+        <div class="plus-btn">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+
+    </a>
+
+</div>
+
+<!-- CONTENIDO -->
+
+<div class="container">
+
+    <div id="contenedor" class="grid"></div>
+
+    <div id="empty"
+    class="empty-state"
+    style="display:none;">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/4140/4140047.png">
+
+        <h2>No tienes clases aún</h2>
+
+        <p>Crea una nueva clase para empezar</p>
+
+    </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" id="modalEditar">
+
+    <div class="modal-content">
+
+        <h2>Editar Clase</h2>
+
+        <input type="hidden" id="editId">
+
+        <div class="input-group">
+
+            <label>Materia</label>
+
+            <input type="text"
+            id="editMateria">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Grado</label>
+
+            <input type="number"
+            id="editGrado">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Sección</label>
+
+            <input type="text"
+            id="editSeccion">
+
+        </div>
+
+        <div class="modal-buttons">
+
+            <button class="btn-save"
+            onclick="guardarCambios()">
+                Guardar
+            </button>
+
+            <button class="btn-cancel"
+            onclick="cerrarModal()">
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NAV -->
+
+<div class="bottom-nav">
+
+    <a href="dashboard.html">
+        <i class="fa-solid fa-house"></i>
+        Inicio
+    </a>
+
+    <a href="#" class="active">
+        <i class="fa-solid fa-book"></i>
+        Clases
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-users"></i>
+        Estudiantes
+    </a>
+
+    <a href="#">
+        <i class="fa-regular fa-user"></i>
+        Perfil
+    </a>
+
+</div>
+
+<script>
+
+function cargarClases(){
+
+    fetch(
+    "http://localhost:3000/api/docente/mis-clases",
+    {
+        credentials:"include"
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        const contenedor =
+        document.getElementById("contenedor");
+
+        const empty =
+        document.getElementById("empty");
+
+        contenedor.innerHTML = "";
+
+        if(!Array.isArray(data)
+        || data.length === 0){
+
+            empty.style.display = "block";
+            return;
+        }
+
+        empty.style.display = "none";
+
+        const imagenes = [
+
+            "https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=1000",
+
+            "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1000",
+
+            "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000",
+
+            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000"
+        ];
+
+        data.forEach((clase,index) => {
+
+            const imagen =
+            imagenes[index % imagenes.length];
+
+            contenedor.innerHTML += `
+
+            <div class="class-card">
+
+                <img
+                src="${imagen}"
+                class="class-image">
+
+                <div class="class-content">
+
+                    <div class="class-title">
+
+                        <div class="class-icon">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+
+                        <h3>${clase.materia}</h3>
+
+                    </div>
+
+                    <div class="class-info">
+
+                        <p>
+                        <b>Profesor:</b>
+                        ${clase.profesor}
+                        </p>
+
+                        <p>
+                        <b>Grado:</b>
+                        ${clase.grado}
+                        </p>
+
+                        <p>
+                        <b>Sección:</b>
+                        ${clase.seccion}
+                        </p>
+
+                        <p class="code">
+                        Código:
+                        ${clase.codigo_clase}
+                        </p>
+
+                    </div>
+
+                    <div class="buttons">
+
+                        <button
+                        class="btn-view"
+                        onclick="verClase(${clase.id})">
+                            Ver
+                        </button>
+
+                        <button
+                        class="btn-edit"
+                        onclick="abrirEditar(
+                        ${clase.id},
+                        '${clase.materia}',
+                        '${clase.grado}',
+                        '${clase.seccion}'
+                        )">
+                            Editar
+                        </button>
+
+                        <button
+                        class="btn-delete"
+                        onclick="eliminarClase(${clase.id})">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+        });
+
+    });
+
+}
+
+function verClase(id){
+
+    window.location.href =
+    `detalle-clase.html?id=${id}`;
+
+}
+
+function abrirEditar(
+id,
+materia,
+grado,
+seccion
+){
+
+    document
+    .getElementById("modalEditar")
+    .style.display = "flex";
+
+    document
+    .getElementById("editId")
+    .value = id;
+
+    document
+    .getElementById("editMateria")
+    .value = materia;
+
+    document
+    .getElementById("editGrado")
+    .value = grado;
+
+    document
+    .getElementById("editSeccion")
+    .value = seccion;
+
+}
+
+function cerrarModal(){
+
+    document
+    .getElementById("modalEditar")
+    .style.display = "none";
+
+}
+
+function guardarCambios(){
+
+    const id =
+    document.getElementById("editId").value;
+
+    fetch(
+    `http://localhost:3000/api/docente/editar-clase/${id}`,
+    {
+
+        method:"PUT",
+
+        credentials:"include",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            materia:
+            document.getElementById("editMateria").value,
+
+            grado:
+            document.getElementById("editGrado").value,
+
+            seccion:
+            document.getElementById("editSeccion").value
+
+        })
+
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        alert(data.message);
+
+        cerrarModal();
+
+        cargarClases();
+
+    });
+
+}
+
+function eliminarClase(id){
+
+    if(!confirm(
+    "¿Deseas eliminar esta clase?"
+    )){
+        return;
+    }
+
+    fetch(
+    `http://localhost:3000/api/docente/eliminar-clase/${id}`,
+    {
+
+        method:"DELETE",
+
+        credentials:"include"
+
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        alert(data.message);
+
+        cargarClases();
+
+    });
+
+}
+
+function logout(){
+
+    fetch(
+    "http://localhost:3000/api/auth/logout",
+    {
+        credentials:"include"
+    })
+
+    .then(() => {
+
+        window.location.href =
+        "../login.html";
+
+    });
+
+}
+
+window.onload = cargarClases;
+
+</script>
+
+</body>
+</html>
