@@ -13,8 +13,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <style>
 
-/* ===== RESET ===== */
-
 *{
 margin:0;
 padding:0;
@@ -27,8 +25,6 @@ background:#eef4fb;
 min-height:100vh;
 }
 
-/* ===== TOPBAR ===== */
-
 .topbar{
 background:#0f2c82;
 height:90px;
@@ -37,9 +33,6 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 color:white;
-position:sticky;
-top:0;
-z-index:100;
 }
 
 .topbar-left{
@@ -49,117 +42,51 @@ gap:15px;
 }
 
 .circle-btn{
-
 width:38px;
 height:38px;
 border-radius:50%;
 background:white;
 color:#0f2c82;
-
 display:flex;
 justify-content:center;
 align-items:center;
-
-font-size:18px;
-
 }
 
 .back-btn{
-
 background:white;
-color:#0f2c82;
-
 border:none;
 padding:10px 16px;
-
 border-radius:12px;
 cursor:pointer;
-font-weight:600;
-
+font-weight:bold;
+color:#0f2c82;
 }
-
-/* ===== HERO ===== */
-
-.hero{
-
-width:100%;
-height:160px;
-
-background:
-linear-gradient(
-rgba(15,44,130,.7),
-rgba(15,44,130,.7)
-),
-
-url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3");
-
-background-size:cover;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-color:white;
-text-align:center;
-
-}
-
-.hero h1{
-font-size:42px;
-margin-bottom:10px;
-}
-
-/* ===== CONTENIDO ===== */
 
 .container{
-
 width:92%;
 margin:auto;
-
-padding:35px 0 120px;
-
+padding:30px 0 120px;
 }
-
-/* ===== FILTROS ===== */
 
 .tools{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
 margin-bottom:25px;
-
-flex-wrap:wrap;
-gap:15px;
-
-}
-
-.fecha-box{
-
 display:flex;
 gap:10px;
-align-items:center;
-
 }
 
-.fecha-box input{
-
+.tools input{
 padding:12px;
 border-radius:10px;
-border:1px solid #d1d5db;
-
+border:1px solid #ddd;
 }
 
 .btn{
-
 border:none;
 padding:12px 18px;
 border-radius:12px;
 cursor:pointer;
 font-weight:bold;
 color:white;
-
 }
 
 .btn-present{
@@ -170,105 +97,62 @@ background:#16a34a;
 background:#dc2626;
 }
 
-/* ===== ESTADÍSTICAS ===== */
-
 .stats{
-
 display:grid;
-grid-template-columns:
-repeat(4,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:20px;
 margin-bottom:30px;
-
 }
 
 .stat-card{
-
 background:white;
 padding:20px;
-
-border-radius:18px;
-
-box-shadow:
-0 4px 14px rgba(0,0,0,.05);
-
+border-radius:20px;
 text-align:center;
-
 }
 
 .stat-card h2{
-
-font-size:30px;
+font-size:32px;
 color:#0f2c82;
-
 }
-
-.stat-card p{
-
-color:#64748b;
-margin-top:8px;
-
-}
-
-/* ===== ESTUDIANTES ===== */
 
 .lista{
-
 display:flex;
 flex-direction:column;
 gap:20px;
-
 }
 
 .student{
-
 background:white;
 padding:20px;
-
 border-radius:20px;
-
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-box-shadow:
-0 4px 12px rgba(0,0,0,.05);
-
 }
 
 .student-left{
-
 display:flex;
-align-items:center;
 gap:15px;
-
+align-items:center;
 }
 
 .avatar{
-
 width:60px;
 height:60px;
-
 border-radius:50%;
 background:#2563eb;
-color:white;
-
 display:flex;
 justify-content:center;
 align-items:center;
-
-font-size:24px;
+color:white;
+font-size:25px;
 font-weight:bold;
-
 }
 
 .status{
-
-margin-top:5px;
-font-size:14px;
 font-weight:bold;
-
+margin-top:5px;
 }
 
 .present{
@@ -279,83 +163,40 @@ color:#16a34a;
 color:#dc2626;
 }
 
-.resumen{
-
-font-size:13px;
-color:#64748b;
-
-margin-top:10px;
-
-}
-
 .actions{
-
 display:flex;
 gap:10px;
-
 }
 
-/* ===== NAVBAR ===== */
-
 .bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:75px;
-    background:white;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    box-shadow:0 -2px 10px rgba(0,0,0,0.08);
-    z-index:999;
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:75px;
+background:white;
+display:flex;
+justify-content:space-around;
+align-items:center;
 }
 
 .bottom-nav a{
-    text-decoration:none;
-    color:#6b7280;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:5px;
-    font-size:13px;
-    transition:.3s;
-}
-
-.bottom-nav a i{
-    font-size:22px;
+text-decoration:none;
+color:#6b7280;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
 .bottom-nav a.active{
-    color:#2563eb;
-}
-/* ===== RESPONSIVE ===== */
-
-@media(max-width:900px){
-
-.stats{
-grid-template-columns:1fr;
-}
-
-.student{
-flex-direction:column;
-gap:20px;
-align-items:flex-start;
-}
-
-.tools{
-flex-direction:column;
-align-items:flex-start;
-}
-
+color:#2563eb;
 }
 
 </style>
+
 </head>
 
 <body>
-
-<!-- TOPBAR -->
 
 <div class="topbar">
 
@@ -365,9 +206,7 @@ align-items:flex-start;
 <i class="fa-solid fa-user-check"></i>
 </div>
 
-<h2>
-Control Asistencia
-</h2>
+<h2>Control Asistencia</h2>
 
 </div>
 
@@ -375,36 +214,15 @@ Control Asistencia
 class="back-btn"
 onclick="history.back()">
 
-<i class="fa-solid fa-arrow-left"></i>
 Volver
 
 </button>
 
 </div>
 
-<!-- HERO -->
-
-<div class="hero">
-
-<div>
-
-<h1>Asistencia</h1>
-
-<p id="fechaTexto">
-Control de estudiantes
-</p>
-
-</div>
-
-</div>
-
-<!-- CONTENIDO -->
-
 <div class="container">
 
 <div class="tools">
-
-<div class="fecha-box">
 
 <input
 type="date"
@@ -419,10 +237,6 @@ Buscar
 </button>
 
 </div>
-
-</div>
-
-<!-- STATS -->
 
 <div class="stats">
 
@@ -451,36 +265,26 @@ Buscar
 <div
 class="lista"
 id="lista">
-
 </div>
 
 </div>
-
-<!-- NAVBAR -->
-
-<!-- NAVBAR -->
 
 <div class="bottom-nav">
 
-    <a href="dashboard-docente.html">
-        <i class="fa-solid fa-house"></i>
-        Inicio
-    </a>
+<a href="dashboard-docente.html">
+<i class="fa-solid fa-house"></i>
+Inicio
+</a>
 
-    <a href="clase.html">
-        <i class="fa-solid fa-book"></i>
-        Clases
-    </a>
+<a href="clase.html">
+<i class="fa-solid fa-book"></i>
+Clases
+</a>
 
-    <a href="#" class="active">
-        <i class="fa-solid fa-users"></i>
-        Estudiantes
-    </a>
-
-    <a href="#">
-        <i class="fa-regular fa-user"></i>
-        Perfil
-    </a>
+<a class="active">
+<i class="fa-solid fa-users"></i>
+Estudiantes
+</a>
 
 </div>
 
@@ -493,49 +297,48 @@ location.search
 
 let estudiantes=[];
 
-const hoy=new Date();
-
 document.getElementById(
 "fecha"
 ).value=
-hoy.toISOString()
+new Date()
+.toISOString()
 .split("T")[0];
 
-function cargar(){
+async function cargar(){
 
 const fecha=
 document.getElementById(
 "fecha"
 ).value;
 
-fetch(
-`http://localhost:3000/api/asistencia/${clase}?fecha=${fecha}`
-)
+const r=await fetch(
+`http://localhost:3000/api/asistencia/${clase}?fecha=${fecha}`,
+{
+credentials:"include"
+}
+);
 
-.then(r=>r.json())
-
-.then(data=>{
+const data=
+await r.json();
 
 estudiantes=
 data.estudiantes;
 
-document.getElementById(
-"fechaTexto"
-).innerHTML=
-`Fecha: ${data.fecha}`;
-
 render();
-
-});
 
 }
 
 function render(){
 
+const lista=
+document.getElementById(
+"lista"
+);
+
 lista.innerHTML="";
 
-let presentes=0;
-let ausentes=0;
+let totalPresentes=0;
+let totalAusentes=0;
 
 estudiantes.forEach(e=>{
 
@@ -544,19 +347,19 @@ let estado=
 
 let claseEstado="";
 
-if(Number(e.presente)==1){
+if(Number(e.presente)===1){
 
 estado="Presente";
 claseEstado="present";
-presentes++;
+totalPresentes++;
 
 }
 
-if(Number(e.presente)==0){
+else if(Number(e.presente)===0){
 
 estado="Ausente";
 claseEstado="absent";
-ausentes++;
+totalAusentes++;
 
 }
 
@@ -567,9 +370,7 @@ lista.innerHTML+=`
 <div class="student-left">
 
 <div class="avatar">
-
 ${e.nombre.charAt(0)}
-
 </div>
 
 <div>
@@ -578,18 +379,6 @@ ${e.nombre.charAt(0)}
 
 <div class="status ${claseEstado}">
 ${estado}
-</div>
-
-<div class="resumen">
-
-✅ ${e.total_presentes||0}
-presentes
-
-<br>
-
-❌ ${e.total_ausentes||0}
-ausencias
-
 </div>
 
 </div>
@@ -601,17 +390,13 @@ ausencias
 <button
 class="btn btn-present"
 onclick="guardar(${e.id},1)">
-
 ✓ Presente
-
 </button>
 
 <button
 class="btn btn-absent"
 onclick="guardar(${e.id},0)">
-
 ✕ Ausente
-
 </button>
 
 </div>
@@ -622,15 +407,29 @@ onclick="guardar(${e.id},0)">
 
 });
 
-presentes.innerHTML=presentes;
-ausentes.innerHTML=ausentes;
-total.innerHTML=estudiantes.length;
+document.getElementById(
+"presentes"
+).innerHTML=
+totalPresentes;
 
-porcentaje.innerHTML=
-estudiantes.length
+document.getElementById(
+"ausentes"
+).innerHTML=
+totalAusentes;
+
+document.getElementById(
+"total"
+).innerHTML=
+estudiantes.length;
+
+document.getElementById(
+"porcentaje"
+).innerHTML=
+
+estudiantes.length>0
 ?
 Math.round(
-(presentes*100)
+(totalPresentes*100)
 /estudiantes.length
 )+"%"
 :
@@ -639,7 +438,9 @@ Math.round(
 }
 
 async function guardar(
-id,presente){
+id,
+presente
+){
 
 const fecha=
 document.getElementById(
@@ -649,8 +450,9 @@ document.getElementById(
 await fetch(
 "http://localhost:3000/api/asistencia/guardar",
 {
-
 method:"POST",
+
+credentials:"include",
 
 headers:{
 "Content-Type":"application/json"
@@ -658,15 +460,14 @@ headers:{
 
 body:JSON.stringify({
 
-clase_id:Number(clase),
-estudiante_id:Number(id),
+clase_id:clase,
+estudiante_id:id,
 presente,
 fecha
 
 })
 
 }
-
 );
 
 cargar();

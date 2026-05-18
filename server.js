@@ -107,7 +107,10 @@ app.use(
     "/api/asistencia",
     require("./routes/asistencia")
 );
-
+app.use(
+    "/api/admin",
+    require("./routes/admin")
+);
 // =====================================
 // RUTA PRINCIPAL
 // =====================================

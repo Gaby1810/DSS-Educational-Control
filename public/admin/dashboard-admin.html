@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f5f7fb;
+color:#1f2937;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+height:60px;
+background:#1e3a8a;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+color:white;
+}
+
+.logo{
+font-weight:bold;
+font-size:15px;
+}
+
+.menu{
+display:flex;
+gap:25px;
+align-items:center;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+font-size:14px;
+opacity:.9;
+}
+
+.menu a:hover{
+opacity:1;
+}
+
+.icons{
+display:flex;
+gap:18px;
+font-size:16px;
+}
+
+/* ================= LAYOUT ================= */
+
+.container{
+display:grid;
+grid-template-columns:1.4fr 1fr;
+gap:20px;
+padding:20px;
+height:calc(100vh - 60px);
+}
+
+/* ================= LEFT ================= */
+
+.left{
+background:white;
+border-radius:18px;
+padding:25px;
+overflow:auto;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.welcome{
+margin-bottom:25px;
+}
+
+.welcome h2{
+font-size:28px;
+margin-bottom:5px;
+}
+
+.welcome p{
+color:#6b7280;
+}
+
+/* ================= KPI ================= */
+
+.kpis{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.card{
+padding:20px;
+border-radius:16px;
+background:#f8fafc;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.card i{
+font-size:22px;
+}
+
+.card h1{
+font-size:28px;
+}
+
+.card p{
+font-size:14px;
+color:#6b7280;
+}
+
+.card:nth-child(1){
+background:#eef2ff;
+color:#4f46e5;
+}
+
+.card:nth-child(2){
+background:#ecfeff;
+color:#0891b2;
+}
+
+.card:nth-child(3){
+background:#ecfdf5;
+color:#059669;
+}
+
+.card:nth-child(4){
+background:#fef3c7;
+color:#d97706;
+}
+
+/* ================= ACTIVITY ================= */
+
+.section-title{
+margin-bottom:15px;
+font-size:18px;
+font-weight:600;
+}
+
+.activities{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.activity{
+border:1px solid #eee;
+border-radius:14px;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.activity-left{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.activity-icon{
+width:42px;
+height:42px;
+border-radius:12px;
+background:#eef2ff;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#4f46e5;
+}
+
+.activity h4{
+font-size:14px;
+margin-bottom:4px;
+}
+
+.activity p{
+font-size:12px;
+color:#6b7280;
+}
+
+.activity small{
+font-size:11px;
+color:#9ca3af;
+}
+
+/* ================= RIGHT ================= */
+
+.right{
+background:white;
+border-radius:18px;
+padding:20px;
+overflow:auto;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.search{
+width:100%;
+padding:12px 15px;
+border:1px solid #ddd;
+border-radius:12px;
+margin-bottom:15px;
+outline:none;
+}
+
+.filters{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+.filter{
+padding:8px 14px;
+border-radius:20px;
+background:#f3f4f6;
+font-size:13px;
+cursor:pointer;
+border:none;
+}
+
+.filter.active{
+background:#dbeafe;
+color:#1d4ed8;
+}
+
+.user-list{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.user{
+border:1px solid #eee;
+border-radius:16px;
+padding:14px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+transition:.2s;
+}
+
+.user:hover{
+transform:translateY(-2px);
+box-shadow:0 4px 10px rgba(0,0,0,.05);
+}
+
+.user-left{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.avatar{
+width:52px;
+height:52px;
+border-radius:50%;
+background:#1e3a8a;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+font-size:18px;
+}
+
+.user-name{
+font-weight:600;
+margin-bottom:4px;
+}
+
+.user-email{
+font-size:12px;
+color:#6b7280;
+margin-bottom:6px;
+}
+
+.badges{
+display:flex;
+gap:8px;
+}
+
+.badge{
+padding:4px 10px;
+border-radius:20px;
+font-size:11px;
+font-weight:600;
+}
+
+.docente{
+background:#dbeafe;
+color:#1d4ed8;
+}
+
+.estudiante{
+background:#fef3c7;
+color:#b45309;
+}
+
+.admin{
+background:#dcfce7;
+color:#15803d;
+}
+
+.estado{
+background:#fee2e2;
+color:#dc2626;
+}
+
+.estado.activo{
+background:#dcfce7;
+color:#16a34a;
+}
+
+.actions{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.btn{
+border:none;
+padding:7px 12px;
+border-radius:10px;
+font-size:12px;
+cursor:pointer;
+}
+
+.edit{
+background:#eef2ff;
+color:#4f46e5;
+}
+
+.delete{
+background:#fee2e2;
+color:#dc2626;
+}
+
+/* ================= CHART ================= */
+
+.chart-box{
+margin-top:25px;
+background:#fff;
+border:1px solid #eee;
+border-radius:16px;
+padding:15px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+.kpis{
+grid-template-columns:repeat(2,1fr);
+}
+
+.activities{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+Educational Control
+</div>
+
+<div class="menu">
+<a href="#">Inicio</a>
+<a href="reportes-admin.html">Reportes</a>
+<a href="#">Administrador</a>
+</div>
+
+<div class="icons">
+<i class="fa-regular fa-bell"></i>
+<i class="fa-solid fa-gear"></i>
+</div>
+
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+<!-- LEFT -->
+<div class="left">
+
+<div class="welcome">
+<h2>Hola, Administrador 👋</h2>
+<p>Aquí tienes un resumen del sistema hoy.</p>
+</div>
+
+<!-- KPIS -->
+<div class="kpis">
+
+<div class="card">
+<i class="fa-solid fa-chart-line"></i>
+<h1 id="usuarios">0</h1>
+<p>Usuarios</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-chalkboard-user"></i>
+<h1 id="docentes">0</h1>
+<p>Total de docentes</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-user-graduate"></i>
+<h1 id="estudiantes">0</h1>
+<p>Total de estudiantes</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-book-open"></i>
+<h1 id="clases">0</h1>
+<p>Total de clases</p>
+</div>
+
+</div>
+
+<!-- ACTIVIDAD -->
+<div class="section-title">
+Actividad reciente
+</div>
+
+<div class="activities" id="actividad"></div>
+
+<!-- CHART -->
+<div class="chart-box">
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+
+<input
+type="text"
+class="search"
+id="search"
+placeholder="Buscar por nombre o email..."
+>
+
+<div class="filters">
+<button class="filter active" onclick="filtrar('todos')">
+Todos
+</button>
+
+<button class="filter" onclick="filtrar('docente')">
+Docentes
+</button>
+
+<button class="filter" onclick="filtrar('estudiante')">
+Estudiantes
+</button>
+
+<button class="filter" onclick="filtrar('admin')">
+Admins
+</button>
+</div>
+
+<div class="section-title">
+Directorio de Usuarios
+</div>
+
+<div class="user-list" id="users"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let usuariosGlobal=[];
+
+// ================= DASHBOARD =================
+
+fetch("http://localhost:3000/api/admin/dashboard",{
+credentials:"include"
+})
+.then(r=>r.json())
+.then(d=>{
+
+document.getElementById("usuarios").innerText=d.usuarios;
+document.getElementById("docentes").innerText=d.docentes;
+document.getElementById("estudiantes").innerText=d.estudiantes;
+document.getElementById("clases").innerText=d.clases;
+
+// CHART
+new Chart(document.getElementById("chart"),{
+
+type:"bar",
+
+data:{
+labels:["Usuarios","Estudiantes","Docentes","Clases"],
+datasets:[{
+data:[
+d.usuarios,
+d.estudiantes,
+d.docentes,
+d.clases
+],
+borderRadius:8
+}]
+},
+
+options:{
+responsive:true,
+plugins:{
+legend:{
+display:false
+}
+}
+}
+
+});
+
+});
+
+// ================= USERS =================
+
+function cargarUsuarios(){
+
+fetch("http://localhost:3000/api/admin/usuarios",{
+credentials:"include"
+})
+.then(r=>r.json())
+.then(data=>{
+
+usuariosGlobal=data;
+renderUsuarios(data);
+
+});
+
+}
+
+function renderUsuarios(data){
+
+let box=document.getElementById("users");
+
+box.innerHTML="";
+
+data.forEach(u=>{
+
+let tipo=u.rol;
+
+box.innerHTML+=`
+
+<div class="user">
+
+<div class="user-left">
+
+<div class="avatar">
+${u.nombre.charAt(0).toUpperCase()}
+</div>
+
+<div>
+
+<div class="user-name">
+${u.nombre}
+</div>
+
+<div class="user-email">
+${u.correo}
+</div>
+
+<div class="badges">
+
+<span class="badge ${tipo}">
+${u.rol}
+</span>
+
+<span class="badge estado activo">
+Activo
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn edit"
+onclick="editarUsuario(${u.id})"
+>
+Editar
+</button>
+
+<button
+class="btn delete"
+onclick="eliminarUsuario(${u.id})"
+>
+Eliminar
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+// ================= FILTROS =================
+
+function filtrar(tipo){
+
+document.querySelectorAll(".filter")
+.forEach(b=>b.classList.remove("active"));
+
+event.target.classList.add("active");
+
+if(tipo==="todos"){
+renderUsuarios(usuariosGlobal);
+return;
+}
+
+let filtrados=usuariosGlobal.filter(
+u=>u.rol===tipo
+);
+
+renderUsuarios(filtrados);
+
+}
+
+// ================= SEARCH =================
+
+document.getElementById("search")
+.addEventListener("input",e=>{
+
+let texto=e.target.value.toLowerCase();
+
+let filtrados=usuariosGlobal.filter(u=>
+
+u.nombre.toLowerCase().includes(texto)
+||
+u.correo.toLowerCase().includes(texto)
+
+);
+
+renderUsuarios(filtrados);
+
+});
+
+// ================= ELIMINAR =================
+
+function eliminarUsuario(id){
+
+if(!confirm("¿Eliminar usuario?")) return;
+
+fetch(`http://localhost:3000/api/admin/usuarios/${id}`,{
+
+method:"DELETE",
+credentials:"include"
+
+})
+.then(r=>r.json())
+.then(d=>{
+
+alert(d.message);
+cargarUsuarios();
+
+});
+
+}
+
+// ================= EDITAR =================
+
+function editarUsuario(id){
+
+let nombre=prompt("Nuevo nombre");
+if(!nombre) return;
+
+fetch(`http://localhost:3000/api/admin/usuarios/${id}`,{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+credentials:"include",
+
+body:JSON.stringify({
+nombre:nombre,
+correo:"temp@gmail.com",
+rol:"estudiante"
+})
+
+})
+.then(r=>r.json())
+.then(d=>{
+
+alert(d.message);
+cargarUsuarios();
+
+});
+
+}
+
+// ================= ACTIVIDAD =================
+
+fetch("http://localhost:3000/api/admin/reporte-clases",{
+credentials:"include"
+})
+.then(r=>r.json())
+.then(data=>{
+
+let box=document.getElementById("actividad");
+
+data.slice(0,4).forEach(c=>{
+
+box.innerHTML+=`
+
+<div class="activity">
+
+<div class="activity-left">
+
+<div class="activity-icon">
+<i class="fa-solid fa-book"></i>
+</div>
+
+<div>
+<h4>${c.materia}</h4>
+<p>${c.docente}</p>
+</div>
+
+</div>
+
+<small>
+${c.inscritos} alumnos
+</small>
+
+</div>
+
+`;
+
+});
+
+});
+
+// INIT
+cargarUsuarios();
+
+</script>
+
+</body>
+</html>

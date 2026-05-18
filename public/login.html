@@ -181,6 +181,10 @@ function iniciarSesion() {
         else if (data.rol === "estudiante") {
             window.location.href = "./estudiante/clases.html";
         }
+                else if (data.rol === "admin") {
+            window.location.href = "./admin/dashboard-admin.html";
+        }
+
 
         else {
             alert(data.message);
