@@ -4,6 +4,7 @@
   --ec-blue-200: #bfdbfe;
   --ec-blue-500: #3b82f6;
   --ec-blue-600: #2563eb;
+  --ec-blue-700: #1d4ed8;
   --ec-blue-800: #1e40af;
   --ec-blue-900: #1e3a8a;
 
@@ -21,13 +22,19 @@
 
   --ec-gradient-primary: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
   --ec-gradient-soft: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  --ec-gradient-hero: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
 
   --ec-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
   --ec-shadow-soft: 0 4px 14px rgba(15, 23, 42, 0.08);
+  --ec-shadow-xl: 0 24px 60px rgba(15, 23, 42, 0.18);
 
   --ec-radius: 14px;
+  --ec-radius-sm: 10px;
   --ec-radius-lg: 24px;
+  --ec-radius-xl: 28px;
+  --ec-radius-full: 999px;
   --ec-font: "Inter", "Segoe UI", system-ui, sans-serif;
+  --ec-transition: 0.2s ease;
 }
 
 *,
@@ -65,7 +72,8 @@ img {
 /* LOGIN / REGISTER */
 body:has(.login-container),
 body:has(.auth-container),
-body:has(.register-container) {
+body:has(.register-container),
+body:has(.card-register) {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,6 +164,14 @@ label {
   color: var(--ec-slate-700);
 }
 
+.ec-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ec-slate-700);
+}
+
 input,
 select,
 textarea,
@@ -183,6 +199,14 @@ textarea:focus,
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
+.ec-input-ok {
+  border-color: var(--ec-success);
+}
+
+.ec-input-error {
+  border-color: var(--ec-danger);
+}
+
 button,
 .btn,
 .ec-btn,
@@ -206,6 +230,19 @@ button:hover,
 input[type="submit"]:hover {
   transform: translateY(-1px);
   box-shadow: var(--ec-shadow);
+}
+
+.ec-btn-primary {
+  background: var(--ec-gradient-primary);
+  color: #fff;
+}
+
+.ec-btn-block {
+  width: 100%;
+}
+
+.ec-mt-2 {
+  margin-top: 12px;
 }
 
 /* DASHBOARD / GENERAL */
@@ -302,6 +339,20 @@ tr:hover {
   background: #fef2f2;
   color: #991b1b;
   border-color: var(--ec-danger);
+}
+
+.ec-help {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ec-slate-500);
+}
+
+.ec-help.ok {
+  color: #047857;
+}
+
+.ec-help.error {
+  color: #b91c1c;
 }
 
 /* RESPONSIVE */
