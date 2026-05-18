@@ -184,7 +184,7 @@ async function iniciarSesion(e) {
             return;
         }
         if (data.rol === "docente") window.location.href = "/docente/dashboard.html";
-        else if (data.rol === "estudiante") window.location.href = "/estudiante/clases.html";
+        else if (data.rol === "estudiante") window.location.href = "/estudiante/dashboard.html";
         else if (data.rol === "admin") window.location.href = "/admin/dashboard-admin.html";
         else showAlert("Rol desconocido");
     } catch (err) {

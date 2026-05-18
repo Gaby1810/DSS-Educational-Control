@@ -8,7 +8,7 @@ router.use(requireAuth);
 
 function sanitize(str) { return String(str || "").trim().slice(0, 500); }
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", requireRole("estudiante"), (req, res) => {
     const id = req.session.usuario.id;
     db.query(
         "SELECT id, nombre, correo, rol, tipo_bachillerato, anio, telefono FROM usuarios WHERE id=?",
@@ -174,6 +174,34 @@ router.get("/materiales/:clase", (req, res) => {
             res.json(result);
         }
     );
+});
+
+router.get("/companeros", requireRole("estudiante"), (req, res) => {
+    const estudiante = req.session.usuario.id;
+    const sql = `
+        SELECT
+            u.id,
+            u.nombre,
+            u.correo,
+            COUNT(DISTINCT dm.id) AS clases_compartidas,
+            GROUP_CONCAT(DISTINCT m.nombre ORDER BY m.nombre SEPARATOR ', ') AS materias
+        FROM estudiante_materias actual
+        INNER JOIN estudiante_materias peers
+            ON peers.docente_materia_id = actual.docente_materia_id
+           AND peers.estudiante_id <> actual.estudiante_id
+        INNER JOIN usuarios u
+            ON u.id = peers.estudiante_id
+        INNER JOIN docente_materias dm
+            ON dm.id = actual.docente_materia_id
+        INNER JOIN materias m
+            ON m.id = dm.materia_id
+        WHERE actual.estudiante_id = ?
+        GROUP BY u.id, u.nombre, u.correo
+        ORDER BY u.nombre ASC`;
+    db.query(sql, [estudiante], (err, result) => {
+        if (err) return res.status(500).json({ message: "Error servidor" });
+        res.json(result);
+    });
 });
 
 module.exports = router;
